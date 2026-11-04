@@ -101,8 +101,9 @@ Prices checked 2026-11-04: fal.ai lists Kling Avatar v2 at $0.0562/s (Std) and $
 ## Phase V3 — Pipeline
 
 ### V3.1 Input: topic text or Trend Radar Content Package (`package.json` / `package.md`)
-- [ ] Both inputs parsed; package facts marked `verified`
-- DoD: [ ] Implemented [ ] Tests/manual test [ ] Docs [ ] Committed & pushed [ ] Verified — how:
+- [x] Both inputs parsed; package facts marked `verified`
+- DoD: [x] Implemented [x] Tests/manual test [x] Docs [x] Committed & pushed [x] Verified — how: `POST /jobs` on the running API with today's real, untrimmed package from the local Trend Radar (`GET /api/admin/content-package`), as JSON and as the Markdown Trend Radar renders from it. Both jobs got the same 24 `verified` facts word for word (SQL `except` of the two sets is empty). A topic line became a topic job; an empty input and a 5 s length were refused with a reason. Tests: `test_inputs.py` (fixture = trimmed real package; its `.md` rendered by Trend Radar's own `markdown()`).
+- Notes: Trend Radar's `official` facts (primary-source URL) are stored as cited `unverified-context`, so their numbers stay off screen until we add an `official` kind. The package's `daily_radar` format maps to Radar Report; its length (40 s) wins over the format default.
 
 ### V3.2 Research step (Claude + web search): cited notes, kept apart from verified facts
 - [ ] Every added claim has a source URL; stored as `unverified-context`

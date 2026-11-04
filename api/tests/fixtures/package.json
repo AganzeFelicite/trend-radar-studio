@@ -1,0 +1,172 @@
+{
+  "package_id": "2026-11-04-daily_radar-en-v5",
+  "format": "daily_radar",
+  "language": "en",
+  "host": "Wi-Fido",
+  "data_brand": "Trend Radar",
+  "target_length_seconds": 40,
+  "status": "not approved (preview: don't publish)",
+  "brief_date": "2026-11-04",
+  "brief_version": 5,
+  "scores_at": "2026-11-04 09:00 UTC",
+  "movement": "some",
+  "facts": [
+    {
+      "id": "F1",
+      "type": "verified",
+      "label": "Pre-load: rank",
+      "value": "#1",
+      "source": "Trend Radar topic_scores · preload · public_rank · 2026-11-04 09:00 UTC"
+    },
+    {
+      "id": "F2",
+      "type": "verified",
+      "label": "Pre-load: rank 6 hours ago",
+      "value": "#1",
+      "source": "Trend Radar topic_scores · preload · public_rank_6h_ago · 2026-11-04 09:00 UTC"
+    },
+    {
+      "id": "F3",
+      "type": "verified",
+      "label": "Pre-load: score (0-100)",
+      "value": "68",
+      "source": "Trend Radar topic_scores · preload · score · 2026-11-04 09:00 UTC"
+    },
+    {
+      "id": "F4",
+      "type": "verified",
+      "label": "Pre-load: share of the GTA 6 conversation, 24h",
+      "value": "11.5%",
+      "source": "Trend Radar topic_scores · preload · attention · 2026-11-04 09:00 UTC"
+    },
+    {
+      "id": "F5",
+      "type": "verified",
+      "label": "Pre-load: sources it's active on",
+      "value": "3",
+      "source": "Trend Radar topic_scores · preload · sources · 2026-11-04 09:00 UTC"
+    },
+    {
+      "id": "F6",
+      "type": "verified",
+      "label": "Pre-load: posts and videos, 24h",
+      "value": "62",
+      "source": "Trend Radar topic_scores · preload · items · 2026-11-04 09:00 UTC"
+    },
+    {
+      "id": "F7",
+      "type": "official",
+      "label": "Pre-load start date",
+      "value": "November 10",
+      "source": "https://www.rockstargames.com/newswire/example"
+    }
+  ],
+  "segments": [
+    {
+      "label": "Pre-load",
+      "kind": "top",
+      "topics": [
+        {
+          "key": "t1",
+          "topic": {
+            "slug": "preload",
+            "name": "Pre-load",
+            "rank": 1,
+            "rank_6h_ago": 1,
+            "score": 67.6,
+            "share": 0.11520209533248045,
+            "growth": null,
+            "sources": 3,
+            "items": 62,
+            "channels": 52
+          },
+          "movement": "unchanged in 6 hours (still #1)",
+          "fact_ids": [
+            "F1",
+            "F2",
+            "F3",
+            "F4",
+            "F5",
+            "F6",
+            "F7"
+          ]
+        }
+      ],
+      "keywords": [
+        "pre load",
+        "preload",
+        "november 10",
+        "pre loading",
+        "preloading",
+        "pre loads",
+        "212 gb",
+        "file size",
+        "storage",
+        "212gb",
+        "install size",
+        "download size",
+        "210 gb"
+      ],
+      "leads": [],
+      "questions": [
+        "What is actually happening with Pre-load & File size? For every official statement give the primary-source URL (Rockstar Newswire, PlayStation, Xbox or the store page; resolve short links; a news article is never the source of an official fact) and tag it `official`. Everything else is `unverified-context`.",
+        "The 3 questions, complaints or claims that come up most in the comments and replies of the items below (read through the YouTube Data API and the Bluesky API only; paraphrase; no usernames; rough share).",
+        "What do the top videos have in common (angle, title, hook in the first 5 seconds), and what do viewers say is missing? That gap is our angle."
+      ]
+    }
+  ],
+  "breakout_videos": [],
+  "official_sources_in_our_data": [],
+  "script": "HOOK: Wi-Fido here with your GTA 6 radar for November 4. Pre-load and File size hold the top spots.\n\nWHAT THE DATA SHOWS: Pre-load sits at #1 with a score of 68 out of 100, and File size is at #3 with 36. Both are unchanged over the past six hours, still holding their places. Xbox stays at #2 with 42. Map moved up a place over six hours, from #5 to #4, with a score of 28.\n\nWHY IT MATTERS: Creators, this shows where attention is building across YouTube, Bluesky and gaming news. Topics at the top give you a clear sense of what viewers are searching for and sharing right now.\n\nWHAT NEXT: Use these topics to plan your next video, and watch how Map moves in the next update.",
+  "scenes": [
+    {
+      "start": 0,
+      "end": 4,
+      "voice": "Hook",
+      "screen": "Title card \"GTA 6 trends · Nov 4\" and Wi-Fido"
+    },
+    {
+      "start": 4,
+      "end": 13,
+      "voice": "Pre-load & File size: the data, its movement, one cited finding",
+      "screen": "cards/segment-1.png"
+    },
+    {
+      "start": 32,
+      "end": 40,
+      "voice": "Why it matters, the owner's line (4 s), what to watch",
+      "screen": "Host close-up with the owner's line as a caption, then cards/end.png"
+    }
+  ],
+  "cards": [
+    {
+      "file": "cards/title.png",
+      "shows": "\"GTA 6 trends · Nov 4\", data by Trend Radar",
+      "rendered": false
+    },
+    {
+      "file": "cards/segment-1.png",
+      "shows": "#1 Pre-load · 68/100 · 11.5% · unchanged in 6 hours (still #1) + #3 File size · 36/100 · 6.1% · unchanged in 6 hours (still #3)",
+      "rendered": false
+    },
+    {
+      "file": "cards/end.png",
+      "shows": "\"Daily GTA 6 trends · AI host, real data · Trend Radar\"",
+      "rendered": false
+    }
+  ],
+  "previous_titles": [],
+  "rules": [
+    "No third-party clips or thumbnails in the video. The videos, posts and headlines in the research list are for reading and citing only.",
+    "No Rockstar/GTA logos, art, screenshots, characters or music.",
+    "The host is a stylised, clearly-AI character, never a realistic human. Trend Radar is the data source, not the host.",
+    "The platform AI label must be switched on when posting (YouTube altered/synthetic content; TikTok AI-generated).",
+    "Only `verified` facts (listed in this package) and `official` facts (from Rockstar Newswire, PlayStation, Xbox or a store page, with the primary-source URL; short links resolved; never a news site as the source) may be said or shown as numbers or dates.",
+    "Anything else from research is cited and marked `unverified-context`, and is never shown as a number.",
+    "No sensational claims: no \"leaked\", \"confirmed\", \"cancelled\" or \"delayed\" framing unless an official source says so; no fake urgency.",
+    "Titles never use \"confirmed\", \"leaked\", \"insane\" or all-caps words, and differ from the previous titles listed in this package.",
+    "No finance, money-making, health or legal topics. Nothing about piracy, jailbreaks, leaks or cheats.",
+    "Read comments and replies only through official APIs: YouTube Data API (commentThreads.list) and the Bluesky API (app.bsky.feed.getPostThread). No scraping.",
+    "Never show or say commenters' names or handles; paraphrase what they say."
+  ]
+}

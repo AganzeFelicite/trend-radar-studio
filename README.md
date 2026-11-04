@@ -60,6 +60,14 @@ uv run pytest                      # uses its own studio_test database
 
 Secrets go in `.env` only, which git ignores. `.env.example` lists every variable, and a test fails if the code reads one that isn't listed.
 
+## Input (V3.1)
+
+`POST /jobs` takes `{"input": "...", "format": "radar_report", "target_seconds": 50}` (format and length are optional). `input` is one topic line, or a whole Trend Radar Content Package: the JSON from Trend Radar's `GET /api/admin/content-package`, or the Markdown it renders. The package's facts are stored as `verified`, word for word.
+
+```bash
+curl -s localhost:8000/api/admin/content-package | jq '{input: tojson}' | curl -s -X POST 127.0.0.1:8400/jobs -H 'content-type: application/json' -d @-
+```
+
 ## Voice and talking clip (free)
 
 ```bash
