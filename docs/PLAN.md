@@ -128,8 +128,9 @@ Prices checked 2026-11-04: fal.ai lists Kling Avatar v2 at $0.0562/s (Std) and $
 - Output: `storage/jobs/<id>/voice.wav` (one track: your pipeline's A-roll audio) and `voice.json` with real scene start/end times, mouth cues for the talking clip, whisper word timestamps (same model as your FilmCraft pipeline) and the match score.
 
 ### V3.6 Talking-character generation through the chosen provider (adapter interface)
-- [ ] Cost logged per clip; cap enforced
-- DoD: [ ] Implemented [ ] Tests/manual test [ ] Docs [ ] Committed & pushed [ ] Verified — how:
+- [x] Cost logged per clip; cap enforced
+- DoD: [x] Implemented [x] Tests/manual test [x] Docs [x] Committed & pushed [x] Verified — how: rendered today's package (job 1) in 51 s: `storage/jobs/1/reporter.mp4`, 1080×1920, 30 fps, 42.9 s with audio. An 8-frame grid shows varied mouth shapes, the thinking pose on its desk scene, and the same character and set throughout. Whisper on the MP4 matches the script at 0.957, the same as the voice track, so no audio was lost in the render. Provenance (`avatar_clip`, `own`) and a $0 `avatar` cost row are written, after `ensure_budget`. Tests: `test_clip.py` (reaction poses only on desk scenes, held 2 s; render command mounts; provenance and cost).
+- Notes: the provider is Remotion with our drawn character (D16, $0). One full-length clip covers the whole voice track, like your phone A-roll; the FilmCraft edit cuts to full-frame cards and headlines on non-desk scenes while the voice continues. The adapter is the function contract `talking_clip(job_id)`: `voice.json` in, `reporter.mp4` out. A second provider is a second function behind a config switch, added when one exists.
 
 ### V3.7 B-roll: our own Remotion scenes per script cue (D18; Pexels paused); provenance logged as `own`
 - [ ] Render refused if any asset lacks a licence entry (tested)

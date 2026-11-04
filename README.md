@@ -96,6 +96,8 @@ The `SENSITIVE_TOPICS` blocklist runs first, then an AI classifier (Claude Code,
 
 A job's voice track (V3.5): `cd api && uv run python -m studio.voice <job_id>` writes `storage/jobs/<id>/voice.wav` and `voice.json` (scene times, mouth cues, whisper word timestamps), then prints what whisper heard differently from the script.
 
+A job's talking clip (V3.6): `cd api && uv run python -m studio.clip <job_id>` renders `storage/jobs/<id>/reporter.mp4` (the whole voice track, lip-synced, reaction poses on desk scenes) in the renderer container.
+
 ```bash
 # one-time model download (data only, git-ignored): the v1.1 export includes phoneme durations for lip-sync
 mkdir -p models/kokoro && cd models/kokoro
