@@ -8,7 +8,15 @@ Turns a topic (or a Trend Radar Content Package) into a finished 1080×1920 shor
 
 ## Status
 
-Done: V1.1 (repo), V1.2 (Docker Compose), V1.3 (database), and the V2.1 draft (character bible). Next comes V1.4 (config).
+Phase V1 is done (repo, Docker Compose, database, config), along with the V2.1 draft (character bible). Next comes V2.2 (character sheet), once you approve the bible.
+
+## Config
+
+```bash
+cp .env.example .env   # then paste your API keys
+```
+
+All settings live in `api/studio/config.py`, which reads `.env`. They are the character name, provider and model choices, monthly cost caps per service ($20 total by default), the sensitive-topic blocklist and the sensational-word list. `studio/costs.py` checks the cap before every paid call (`ensure_budget`) and logs every spend (`record_cost`).
 
 ## Run locally
 
@@ -50,4 +58,4 @@ uv run pytest                      # uses its own studio_test database
 
 ## Secrets
 
-Secrets go in `.env` only, which git ignores. `.env.example` arrives in V1.4.
+Secrets go in `.env` only, which git ignores. `.env.example` lists every variable, and a test fails if the code reads one that isn't listed.

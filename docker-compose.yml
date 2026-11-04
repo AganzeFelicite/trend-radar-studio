@@ -34,6 +34,7 @@ services:
 
   api:
     build: ./api
+    env_file: [{ path: .env, required: false }]
     environment: *py-env
     ports: ["127.0.0.1:8400:8000"]
     depends_on: *needs-data
@@ -41,6 +42,7 @@ services:
   worker:
     build: ./api
     command: ["rq", "worker", "--url", "redis://redis:6379/0", "default"]
+    env_file: [{ path: .env, required: false }]
     environment: *py-env
     depends_on: *needs-data
 

@@ -53,9 +53,10 @@ Prices checked 2026-11-04: fal.ai lists Kling Avatar v2 at $0.0562/s (Std) and $
 - DoD: [x] Implemented [x] Tests/manual test [x] Docs [x] Committed & pushed [x] Verified — how: `uv run pytest` gives 9 passed. Those tests cover: migrations down to base with 0 tables, then back up to head with all 6 tables; assets rejected with no or empty licence and with source `youtube` or `gameplay`; unverified facts rejected without a source URL; outputs rejected without the AI disclosure or with anything other than 3 titles; negative costs rejected. `alembic check` reports no drift between the models and the migrations. In Docker, the api ran `alembic upgrade head` on startup and `./scripts/smoke.sh` printed `ALL OK`.
 
 ### V1.4 Config: character name, cost caps, blocklist, provider choices
-- [ ] `CHARACTER_NAME` used everywhere (no hard-coded name)
-- [ ] `.env.example` complete; no secrets committed
-- DoD: [ ] Implemented [ ] Tests/manual test [ ] Docs [ ] Committed & pushed [ ] Verified — how:
+- [x] `CHARACTER_NAME` used everywhere (no hard-coded name)
+- [x] `.env.example` complete; no secrets committed
+- [x] Cost caps enforced: `ensure_budget` runs before every paid call, `record_cost` logs every spend
+- DoD: [x] Implemented [x] Tests/manual test [x] Docs [x] Committed & pushed [x] Verified — how: `uv run pytest` gives 13 passed. The new tests check that the caps total $20; that `.env.example` covers every env var the code and compose read (I deleted one line on purpose, the test failed naming it, then I restored it); that "Big Dog" is hard-coded only in `config.py`; and that the budget guard allows exactly $4.00 but raises at $4.01, ignoring last month's spend. `git ls-files` shows only `.env.example`, and a `git grep` for key patterns found none. In Docker, the api loaded the config (`Big Dog | claude-opus-5-5 | caps llm 4, tts 6, avatar 8, image 2, video 0`) and the smoke test printed `ALL OK`.
 
 ## Phase V2 — Character
 

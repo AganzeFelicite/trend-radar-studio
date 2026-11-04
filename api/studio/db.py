@@ -20,6 +20,8 @@ from sqlalchemy import (
 from sqlalchemy.dialects.postgresql import ARRAY, JSONB
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
+from studio.config import COST_CAPS_USD
+
 DATABASE_URL = os.environ.get("DATABASE_URL", "postgresql+psycopg://studio:studio@localhost:5442/studio")
 engine = create_engine(DATABASE_URL, pool_pre_ping=True)
 
@@ -29,8 +31,8 @@ FACT_KINDS = ("verified", "unverified-context")
 ASSET_KINDS = ("character", "cutaway", "voice", "avatar_clip", "broll", "data_card", "music", "sfx", "thumbnail")
 # Allowed visual/audio sources (brief §2). "gameplay" is deliberately absent until V6.4 is approved.
 ASSET_SOURCES = ("own", "trend_radar", "pexels", "ai_generated", "tts", "royalty_free")
-COST_SERVICES = ("llm", "tts", "avatar", "image", "video")
 REVIEW_STATES = ("pending", "approved", "rejected")
+COST_SERVICES = tuple(COST_CAPS_USD)  # one list: every paid service has a cap
 
 
 def one_of(column: str, values: tuple[str, ...]) -> CheckConstraint:
