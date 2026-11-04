@@ -33,3 +33,6 @@ next-env.d.ts
 
 # downloaded model weights (fetched by scripts, never committed)
 models/
+
+# generated per job / test (voice tracks, props)
+renderer/public/test/

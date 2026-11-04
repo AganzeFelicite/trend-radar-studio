@@ -36,7 +36,7 @@ The character is drawn in code: [`renderer/src/Reporter.tsx`](../renderer/src/Re
 ## 6. Poses and lip-sync
 
 - **Poses:** `talk` (hands on the desk), `shocked` (hands to cheeks, wide eyes, "O" mouth), `laughing` (eyes shut, big grin, head tilt), `thinking` (hand on chin, one eyebrow up, eyes up and to the side) and `celebrating` (both fists up).
-- **Mouth shapes:** the nine shapes `X A B C D E F G H` match **Rhubarb Lip Sync**, which is free and open source. In V2.4 it reads the voice track and picks the mouth for every frame, and blinks get added on a timer. This replaces paid lip-sync.
+- **Mouth shapes:** the nine shapes `X A B C D E F G H` use Rhubarb Lip Sync's set. Kokoro reports when every phoneme is spoken, and `api/studio/voice.py` maps each one to a mouth shape (p/b/m closed, "oo" puckered, f/v teeth on lip...). Blinks run on an irregular timer, and the head nods slightly while speaking. Test clip: `assets/character/talk-test.mp4`.
 
 ## 7. Personality
 
@@ -63,7 +63,7 @@ The character is drawn in code: [`renderer/src/Reporter.tsx`](../renderer/src/Re
 | Say "I'm an AI host. The data's real." if asked | Pretend to be a real person |
 | Keep it clean and kind | Swear, mock people, or touch finance / investing / money-making / health / medical / legal |
 
-## 10. Voice (V2.3, free)
+## 10. Voice (V2.3, free): **`hype`** picked
 
 - **Engine:** local **Kokoro** TTS (open source, Apache-2.0), $0.
 - **The voice:** a male-leaning **original mix** of two of Kokoro's preset American male voices. It isn't cloned, and it imitates no real person.

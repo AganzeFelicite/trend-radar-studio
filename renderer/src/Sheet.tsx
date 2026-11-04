@@ -10,7 +10,7 @@ export const Sheet: React.FC = () => (
     <div style={{ display: "flex", gap: 24, justifyContent: "center" }}>
       {POSES.map((p) => (
         <div key={p}>
-          <div style={{ width: 324, height: 576, borderRadius: 16, overflow: "hidden" }}><Reporter pose={p} mouth="C" /></div>
+          <div style={{ width: 324, height: 576, borderRadius: 16, overflow: "hidden" }}><Reporter pose={p} mouth={p === "talk" ? "C" : "X"} /></div>
           <div style={label}>{p}</div>
         </div>
       ))}

@@ -59,3 +59,16 @@ uv run pytest                      # uses its own studio_test database
 ## Secrets
 
 Secrets go in `.env` only, which git ignores. `.env.example` lists every variable, and a test fails if the code reads one that isn't listed.
+
+## Voice and talking clip (free)
+
+```bash
+# one-time model download (data only, git-ignored): the v1.1 export includes phoneme durations for lip-sync
+mkdir -p models/kokoro && cd models/kokoro
+curl -fsSLO https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.1/kokoro-v1.0.onnx
+curl -fsSLO https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/voices-v1.0.bin
+cd ../../api
+uv run python -m studio.voice            # test line -> renderer/public/test/line.wav + renderer/out/props.json
+cd .. && docker compose run --rm -T -v "$PWD/renderer/src:/app/src" -v "$PWD/renderer/public:/app/public" \
+  -v "$PWD/renderer/out:/app/out" renderer npx remotion render src/index.ts TalkingClip out/talk-test.mp4 --props=out/props.json
+```

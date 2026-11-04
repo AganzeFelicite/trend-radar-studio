@@ -88,11 +88,13 @@ Prices checked 2026-11-04: fal.ai lists Kling Avatar v2 at $0.0562/s (Std) and $
 ### V2.3 Voice design + 3 sample lines (local Kokoro, D14)
 - [x] Original mix of Kokoro preset voices (not cloned, no "sounds like <person>" prompts)
 - [x] 3 samples in `assets/voice/` (`anchor`, `hype`, `warm`); `studio/voice.py` makes them. Local Whisper heard every word of all three.
-- [ ] You pick the voice
+- [x] Voice picked: `hype` (60% am_puck + 40% am_michael, speed 1.15), chosen by me on your go-ahead
 - DoD: [ ] Implemented [ ] Tests/manual test [ ] Docs [ ] Committed & pushed [ ] Verified — how:
 
 ### V2.4 Talking-clip test (replaces the paid avatar test): same 10 s line, Rhubarb lip-sync + blinks + pose swaps in Remotion
-- [ ] 1080x1920 MP4 of the reporter speaking the V2.3 voice; you judge lip-sync and motion ($0)
+- [x] 1080x1920 MP4 of the reporter speaking the V2.3 voice: `assets/character/talk-test.mp4` ($0)
+- [x] Lip-sync from Kokoro's own phoneme timings mapped to the 9 mouth shapes (`studio/voice.py: mouth_cues`), no extra tool. Rhubarb was blocked as an external binary; the cues use its format, so it can drop in later.
+- [ ] You judge lip-sync and motion
 - DoD: [ ] Implemented [ ] Tests/manual test [ ] Docs [ ] Committed & pushed [ ] Verified — how:
 
 ## Phase V3 — Pipeline

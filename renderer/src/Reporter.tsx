@@ -140,8 +140,8 @@ const Desk: React.FC = () => (
   </g>
 );
 
-export const Reporter: React.FC<{ pose?: Pose; mouth?: Mouth; blink?: boolean; background?: boolean; crop?: string }> = ({
-  pose = "talk", mouth = "X", blink = false, background = true, crop = "0 0 1080 1920",
+export const Reporter: React.FC<{ pose?: Pose; mouth?: Mouth; blink?: boolean; background?: boolean; crop?: string; nod?: number }> = ({
+  pose = "talk", mouth = "X", blink = false, background = true, crop = "0 0 1080 1920", nod = 0,
 }) => {
   const f = FACES[pose];
   const a = ARMS[pose];
@@ -164,7 +164,7 @@ export const Reporter: React.FC<{ pose?: Pose; mouth?: Mouth; blink?: boolean; b
       {a.arms.map((d) => <Arm key={d} d={d} />)}
       <Desk />
       {/* head */}
-      <g transform={`rotate(${f.head} 540 900)`}>
+      <g transform={`rotate(${f.head + nod} 540 900)`}>
         <ellipse cx={372} cy={795} rx={26} ry={40} fill={c.skinShade} />
         <ellipse cx={708} cy={795} rx={26} ry={40} fill={c.skinShade} />
         <ellipse cx={540} cy={775} rx={172} ry={198} fill={c.skin} />
@@ -190,7 +190,7 @@ export const Reporter: React.FC<{ pose?: Pose; mouth?: Mouth; blink?: boolean; b
         <path d="M540,792 C530,830 522,846 540,853 C552,857 560,851 563,845" stroke={c.skinShade} strokeWidth={7} fill="none" strokeLinecap="round" />
         <ellipse cx={440} cy={858} rx={26} ry={14} fill="#b0654a" opacity={0.35} />
         <ellipse cx={640} cy={858} rx={26} ry={14} fill="#b0654a" opacity={0.35} />
-        <g transform="translate(540 905)"><MouthShape m={f.mouth ?? mouth} /></g>
+        <g transform="translate(540 905)"><MouthShape m={mouth !== "X" ? mouth : f.mouth ?? mouth} /></g>
       </g>
       {/* hands last: they rest on the desk or sit in front of the face */}
       {a.fists.map(([x, y]) => <Fist key={`${x},${y}`} x={x} y={y} />)}
