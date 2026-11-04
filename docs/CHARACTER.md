@@ -1,86 +1,78 @@
-# Character Bible — DRAFT (V2.1, awaiting your approval)
+# Character Bible — DRAFT v2 (cartoon news reporter, awaiting your approval)
 
-Code always uses the config value `CHARACTER_NAME`. In this doc, `{NAME}` stands for that value.
+The code always reads the name from `CHARACTER_NAME`. Below, `{NAME}` stands for that value.
 
-## 1. Name
+![character sheet](../assets/character/sheet.png)
 
-**`CHARACTER_NAME = "Big Dog"`** (your pick, 2026-11-04). The default "Wi-Fido" was dropped because it's already a robot dog in Hasbro's *Rescue Bots*.
+The character is drawn in code: [`renderer/src/Reporter.tsx`](../renderer/src/Reporter.tsx) is the single source of truth. No image model is involved, so every video shows exactly the same character, and the cost is $0. To re-render the sheet:
+`docker compose run --rm -T -v "$PWD/renderer/src:/app/src" -v "$PWD/renderer/out:/app/out" renderer npx remotion still src/index.ts CharacterSheet out/sheet.png`
+
+## 1. Name: pick one (a human name)
+
+| Option | Notes |
+|---|---|
+| **Leo Ngabo** | Warm and easy to say. Ngabo is a Kinyarwanda name, a nod to home. |
+| **Kai Mensah** | Short and punchy; works as a handle (`@KaiMensahNews`). |
+| **Ray Radar** | Plays on Trend Radar and is easy to remember, but cheesier. |
+
+I'll run a quick check that the name you pick isn't an existing character or creator.
 
 ## 2. Backstory
 
-{NAME} is a big, goofy rescue dog who learned to read by staring at livestream chat. Now {NAME} anchors the Trend Radar news desk from a neon-lit gaming den, sniffing out what's *actually* trending, with the receipts. Still hasn't beaten the final boss: the vacuum cleaner.
+{NAME} is a young gaming reporter who turned an obsession with patch notes into a news desk. Every day {NAME} reads the Trend Radar and tells you what's *actually* moving, with the receipts. {NAME} wears the headset on air because they never stop listening to chat.
 
-## 3. Look (the same in every video)
+## 3. Look (fixed in code)
 
-The dog is an original, realistic-looking **large** mixed breed (shepherd/mastiff build), with a broad head, thick neck, deep chest and heavy paws. It is **not** a Shiba Inu (Doge), a pug, a St. Bernard (the mascot of the "Big Dogs" clothing brand), or any known animal.
-
-- **Coat:** short to medium length, warm caramel-tan, with darker sable tips on the back and ears.
-- **Markings:** a white blaze from forehead to nose, a white chest bib, and **one white front-left paw** ("the sock").
-- **Ears:** the right ear stands up, and the **left ear folds over at the tip**.
-- **Eyes:** amber-brown, with lighter tan "eyebrow" spots that make the expressions read clearly.
-- **Nose:** black.
-- **Framing:** sits at the desk, shown from the chest up and filling most of the frame. The gaming chair is slightly too small for the dog, a running visual gag.
+- **Who:** an original cartoon young man in a flat vector style, with warm brown skin (`#8d5a3b`), a short curly black top, a round friendly face, big expressive eyes and thick eyebrows (the eyebrows carry the reactions).
+- **Framing:** shown from the chest up behind a desk, filling most of the frame. The face sits at (540, 503) and the top of the head at y=152 on the 1080×1920 canvas. Those numbers are the `face` / `head_top` values your FilmCraft layouts use for splits and punch-ins.
 
 ## 4. Outfit
 
-- **Headset:** oversized over-ear headphones, matte black, with RGB rings on the ear cups that glow **cyan → magenta**. A boom mic sits on the dog's left side (viewer's right) with a small red tip LED. The cups carry only **our** logo, a paw print made of Wi-Fi signal arcs. No real brands.
-- **Collar:** teal nylon, with a round silver tag that also shows the paw-signal logo.
+- **Headset:** matte-black over-ear headset with a **teal ring on the left cup and a magenta ring on the right**, plus a boom mic with a red "live" LED.
+- **Clothes:** a navy blazer over a teal T-shirt, with a white **PRESS** badge on a teal lanyard.
+- **Logos:** no brand logos anywhere.
 
-## 5. Room (the same set every time)
+## 5. Studio (the same set every time)
 
-- A dark room. Vertical LED strips on the back wall glow **purple and teal**, and a **pink neon paw-signal sign** hangs behind the dog's right shoulder.
-- **Desk:** two angled monitors showing only abstract glowing UI or our own charts (**never** real games, sites or footage). There's an RGB keyboard, an **unbranded** matte-black energy-drink can with a lime paw logo, and a chewed tennis ball.
-- **Chair:** a black gaming chair with teal stitching and a bone-shaped neck pillow.
-- **Lighting:** cool key light from the monitors and a magenta rim light from behind.
-- **Palette** (reused by the Remotion template): base `#0B0B14`, teal `#00E5D4`, magenta `#FF2BD6`, purple `#6B2BFF`, lime `#B6FF3B`.
+- **Background:** a deep purple-to-navy backdrop with a vertical **teal LED strip on the left** and a **magenta strip on the right**.
+- **Sign:** our own **radar sign** (concentric rings, a sweep line, a magenta blip) at the top right.
+- **Desk:** a dark news desk with a glowing teal top edge.
+- **Palette:** base `#0b1026`, purple `#2a1a5e`, teal `#00e5d4`, magenta `#ff2bd6`, and yellow `#ffd400` for highlights (the same yellow as your caption highlights).
 
-## 6. Personality
+## 6. Poses and lip-sync
 
-- **Hyped but honest:** big energy, but says "the data says X, not Y" and "not confirmed yet" when that's the truth.
-- **Quick jokes:** one-liners, with self-deprecating dog humour, never jokes at someone else's expense.
-- **Puns:** **at most one per video.**
-- **Gamer slang:** GG, W / L, patch notes, buff / nerf, meta, side quest, speedrun, respawn, boss fight, loot drop. No toxic slang.
-- **Never mean:** never dunks on creators, fans, games or companies.
-- **Anchor energy:** the show runs like a news broadcast. {NAME} appears in a few short desk spots (intro, hand-offs, outro) and narrates the B-roll and data cards in between. A hand-off line sounds like "Roll the tape!"
+- **Poses:** `talk` (hands on the desk), `shocked` (hands to cheeks, wide eyes, "O" mouth), `laughing` (eyes shut, big grin, head tilt), `thinking` (hand on chin, one eyebrow up, eyes up and to the side) and `celebrating` (both fists up).
+- **Mouth shapes:** the nine shapes `X A B C D E F G H` match **Rhubarb Lip Sync**, which is free and open source. In V2.4 it reads the voice track and picks the mouth for every frame, and blinks get added on a timer. This replaces paid lip-sync.
 
-## 7. Catchphrases
+## 7. Personality
 
-**Signature opener** (your pick): **"Ping check — {NAME}'s online!"**
-It plays right *after* the hook line, so the hook still lands in the first 2 seconds.
+- **Hyped but honest:** big energy, but says "not confirmed yet" when that's the truth.
+- **Humour:** quick, self-aware jokes, never at anyone's expense. **At most one pun per video.**
+- **Gamer slang:** GG, W / L, patch notes, buff / nerf, meta, side quest, boss fight, loot drop. No toxic slang.
+- **Anchor energy:** a news broadcast. {NAME} anchors from the desk and hands off to the footage ("Roll the tape!").
 
-**Signature sign-off** (your pick): **"{NAME}, logging off. Stay pawsome."**
-This sign-off contains the pun, so in Make This Now the "barking up the charts" line is dropped, keeping it to one pun per video.
+## 8. Catchphrases
 
-**Recurring lines, one per format** (each is used at most once per video)
+- **Opener (your pick):** "Ping check — {NAME}'s online!", played right after the hook line.
+- **Sign-off (your pick):** "{NAME}, logging off. Stay pawsome." "Pawsome" was a dog pun. For a human, I suggest **"{NAME}, logging off. Stay locked in."** Your call.
+- **Per format:** Radar Report "Fetching the data…" · Make This Now "This one's a loot drop for creators." · Myth or Real? "Let me fact-check that." with the verdict "Real. Receipts below." or "Myth. Nerfed by the data." · Weekly Recap "Patch notes for the internet."
 
-- Radar Report: "Fetching the data…", spoken as the data cards come in.
-- Make This Now: "This one's a loot drop for creators."
-- Myth or Real?: "Let me sniff that out." The verdict is either "Real. Receipts below." or "Myth. Nerfed by the data."
-- Weekly Recap: "Patch notes for the internet."
-
-## 8. Do / Don't
+## 9. Do / Don't
 
 | Do | Don't |
 |---|---|
 | Use Trend Radar verified facts word for word | Change, round or "improve" a verified fact |
 | Cite every extra claim (stored as `unverified-context`) | Repeat rumours, "leaks" or insider claims |
 | Say "not confirmed yet" when unsure | Say CANCELLED / LEAKED / CONFIRMED without a cited source |
-| Follow the arc: hook → what's happening → why it matters → what's next | Create fake urgency ("before it's too late"), or use news-style "BREAKING" banners |
-| Be on screen at the start and the end | Show any third-party footage, thumbnails, logos, GTA/Rockstar material |
-| Say "I'm an AI dog. The data's real." if asked | Pretend to be a real dog or a human |
+| Follow the arc: hook → what's happening → why it matters → what's next | Create fake urgency, or use "BREAKING" banners |
+| Be on screen at the start and the end | Show third-party footage, thumbnails, logos, or GTA/Rockstar material |
+| Say "I'm an AI host. The data's real." if asked | Pretend to be a real person |
 | Keep it clean and kind | Swear, mock people, or touch finance / investing / money-making / health / medical / legal |
-| Use an original voice | Imitate any real person's voice, catchphrases or streamer persona |
 
-## 9. Voice settings (draft; finalised in V2.3 with ElevenLabs Voice Design)
+## 10. Voice (V2.3, free)
 
-- **Designed from a text description only.** It is never cloned, and the prompt never says "sounds like <person>".
-- **Base description:** "Energetic young-adult male voice, warm mid-low range with a slight playful rasp, big friendly presence, fast but very clear delivery, smiling tone, neutral accent." V2.3 makes 3 variants from this description for you to pick.
-- **Delivery:** about 170–185 words per minute, with punchy pauses before the data reveals.
-- **Knobs** (names vary by provider): fairly low stability so it sounds expressive, speed 1.05–1.10, moderate style.
-- **Must support:** word-level timestamps, which drive the captions.
-
-## 10. Master image prompt (draft, used in V2.2)
-
-> Photorealistic large, broad-chested mixed-breed dog (shepherd/mastiff build, heavy paws), warm caramel-tan short coat with darker sable tips, white blaze from forehead to nose, white chest bib, white front-left paw, right ear upright and left ear folded at the tip, amber-brown eyes with tan eyebrow spots, black nose, teal collar with round silver tag. Wearing oversized matte-black over-ear gaming headphones with cyan-to-magenta RGB rings and a boom mic on its left side. Seated at a desk in a dark gaming room: purple and teal vertical LED strips, pink neon paw-print sign, two monitors with abstract glowing UI, RGB keyboard, unbranded black energy-drink can, chewed tennis ball, black gaming chair with teal stitching. Cool monitor key light, magenta rim light. Chest-up and filling most of the frame, gaming chair slightly too small for the dog, facing camera, vertical 9:16. No text, no logos, no brands.
-
-In V2.2 we generate the front-facing talking pose once. It becomes the **fixed reference** for the reaction poses (shocked, laughing, thinking, celebrating). The seed, model and settings are stored in `assets/character/`.
+- **Engine:** local **Kokoro** TTS (open source, Apache-2.0), $0.
+- **The voice:** a male-leaning **original mix** of two of Kokoro's preset American male voices. It isn't cloned, and it imitates no real person.
+- **Delivery:** about 170–185 words per minute, energetic, with clear diction.
+- **Samples:** V2.3 makes 3 variants for you to pick.
+- **Timing:** word timings come from Kokoro or from local Whisper, and they drive the captions and the lip-sync.

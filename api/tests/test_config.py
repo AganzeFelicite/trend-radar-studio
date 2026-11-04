@@ -12,8 +12,9 @@ from studio.db import engine
 REPO = Path(__file__).parents[2]
 
 
-def test_default_caps_total_twenty_dollars():
-    assert sum(config.COST_CAPS_USD.values()) == Decimal("20")
+def test_default_caps_are_zero():
+    # nothing paid happens unless you raise a cap in .env
+    assert sum(config.COST_CAPS_USD.values()) == 0
 
 
 def test_env_example_lists_every_setting_the_code_reads():

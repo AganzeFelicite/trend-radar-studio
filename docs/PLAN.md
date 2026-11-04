@@ -75,22 +75,23 @@ Prices checked 2026-11-04: fal.ai lists Kling Avatar v2 at $0.0562/s (Std) and $
 ### V2.1 Character bible (`docs/CHARACTER.md`)
 - [x] Draft written (name, backstory, look, outfit, room, personality, catchphrases, do/don't, voice settings)
 - [x] Name + opener + sign-off picked by you (D2, D3)
+- [x] Rewritten for the cartoon reporter (D13): draft v2
+- [ ] Human name picked by you (Leo Ngabo / Kai Mensah / Ray Radar / other)
 - [ ] Approved by you
 - DoD: [ ] Implemented [ ] Tests/manual test [ ] Docs [ ] Committed & pushed [ ] Verified — how:
 
-### V2.2 Master character sheet (talking pose + 4 reactions), reproducible prompts/settings
-- [ ] One image model, fixed reference image, seeds/settings stored in `assets/character/`
-- [ ] Approved by you; same dog in every pose
+### V2.2 Master character sheet (talking pose + 4 reactions), drawn in code (D13)
+- [x] Reporter drawn as SVG in `renderer/src/Reporter.tsx`: 5 poses + 9 Rhubarb mouth shapes; sheet in `assets/character/` ($0, reproducible by construction)
+- [ ] Approved by you; same character in every pose
 - DoD: [ ] Implemented [ ] Tests/manual test [ ] Docs [ ] Committed & pushed [ ] Verified — how:
 
-### V2.3 Voice design + 3 sample lines
-- [ ] Designed voice (not cloned, no "sounds like <person>" prompts)
+### V2.3 Voice design + 3 sample lines (local Kokoro, D14)
+- [ ] Original mix of Kokoro preset voices (not cloned, no "sounds like <person>" prompts)
 - [ ] You pick the voice
 - DoD: [ ] Implemented [ ] Tests/manual test [ ] Docs [ ] Committed & pushed [ ] Verified — how:
 
-### V2.4 Avatar provider test: same 10 s line through Kling Avatar v2 Std + Pro on fal.ai (Hedra skipped, per D7)
-- [ ] Your OK before spending (about $1.70)
-- [ ] Comparison table (quality, lip-sync, motion, cost/second) shown to you; you choose
+### V2.4 Talking-clip test (replaces the paid avatar test): same 10 s line, Rhubarb lip-sync + blinks + pose swaps in Remotion
+- [ ] 1080x1920 MP4 of the reporter speaking the V2.3 voice; you judge lip-sync and motion ($0)
 - DoD: [ ] Implemented [ ] Tests/manual test [ ] Docs [ ] Committed & pushed [ ] Verified — how:
 
 ## Phase V3 — Pipeline

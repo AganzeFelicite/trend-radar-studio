@@ -5,16 +5,11 @@ from decimal import Decimal
 
 CHARACTER_NAME = os.environ.get("CHARACTER_NAME", "Big Dog")
 
-# --- Providers (D5-D7) ---
-LLM_MODEL = os.environ.get("LLM_MODEL", "claude-opus-5-5")  # research + script
-CLASSIFIER_MODEL = os.environ.get("CLASSIFIER_MODEL", "claude-opus-5-5")  # sensitive-topic gate
-TTS_PROVIDER = os.environ.get("TTS_PROVIDER", "elevenlabs")
-ELEVENLABS_VOICE_ID = os.environ.get("ELEVENLABS_VOICE_ID", "")  # set in V2.3
-AVATAR_MODEL = os.environ.get("AVATAR_MODEL", "fal-ai/kling-video/ai-avatar/v2/standard")  # V2.4 picks std/pro
-IMAGE_MODEL = os.environ.get("IMAGE_MODEL", "")  # set after D5
+# --- Providers: none paid (D14-D16). Scripts/research run on your Claude Code (`claude -p`),
+# voice on local Kokoro, the reporter is drawn in code. Add a setting here only when a real choice appears.
 
-# --- Monthly cost caps in USD (D8: $20 total). Jobs stop with a clear reason when a cap is hit. ---
-_DEFAULT_CAPS = {"llm": "4", "tts": "6", "avatar": "8", "image": "2", "video": "0"}
+# --- Monthly cost caps in USD. Default $0: any paid call is refused until you raise its cap in .env. ---
+_DEFAULT_CAPS = {"llm": "0", "tts": "0", "avatar": "0", "image": "0", "video": "0"}
 COST_CAPS_USD = {s: Decimal(os.environ.get(f"CAP_{s.upper()}_USD", d)) for s, d in _DEFAULT_CAPS.items()}
 
 # --- Safety gate inputs (brief §2; V3.4 adds the matcher and the AI classifier on top) ---
