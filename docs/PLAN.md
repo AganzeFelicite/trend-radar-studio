@@ -133,12 +133,13 @@ Prices checked 2026-11-04: fal.ai lists Kling Avatar v2 at $0.0562/s (Std) and $
 - Notes: the provider is Remotion with our drawn character (D16, $0). One full-length clip covers the whole voice track, like your phone A-roll; the FilmCraft edit cuts to full-frame cards and headlines on non-desk scenes while the voice continues. The adapter is the function contract `talking_clip(job_id)`: `voice.json` in, `reporter.mp4` out. A second provider is a second function behind a config switch, added when one exists.
 
 ### V3.7 B-roll: our own Remotion scenes per script cue (D18; Pexels paused); provenance logged as `own`
-- [ ] Render refused if any asset lacks a licence entry (tested)
-- DoD: [ ] Implemented [ ] Tests/manual test [ ] Docs [ ] Committed & pushed [ ] Verified — how:
+- [x] Render refused if any asset lacks a licence entry (tested)
+- DoD: [x] Implemented [x] Tests/manual test [x] Docs [x] Committed & pushed [x] Verified — how: today's package (job 1) got one full-frame clip per card or headline scene in 30 s, all with one Remotion bundle (`renderer/render-scenes.mjs`): 1080×1920, silent (the voice track carries the audio), each exactly its scene length plus the 0.3 s pause. Frames checked: studio set, animated entrance, lower third left free for your captions. `ensure_licensed(job_id, paths)` (in `studio/db.py`) refuses a render that uses any file without a provenance row; shared library assets (job_id null) count for every job. Tests: `test_broll.py`.
+- Notes: headlines are big Anton words popping in, with the last word yellow. Anton (SIL OFL 1.1) is your FilmCraft title font, copied from `~/Library/Fonts` into `renderer/public/fonts` with its licence; Arial Rounded is an Apple system font, so it isn't copied.
 
 ### V3.8 Data cards: import Trend Radar card images from the package (or render our own from facts)
-- [ ] Cards logged in provenance as own data
-- DoD: [ ] Implemented [ ] Tests/manual test [ ] Docs [ ] Committed & pushed [ ] Verified — how:
+- [x] Cards logged in provenance as own data
+- DoD: [x] Implemented [x] Tests/manual test [x] Docs [x] Committed & pushed [x] Verified — how: the package's cards are `rendered: false`, so we draw our own from the facts each scene cites. Job 1's two cards show Pre-load #1 / #1 / 68, File size #3 / #3 / 36, Xbox #2 / #2 / 42 and Map #4 / #5 / 28, exactly the package values, footed "Data: Trend Radar · 2026-11-04 09:00 UTC". There's no count-up animation, so no frame shows a number that isn't the fact. A note card shows only the outlets (e.g. `destructoid.com`) as receipts: a research number never reaches the screen (tested with "212 GB"). Each clip is logged as `data_card` or `broll`, source `own`, with the fact IDs and note URLs it shows.
 
 ## Phase V4 — Editing and output
 

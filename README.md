@@ -96,6 +96,8 @@ The `SENSITIVE_TOPICS` blocklist runs first, then an AI classifier (Claude Code,
 
 A job's voice track (V3.5): `cd api && uv run python -m studio.voice <job_id>` writes `storage/jobs/<id>/voice.wav` and `voice.json` (scene times, mouth cues, whisper word timestamps), then prints what whisper heard differently from the script.
 
+B-roll and data cards (V3.7–V3.8): `cd api && uv run python -m studio.broll <job_id>` renders `storage/jobs/<id>/broll/scene-NN.mp4`, one full-frame clip per card or headline scene (our own graphics; facts shown exactly as given). `studio.db.ensure_licensed` refuses any render that uses a file with no licence entry.
+
 A job's talking clip (V3.6): `cd api && uv run python -m studio.clip <job_id>` renders `storage/jobs/<id>/reporter.mp4` (the whole voice track, lip-synced, reaction poses on desk scenes) in the renderer container.
 
 ```bash

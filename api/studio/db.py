@@ -15,10 +15,11 @@ from sqlalchemy import (
     UniqueConstraint,
     create_engine,
     func,
+    select,
     text,
 )
 from sqlalchemy.dialects.postgresql import ARRAY, JSONB
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+from sqlalchemy.orm import DeclarativeBase, Mapped, Session, mapped_column
 
 from studio.config import COST_CAPS_USD
 
@@ -161,3 +162,15 @@ class Output(Base):
     review_note: Mapped[str | None] = mapped_column(Text)
     reviewed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     created_at: Mapped[datetime] = _now()
+
+
+class Unlicensed(RuntimeError):
+    """Raised before a render that would use a file with no licence entry in the provenance log."""
+
+
+def ensure_licensed(job_id: int, paths) -> None:
+    """Brief §2: refuse to render if any asset lacks a licence entry. Shared assets (job_id null) count for every job."""
+    with Session(engine) as s:
+        logged = set(s.scalars(select(Asset.path).where((Asset.job_id == job_id) | Asset.job_id.is_(None))))
+    if missing := sorted(str(p) for p in paths if str(p) not in logged):
+        raise Unlicensed(f"refusing to render: no licence entry for {', '.join(missing)}")
