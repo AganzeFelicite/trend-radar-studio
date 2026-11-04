@@ -17,9 +17,9 @@ Every task uses the same Definition of Done (DoD), plus its own checks:
 
 | # | Decision | Blocks | Status |
 |---|---|---|---|
-| D1 | Repo name (`video-studio` is already taken by the FilmCraft project) | V1.1 | open |
-| D2 | Character name: "Wi-Fido" is already a robot dog in Hasbro's *Rescue Bots* | V2.1 | open |
-| D3 | Signature opening line + sign-off (3 options each, in CHARACTER.md) | V2.1 | open |
+| D1 | Repo name (`video-studio` is already taken by the FilmCraft project) | V1.1 | **`trend-radar-studio`** |
+| D2 | Character name: "Wi-Fido" is already a robot dog in Hasbro's *Rescue Bots* | V2.1 | **Big Dog** |
+| D3 | Signature opening line + sign-off | V2.1 | **"Ping check — {NAME}'s online!"** / **"{NAME}, logging off. Stay pawsome."** |
 | D4 | Remotion licence: free for individuals and companies of up to 3 people. Do we qualify? | V4.1 | open |
 | D5 | Image model for the character sheet (paid) | V2.2 | open |
 | D6 | TTS provider for the designed voice (paid) | V2.3 | open |
@@ -32,11 +32,11 @@ Every task uses the same Definition of Done (DoD), plus its own checks:
 ## Phase V1 — Foundation
 
 ### V1.1 Private repo via `gh`
-- [ ] `gh auth status` OK
-- [ ] Name confirmed by you (D1)
-- [ ] `.gitignore` excludes `.env`
-- [ ] `gh repo view --json visibility` returns `PRIVATE`
-- DoD: [ ] Implemented [ ] Tests/manual test [ ] Docs [ ] Committed & pushed [ ] Verified — how:
+- [x] `gh auth status` OK (account `AganzeFelicite`)
+- [x] Name confirmed by you (D1): `trend-radar-studio`
+- [x] `.gitignore` excludes `.env` / `.env.*` (keeps `.env.example`)
+- [x] `gh repo view --json visibility` returns `PRIVATE`
+- DoD: [x] Implemented [x] Tests/manual test [x] Docs [x] Committed & pushed [x] Verified — how: ran `gh repo view AganzeFelicite/trend-radar-studio --json visibility` and got `{"visibility":"PRIVATE"}`; `main` pushed and tracking `origin/main`.
 
 ### V1.2 Docker Compose: api, worker, postgres, redis, admin (Next.js), renderer (Remotion)
 - [ ] All services start
@@ -56,7 +56,7 @@ Every task uses the same Definition of Done (DoD), plus its own checks:
 
 ### V2.1 Character bible (`docs/CHARACTER.md`)
 - [x] Draft written (name, backstory, look, outfit, room, personality, catchphrases, do/don't, voice settings)
-- [ ] Name + opener + sign-off picked by you (D2, D3)
+- [x] Name + opener + sign-off picked by you (D2, D3)
 - [ ] Approved by you
 - DoD: [ ] Implemented [ ] Tests/manual test [ ] Docs [ ] Committed & pushed [ ] Verified — how:
 

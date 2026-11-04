@@ -2,21 +2,13 @@
 
 Code always uses the config value `CHARACTER_NAME`. In this doc, `{NAME}` stands for that value.
 
-## 1. Name: pick one
+## 1. Name
 
-| Option | Notes |
-|---|---|
-| **Ruff Respawn** (recommended) | My search found no existing character with this name, and "respawn" makes the gaming hook obvious. Possible handle: `@RuffRespawn`. |
-| **Wi-Fido** (brief default) | Already used for a robot dog in Hasbro's *Transformers: Rescue Bots*. It's a minor character, but the brief asks for no existing characters, and it could cause name confusion. |
-| **Sir Fetchalot** | My search found no existing character with this name. It's fun, but it sounds more medieval than gamer. |
-
-Dropped: *Barkley Lagsalot* (several game dogs are already called Barkley) and *Pugdate* (it would force the pug breed, a very common meme look).
-
-Say it like: Ruff Respawn = "ruff ree-SPAWN". Wi-Fido = "WHY-fye-doh".
+**`CHARACTER_NAME = "Big Dog"`** (your pick, 2026-11-04). The default "Wi-Fido" was dropped because it's already a robot dog in Hasbro's *Rescue Bots*.
 
 ## 2. Backstory
 
-{NAME} is a rescue pup who learned to read by staring at livestream chat. Now they run the Trend Radar from a neon-lit den, sniffing out what's *actually* trending, with the receipts. They still haven't beaten the final boss: the vacuum cleaner.
+The name is a flex: {NAME} is a medium-sized dog with big-dog energy. {NAME} is a rescue pup who learned to read by staring at livestream chat. Now they run the Trend Radar from a neon-lit den, sniffing out what's *actually* trending, with the receipts. They still haven't beaten the final boss: the vacuum cleaner.
 
 ## 3. Look (the same in every video)
 
@@ -52,22 +44,16 @@ The dog is an original, realistic-looking medium mixed breed (shepherd/terrier v
 
 ## 7. Catchphrases
 
-**Signature opener: pick one.** The hook has to land in the first 2 seconds, so the opener stays at 4 words or fewer, or plays right after the hook line.
+**Signature opener** (your pick): **"Ping check — {NAME}'s online!"**
+It plays right *after* the hook line, so the hook still lands in the first 2 seconds.
 
-1. "Headset on. Tail up." *(recommended: short, and it works for every format)*
-2. "Ping check — {NAME}'s online!"
-3. "Full signal, zero lag."
-
-**Signature sign-off: pick one**
-
-1. "GG — catch you next respawn." *(recommended: pairs with Ruff Respawn)*
-2. "{NAME}, logging off. Stay pawsome."
-3. "That's the drop. Good game, good dogs."
+**Signature sign-off** (your pick): **"{NAME}, logging off. Stay pawsome."**
+This sign-off contains the pun, so in Make This Now the "barking up the charts" line is dropped, keeping it to one pun per video.
 
 **Recurring lines, one per format** (each is used at most once per video)
 
 - Radar Report: "Fetching the data…", spoken as the data cards come in.
-- Make This Now: "That topic is barking up the charts." (this counts as the video's pun)
+- Make This Now: "This one's a loot drop for creators."
 - Myth or Real?: "Let me sniff that out." The verdict is either "Real. Receipts below." or "Myth. Nerfed by the data."
 - Weekly Recap: "Patch notes for the internet."
 

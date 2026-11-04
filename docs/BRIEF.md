@@ -1,7 +1,7 @@
 # Build Prompt: Video Studio (Wi-Fido, the gamer dog)
 
 > The original brief, kept verbatim as the source of truth. Progress is tracked in [PLAN.md](PLAN.md).
-> The character name is the config value `CHARACTER_NAME`; "Wi-Fido" below is the default from the brief.
+> The character name is the config value `CHARACTER_NAME`, now set to **Big Dog**. "Wi-Fido" below is the brief's original default, kept verbatim.
 
 You are my coding agent. Build **Video Studio**: a separate system that turns a topic (or a Trend Radar Content Package) into a finished short-form vertical video hosted by our character, a dog gamer. I type text; the Studio researches, writes, voices, animates, edits and hands me a video to review.
 
