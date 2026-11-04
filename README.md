@@ -76,6 +76,14 @@ Research runs on **your own Claude Code** (`claude -p`, your claude.ai login; `A
 cd api && uv run python -m studio.research <job_id>   # prints kept and dropped notes
 ```
 
+## Script (V3.3, runs on the Mac)
+
+```bash
+cd api && uv run python -m studio.script <job_id>   # prints titles, thumbnail text and the timed scenes
+```
+
+Claude Code drafts the script as structured JSON: scenes in arc order (hook → what → why → next), each on a `desk` (reporter + pose), `card` (fact/note IDs) or `headline` shot. `studio/script.py: validate` then checks the hard rules in code: every number is a verified fact, the arc is complete, the reporter is on screen at the start and end, at least one data card, on-screen text ≤ 6 words, and 3 titles plus thumbnail text unlike the last 7 videos. A failed draft goes back with its problems (3 tries). The opener and sign-off are added by code, word for word.
+
 ## Voice and talking clip (free)
 
 ```bash

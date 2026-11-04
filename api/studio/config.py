@@ -4,11 +4,13 @@ import os
 from decimal import Decimal
 
 CHARACTER_NAME = os.environ.get("CHARACTER_NAME", "GameReporter")
+OPENER = f"Ping check — {CHARACTER_NAME}'s online!"  # your picks (docs/CHARACTER.md §8)
+SIGNOFF = f"{CHARACTER_NAME}, logging off. Stay locked in."
 
 # --- Providers: none paid (D14-D16). Scripts/research run on your Claude Code (`claude -p`),
 # voice on local Kokoro, the reporter is drawn in code. Add a setting here only when a real choice appears.
-CLAUDE_MODEL = os.environ.get("CLAUDE_MODEL", "haiku")  # your pick (D7); lightest on the Pro plan's limits
-RESEARCH_MAX_SEARCHES = 3  # your pick (D8)
+CLAUDE_MODEL = os.environ.get("CLAUDE_MODEL", "haiku")  # your pick; lightest on the Pro plan's limits
+RESEARCH_MAX_SEARCHES = 3  # your pick: up to 3 searches per video
 
 # --- Monthly cost caps in USD. Default $0: any paid call is refused until you raise its cap in .env. ---
 _DEFAULT_CAPS = {"llm": "0", "tts": "0", "avatar": "0", "image": "0", "video": "0"}
