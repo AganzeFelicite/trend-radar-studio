@@ -44,9 +44,9 @@ Prices checked 2026-11-04: fal.ai lists Kling Avatar v2 at $0.0562/s (Std) and $
 - DoD: [x] Implemented [x] Tests/manual test [x] Docs [x] Committed & pushed [x] Verified — how: ran `gh repo view AganzeFelicite/trend-radar-studio --json visibility` and got `{"visibility":"PRIVATE"}`; `main` pushed and tracking `origin/main`.
 
 ### V1.2 Docker Compose: api, worker, postgres, redis, admin (Next.js), renderer (Remotion)
-- [ ] All services start
-- [ ] Health endpoint OK
-- DoD: [ ] Implemented [ ] Tests/manual test [ ] Docs [ ] Committed & pushed [ ] Verified — how:
+- [x] All services start
+- [x] Health endpoint OK
+- DoD: [x] Implemented [x] Tests/manual test [x] Docs [x] Committed & pushed [x] Verified — how: ran `docker compose up -d --build`, then `./scripts/smoke.sh`, which printed `ALL OK`. That covered api `/health` returning `{"status":"ok","db":"ok","redis":"ok","workers":1}`, the renderer `/health`, and the admin page showing the api status (admin → api → db/redis). Inside the renderer container, `npx remotion still src/index.ts Placeholder` produced a 1080×1920 PNG, which proves Chrome headless shell works. Failure path: with postgres stopped, `/health` returned HTTP 503 `{"status":"degraded","db":"OperationalError"}`, and it recovered to 200 after a restart.
 
 ### V1.3 Database: jobs, scripts, assets (with provenance), costs, outputs
 - [ ] Migrations up/down clean

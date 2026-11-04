@@ -26,3 +26,7 @@ renders/
 .DS_Store
 .idea/
 .vscode/
+
+# next.js generated
+next-env.d.ts
+*.tsbuildinfo

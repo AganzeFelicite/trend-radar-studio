@@ -1,0 +1,58 @@
+name: trend-radar-studio
+
+# Host ports are localhost-only and picked to avoid gta-radar / numa on this machine.
+# api 8400 · admin 3400 · renderer 3500. Postgres and Redis stay inside the Docker network.
+
+x-py-env: &py-env
+  DATABASE_URL: postgresql://studio:${POSTGRES_PASSWORD:-studio}@postgres:5432/studio
+  REDIS_URL: redis://redis:6379/0
+
+x-needs-data: &needs-data
+  postgres: { condition: service_healthy }
+  redis: { condition: service_healthy }
+
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: studio
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-studio}
+      POSTGRES_DB: studio
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U studio -d studio"]
+      interval: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      retries: 10
+
+  api:
+    build: ./api
+    environment: *py-env
+    ports: ["127.0.0.1:8400:8000"]
+    depends_on: *needs-data
+
+  worker:
+    build: ./api
+    command: ["rq", "worker", "--url", "redis://redis:6379/0", "default"]
+    environment: *py-env
+    depends_on: *needs-data
+
+  renderer:
+    build: ./renderer
+    ports: ["127.0.0.1:3500:3000"]
+
+  admin:
+    build: ./admin
+    environment:
+      API_URL: http://api:8000
+    ports: ["127.0.0.1:3400:3000"]
+    depends_on: [api]
+
+volumes:
+  pgdata:
