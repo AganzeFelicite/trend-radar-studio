@@ -1,9 +1,11 @@
 import os
 
-import psycopg
 from fastapi import FastAPI, Response
 from redis import Redis
 from rq import Worker
+from sqlalchemy import text
+
+from studio.db import engine
 
 app = FastAPI(title="Video Studio API")
 redis = Redis.from_url(os.environ["REDIS_URL"], socket_timeout=2)
@@ -13,8 +15,8 @@ redis = Redis.from_url(os.environ["REDIS_URL"], socket_timeout=2)
 def health(response: Response):
     checks = {"db": "ok", "redis": "ok", "workers": 0}
     try:
-        with psycopg.connect(os.environ["DATABASE_URL"], connect_timeout=2) as conn:
-            conn.execute("select 1")
+        with engine.connect() as conn:
+            conn.execute(text("select 1"))
     except Exception as e:
         checks["db"] = type(e).__name__  # class name only: never leak the DSN
     try:

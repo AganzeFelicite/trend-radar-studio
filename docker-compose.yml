@@ -1,10 +1,10 @@
 name: trend-radar-studio
 
 # Host ports are localhost-only and picked to avoid gta-radar / numa on this machine.
-# api 8400 · admin 3400 · renderer 3500. Postgres and Redis stay inside the Docker network.
+# api 8400 · admin 3400 · renderer 3500 · postgres 5442 (for host-side alembic/pytest). Redis stays internal.
 
 x-py-env: &py-env
-  DATABASE_URL: postgresql://studio:${POSTGRES_PASSWORD:-studio}@postgres:5432/studio
+  DATABASE_URL: postgresql+psycopg://studio:${POSTGRES_PASSWORD:-studio}@postgres:5432/studio
   REDIS_URL: redis://redis:6379/0
 
 x-needs-data: &needs-data
@@ -19,6 +19,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-studio}
       POSTGRES_DB: studio
     volumes: [pgdata:/var/lib/postgresql/data]
+    ports: ["127.0.0.1:5442:5432"]
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U studio -d studio"]
       interval: 5s

@@ -49,8 +49,8 @@ Prices checked 2026-11-04: fal.ai lists Kling Avatar v2 at $0.0562/s (Std) and $
 - DoD: [x] Implemented [x] Tests/manual test [x] Docs [x] Committed & pushed [x] Verified — how: ran `docker compose up -d --build`, then `./scripts/smoke.sh`, which printed `ALL OK`. That covered api `/health` returning `{"status":"ok","db":"ok","redis":"ok","workers":1}`, the renderer `/health`, and the admin page showing the api status (admin → api → db/redis). Inside the renderer container, `npx remotion still src/index.ts Placeholder` produced a 1080×1920 PNG, which proves Chrome headless shell works. Failure path: with postgres stopped, `/health` returned HTTP 503 `{"status":"degraded","db":"OperationalError"}`, and it recovered to 200 after a restart.
 
 ### V1.3 Database: jobs, scripts, assets (with provenance), costs, outputs
-- [ ] Migrations up/down clean
-- DoD: [ ] Implemented [ ] Tests/manual test [ ] Docs [ ] Committed & pushed [ ] Verified — how:
+- [x] Migrations up/down clean
+- DoD: [x] Implemented [x] Tests/manual test [x] Docs [x] Committed & pushed [x] Verified — how: `uv run pytest` gives 9 passed. Those tests cover: migrations down to base with 0 tables, then back up to head with all 6 tables; assets rejected with no or empty licence and with source `youtube` or `gameplay`; unverified facts rejected without a source URL; outputs rejected without the AI disclosure or with anything other than 3 titles; negative costs rejected. `alembic check` reports no drift between the models and the migrations. In Docker, the api ran `alembic upgrade head` on startup and `./scripts/smoke.sh` printed `ALL OK`.
 
 ### V1.4 Config: character name, cost caps, blocklist, provider choices
 - [ ] `CHARACTER_NAME` used everywhere (no hard-coded name)
