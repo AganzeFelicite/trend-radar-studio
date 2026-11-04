@@ -48,7 +48,8 @@ const Card: React.FC<BrollProps> = ({ title, rows, sources, footer }) => {
   const enter = useEnter();
   let i = 0;
   return (
-    <div style={{ position: "absolute", left: 110, right: 110, top: 240, bottom: 560, display: "flex", flexDirection: "column", gap: 34 }}>
+    // ends at y 1420: the lower band is your caption line (y 1530)
+    <div style={{ position: "absolute", left: 110, right: 110, top: 240, bottom: 500, display: "flex", flexDirection: "column", gap: 34 }}>
       <div style={{ ...enter(i++), alignSelf: "flex-start", border: `3px solid ${c.teal}`, color: c.teal, borderRadius: 40,
         padding: "8px 26px", fontFamily: SANS, fontWeight: 700, fontSize: 32, letterSpacing: 2 }}>
         {rows.length ? "Trend Radar data" : "Receipts"}

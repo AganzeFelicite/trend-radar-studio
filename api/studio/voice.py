@@ -137,6 +137,22 @@ def match(script_text: str, heard: list[dict]) -> tuple[float, list[str]]:
     return round(sm.ratio(), 3), diffs
 
 
+def caption_words(lines: list[str], heard: list[dict]) -> list[dict]:
+    """The script's own words, timed by whisper: captions show "#1" and the host's name exactly as written,
+    never whisper's spelling. Aligned on characters, so whisper splitting or merging words doesn't matter."""
+    orig = [w for line in lines for w in line.split()]
+    a = [(ch, i) for i, w in enumerate(orig) for ch in "".join(_tokens(w))]
+    b = [(ch, j) for j, w in enumerate(heard) for ch in "".join(_tokens(w["word"]))]
+    span: dict[int, list[float]] = {}
+    sm = SequenceMatcher(None, "".join(c for c, _ in a), "".join(c for c, _ in b), autojunk=False)
+    for blk in sm.get_matching_blocks():
+        for k in range(blk.size):
+            w = heard[b[blk.b + k][1]]
+            s = span.setdefault(a[blk.a + k][1], [w["start"], w["end"]])
+            s[0], s[1] = min(s[0], w["start"]), max(s[1], w["end"])
+    return [{"word": re.sub(r"[()]", "", orig[i]), "start": s, "end": e} for i, (s, e) in sorted(span.items())]
+
+
 PAUSE = 0.3  # seconds of silence between scenes (studio/script.py estimates with the same value)
 LICENSE = "Apache-2.0 (Kokoro-82M model and voices); original blend, no cloned or imitated voice"
 

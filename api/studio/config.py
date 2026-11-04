@@ -44,3 +44,10 @@ RESEARCH_EXCLUDE_WORDS = r"\b(leak\w*|rumou?r\w*|insider|pira\w+|jailbreak\w*|ch
 STORAGE = Path(os.environ.get("STORAGE_DIR", Path(__file__).parents[2] / "storage"))  # per-job files, git-ignored
 WHISPER_PYTHON = os.environ.get("WHISPER_PYTHON", str(Path.home() / ".local/share/uv/tools/mlx-whisper/bin/python"))
 WHISPER_MODEL = os.environ.get("WHISPER_MODEL", "mlx-community/whisper-large-v3-turbo")  # same as your FilmCraft pipeline
+_HOME = Path.home()
+# The final edit runs your FilmCraft pipeline headless (D16): the filmcraft-commentary-short skill's build.py, the
+# Studio repo's render.py (picture from FilmCraft, audio mixed by ffmpeg) and the cleared Sound Library.
+FILMCRAFT_CLI = os.environ.get("FILMCRAFT_CLI", str(_HOME / ".local/bin/filmcraft-cli"))
+FILMCRAFT_SKILL = Path(os.environ.get("FILMCRAFT_SKILL", _HOME / ".claude/skills/filmcraft-commentary-short"))
+FILMCRAFT_RENDER = Path(os.environ.get("FILMCRAFT_RENDER", _HOME / "Desktop/thevault/content-creation/editing/Studio/render.py"))
+SOUND_LIBRARY = Path(os.environ.get("SOUND_LIBRARY", _HOME / "Desktop/thevault/content-creation/editing/Video Editing Sound Library"))

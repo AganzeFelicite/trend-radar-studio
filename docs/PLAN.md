@@ -143,14 +143,17 @@ Prices checked 2026-11-04: fal.ai lists Kling Avatar v2 at $0.0562/s (Std) and $
 
 ## Phase V4 — Editing and output
 
-### V4.1 Remotion signature template (intro sting, character PiP/full-frame, data cards, B-roll, captions, SFX, outro)
+### V4.1 Final edit in your FilmCraft format (D16: Remotion makes the reporter and graphics, FilmCraft edits)
 - [x] Licence question D4 answered
-- [ ] News-format scenes (D10): anchor desk spots, full-screen B-roll and data cards with voice-over, lower-thirds. No "BREAKING" banners.
-- [ ] Renders a 1080×1920 30 fps MP4 from a sample job
-- DoD: [ ] Implemented [ ] Tests/manual test [ ] Docs [ ] Committed & pushed [ ] Verified — how:
+- [x] News-format scenes (D10): anchor desk spots, full-screen B-roll and data cards with voice-over, lower-thirds. No "BREAKING" banners.
+- [x] Renders a 1080×1920 30 fps MP4 from a sample job
+- DoD: [x] Implemented [x] Tests/manual test [x] Docs [x] Committed & pushed [x] Verified — how: today's package (job 1) → `storage/jobs/1/final.mp4`: 1080×1920, 30 fps, 42.9 s, H.264 + AAC 48 kHz, -14.0 LUFS, peak -1.5 dBFS, decodes without errors. Your `build.py` ran headless on the job's own project file: 525 FilmCraft commands, 0 failed. An 8-frame grid shows the hook punch-in, the "GameReporter / AI news host · data by Trend Radar" lower-third, both data cards full-frame, reaction and push-in desk shots, and "+ Follow" on the sign-off; no caption covers the face, badge or card text. Whisper on the final export matches the script at 0.957, the same as the clean voice track, so every word comes through the music and SFX. All 18 media files in the project had a licence entry before rendering. Tests: `test_edit.py` (beat mapping, caption/lower-third clearance from the badge at every zoom, highlights, library licence gate).
+- How it works: `studio/edit.py` writes a `filmcraft-commentary-short` plan.json: desk scenes → `punch` (hook, reactions, sign-off; 1.1×) or `full` (slow push-in), card/headline scenes → `broll` with our clips. No `cut.py`: the voice has no retakes, so `edl.json`/`cut.json` are written directly. It runs your skill's `check.py`, then `build.py` headless (`filmcraft-cli --project <job>/edit/project.fcproj --save`): your open FilmCraft app and your projects are never touched. Sound Library files are logged as shared provenance from its verified catalogue (Mixkit Free License / CC0; anything not cleared is refused). Rendering uses your Studio `render.py` method (FilmCraft picture, ffmpeg audio mix), then the voice dynamics and a two-pass loudnorm to -14 LUFS.
+- Found while verifying: (1) `render.py`'s audio mix never ends with this ffmpeg: the endless `apad` isn't cut by `-t` when the video is stream-copied (reproduced: >90 s and growing vs 1.3 s without it). We bound the padding to the video's length; **your Studio repo has the same bug**. (2) One-pass loudnorm landed at -15.6 LUFS and two-pass at -14.9, because the ffmpeg mix skips build.py's voice compressor; adding it back gives -14.0. (3) Captions at your default y 1480 covered the PRESS badge on punch-ins, so they sit at 1530 with punch-ins at 1.1×.
+- Speed: the headless build takes 1 s. The picture export is ~1× real time on an idle Mac (a 5 s slice in 4.4 s), but took 30 min here while the Mac's load average was ~380 from other apps.
 
 ### V4.2 Captions: word-by-word animated, readable on mobile
-- DoD: [ ] Implemented [ ] Tests/manual test [ ] Docs [ ] Committed & pushed [ ] Verified — how:
+- DoD: [x] Implemented [x] Tests/manual test [x] Docs [x] Committed & pushed [x] Verified — how: your skill's pop captions (1-2 words, Arial Rounded 84 px, white with a black stroke, pop 72→104→100 %, topic names and fact values in yellow) show the **script's own words**, timed by whisper through character-level alignment (`voice.caption_words`): "#1", "11.5%" and "GameReporter's" appear exactly as written, never as whisper's "number one" or "Game Reporter's". 97 of 98 script words were timed on job 1 (the 98th is the "—" dash); 64 captions. Tests: `test_voice.py` (exact text, whisper splitting a word, unheard word).
 
 ### V4.3 Output bundle: MP4, own thumbnail options, 3 titles, caption, hashtags, description, posting checklist
 - [ ] Description has AI disclosure ("<CHARACTER_NAME> is an AI character."), sources, and a stock-site credit link only if stock footage was used

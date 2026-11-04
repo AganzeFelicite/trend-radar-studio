@@ -72,3 +72,13 @@ def test_voice_track_joins_scenes_and_logs_provenance(monkeypatch, tmp_path):
         c = s.scalars(select(Cost).where(Cost.job_id == job.id)).one()
     assert (a.kind, a.source, a.license.startswith("Apache-2.0")) == ("voice", "tts", True)
     assert (c.service, c.usd, float(c.quantity), c.unit) == ("tts", 0, 2.3, "seconds")
+
+
+def test_caption_words_keep_the_script_text_with_whisper_timing():
+    heard = [{"word": "Preload", "start": 0.0, "end": 0.4}, {"word": "is", "start": 0.4, "end": 0.5},
+             {"word": "number", "start": 0.5, "end": 0.8}, {"word": "one.", "start": 0.8, "end": 1.0},
+             {"word": "Game", "start": 1.2, "end": 1.4}, {"word": "Reporter's", "start": 1.4, "end": 1.9},
+             {"word": "online!", "start": 1.9, "end": 2.3}]
+    got = voice.caption_words(["Pre-load is (#1).", "Ping — GameReporter's online!"], heard)
+    assert [(w["word"], w["start"], w["end"]) for w in got] == [
+        ("Pre-load", 0.0, 0.4), ("is", 0.4, 0.5), ("#1.", 0.5, 1.0), ("GameReporter's", 1.2, 1.9), ("online!", 1.9, 2.3)]  # "Ping" unheard: no caption
