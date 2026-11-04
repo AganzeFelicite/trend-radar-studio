@@ -30,6 +30,18 @@ Every task uses the same Definition of Done (DoD), plus its own checks:
 | D11 | Platforms | V4.3 | **YouTube Shorts, TikTok, Instagram Reels, Facebook Reels**: the posting checklist covers each platform's AI label |
 | D12 | Accounts | V2.2+ | You create **fal.ai** (pay-as-you-go), **Pexels** (free) and **ElevenLabs Starter**, then paste the keys into `.env`. You already have an Anthropic key. |
 
+### Pivot, 2026-11-04 (replaces D2, D5–D8 and D10 where they conflict)
+
+| # | Decision | Status |
+|---|---|---|
+| D13 | Character: a **cartoon human news reporter with a headset** (no longer a dog), with a human name, drawn once and reused | Name and look still to be proposed and approved |
+| D14 | Voice: **free local TTS (Kokoro)**, a male-leaning original voice mix ($0). Replaces ElevenLabs. | decided |
+| D15 | Research and scripts run through **your own Claude Code, headless (`claude -p`)**, the same way as the `video-studio` Studio worker. $0 beyond your subscription. Replaces the paid Claude API. | decided |
+| D16 | Editing follows **your existing FilmCraft pipeline**: the `filmcraft-commentary-short` format (splits, punch-ins, cards, pop captions, end card, beds and SFX from the licensed sound library), rendered with `filmcraft-cli`. The cartoon reporter clip takes the place of your phone footage. | Architecture to confirm |
+| D17 | Hard rules still apply: no YouTube/yt-dlp clips and no license-uncertain memes. B-roll comes from Pexels, our own HTML panels, and Trend Radar cards. | decided |
+
+Expected per-video cost after the pivot is about $0, apart from optional Pexels and music credits.
+
 Prices checked 2026-11-04: fal.ai lists Kling Avatar v2 at $0.0562/s (Std) and $0.115/s (Pro). ElevenLabs Starter is $6/mo. Hedra's cheapest commercial plan is about $15/mo for about 4 min of video.
 
 ---
