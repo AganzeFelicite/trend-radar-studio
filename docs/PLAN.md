@@ -20,12 +20,17 @@ Every task uses the same Definition of Done (DoD), plus its own checks:
 | D1 | Repo name (`video-studio` is already taken by the FilmCraft project) | V1.1 | **`trend-radar-studio`** |
 | D2 | Character name: "Wi-Fido" is already a robot dog in Hasbro's *Rescue Bots* | V2.1 | **Big Dog** |
 | D3 | Signature opening line + sign-off | V2.1 | **"Ping check — {NAME}'s online!"** / **"{NAME}, logging off. Stay pawsome."** |
-| D4 | Remotion licence: free for individuals and companies of up to 3 people. Do we qualify? | V4.1 | open |
-| D5 | Image model for the character sheet (paid) | V2.2 | open |
-| D6 | TTS provider for the designed voice (paid) | V2.3 | open |
-| D7 | Avatar provider: Kling Avatar v2 Std / Pro vs Hedra Character-3 (paid test) | V2.4 | open |
-| D8 | Monthly cost caps per service (LLM, TTS, avatar, image/video gen) | V1.4 | open |
+| D4 | Remotion licence: free for individuals and companies of up to 3 people. Do we qualify? | V4.1 | **Yes**: you alone, or a team of 3 or fewer |
+| D5 | Image model for the character sheet (paid) | V2.2 | Via fal.ai. Exact model and price confirmed with you before generating. |
+| D6 | TTS provider for the designed voice (paid) | V2.3 | **ElevenLabs Starter ($6/mo), Voice Design**, male-leaning |
+| D7 | Avatar provider: Kling Avatar v2 Std / Pro vs Hedra Character-3 (paid test) | V2.4 | **Test only Kling Std + Pro on fal.ai** (about $1.70). Hedra is skipped for budget unless Kling fails on a dog. |
+| D8 | Monthly cost caps per service (LLM, TTS, avatar, image/video gen) | V1.4 | **$20/mo total**: TTS $6 · fal.ai (avatar + images) $10 · Claude API $4 |
 | D9 | Rockstar policy check before using your own gameplay | V6.4 | open |
+| D10 | Show style | V3.3, V4.1 | **News format.** The dog is on screen (lip-synced) only in a few short desk spots, about 10 s per video. Voice-over runs over B-roll and data cards the rest of the time. About $0.80 per video, about 17 videos a month. |
+| D11 | Platforms | V4.3 | **YouTube Shorts, TikTok, Instagram Reels, Facebook Reels**: the posting checklist covers each platform's AI label |
+| D12 | Accounts | V2.2+ | You create **fal.ai** (pay-as-you-go), **Pexels** (free) and **ElevenLabs Starter**, then paste the keys into `.env`. You already have an Anthropic key. |
+
+Prices checked 2026-11-04: fal.ai lists Kling Avatar v2 at $0.0562/s (Std) and $0.115/s (Pro). ElevenLabs Starter is $6/mo. Hedra's cheapest commercial plan is about $15/mo for about 4 min of video.
 
 ---
 
@@ -70,7 +75,8 @@ Every task uses the same Definition of Done (DoD), plus its own checks:
 - [ ] You pick the voice
 - DoD: [ ] Implemented [ ] Tests/manual test [ ] Docs [ ] Committed & pushed [ ] Verified — how:
 
-### V2.4 Avatar provider test: same 10 s line through Kling Avatar v2 (Std + Pro) and Hedra Character-3
+### V2.4 Avatar provider test: same 10 s line through Kling Avatar v2 Std + Pro on fal.ai (Hedra skipped, per D7)
+- [ ] Your OK before spending (about $1.70)
 - [ ] Comparison table (quality, lip-sync, motion, cost/second) shown to you; you choose
 - DoD: [ ] Implemented [ ] Tests/manual test [ ] Docs [ ] Committed & pushed [ ] Verified — how:
 
@@ -113,7 +119,8 @@ Every task uses the same Definition of Done (DoD), plus its own checks:
 ## Phase V4 — Editing and output
 
 ### V4.1 Remotion signature template (intro sting, character PiP/full-frame, data cards, B-roll, captions, SFX, outro)
-- [ ] Licence question D4 answered
+- [x] Licence question D4 answered
+- [ ] News-format scenes (D10): anchor desk spots, full-screen B-roll and data cards with voice-over, lower-thirds. No "BREAKING" banners.
 - [ ] Renders a 1080×1920 30 fps MP4 from a sample job
 - DoD: [ ] Implemented [ ] Tests/manual test [ ] Docs [ ] Committed & pushed [ ] Verified — how:
 
@@ -122,7 +129,7 @@ Every task uses the same Definition of Done (DoD), plus its own checks:
 
 ### V4.3 Output bundle: MP4, own thumbnail options, 3 titles, caption, hashtags, description, posting checklist
 - [ ] Description has AI disclosure ("<CHARACTER_NAME> is an AI character."), sources, Pexels link
-- [ ] Posting checklist includes "switch on platform AI label"
+- [ ] Posting checklist includes the AI-label step for YouTube Shorts, TikTok, Instagram Reels and Facebook Reels (D11)
 - [ ] Titles/thumbnail differ from the last 7 videos (checked)
 - DoD: [ ] Implemented [ ] Tests/manual test [ ] Docs [ ] Committed & pushed [ ] Verified — how:
 

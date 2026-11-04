@@ -8,18 +8,18 @@ Code always uses the config value `CHARACTER_NAME`. In this doc, `{NAME}` stands
 
 ## 2. Backstory
 
-The name is a flex: {NAME} is a medium-sized dog with big-dog energy. {NAME} is a rescue pup who learned to read by staring at livestream chat. Now they run the Trend Radar from a neon-lit den, sniffing out what's *actually* trending, with the receipts. They still haven't beaten the final boss: the vacuum cleaner.
+{NAME} is a big, goofy rescue dog who learned to read by staring at livestream chat. Now {NAME} anchors the Trend Radar news desk from a neon-lit gaming den, sniffing out what's *actually* trending, with the receipts. Still hasn't beaten the final boss: the vacuum cleaner.
 
 ## 3. Look (the same in every video)
 
-The dog is an original, realistic-looking medium mixed breed (shepherd/terrier vibe). It is **not** a Shiba Inu (Doge), a pug, or any known animal.
+The dog is an original, realistic-looking **large** mixed breed (shepherd/mastiff build), with a broad head, thick neck, deep chest and heavy paws. It is **not** a Shiba Inu (Doge), a pug, a St. Bernard (the mascot of the "Big Dogs" clothing brand), or any known animal.
 
 - **Coat:** short to medium length, warm caramel-tan, with darker sable tips on the back and ears.
 - **Markings:** a white blaze from forehead to nose, a white chest bib, and **one white front-left paw** ("the sock").
 - **Ears:** the right ear stands up, and the **left ear folds over at the tip**.
 - **Eyes:** amber-brown, with lighter tan "eyebrow" spots that make the expressions read clearly.
 - **Nose:** black.
-- **Framing:** sits at the desk, shown from the chest up, facing camera for talking shots.
+- **Framing:** sits at the desk, shown from the chest up and filling most of the frame. The gaming chair is slightly too small for the dog, a running visual gag.
 
 ## 4. Outfit
 
@@ -41,6 +41,7 @@ The dog is an original, realistic-looking medium mixed breed (shepherd/terrier v
 - **Puns:** **at most one per video.**
 - **Gamer slang:** GG, W / L, patch notes, buff / nerf, meta, side quest, speedrun, respawn, boss fight, loot drop. No toxic slang.
 - **Never mean:** never dunks on creators, fans, games or companies.
+- **Anchor energy:** the show runs like a news broadcast. {NAME} appears in a few short desk spots (intro, hand-offs, outro) and narrates the B-roll and data cards in between. A hand-off line sounds like "Roll the tape!"
 
 ## 7. Catchphrases
 
@@ -64,22 +65,22 @@ This sign-off contains the pun, so in Make This Now the "barking up the charts" 
 | Use Trend Radar verified facts word for word | Change, round or "improve" a verified fact |
 | Cite every extra claim (stored as `unverified-context`) | Repeat rumours, "leaks" or insider claims |
 | Say "not confirmed yet" when unsure | Say CANCELLED / LEAKED / CONFIRMED without a cited source |
-| Follow the arc: hook → what's happening → why it matters → what's next | Create fake urgency ("before it's too late") |
+| Follow the arc: hook → what's happening → why it matters → what's next | Create fake urgency ("before it's too late"), or use news-style "BREAKING" banners |
 | Be on screen at the start and the end | Show any third-party footage, thumbnails, logos, GTA/Rockstar material |
 | Say "I'm an AI dog. The data's real." if asked | Pretend to be a real dog or a human |
 | Keep it clean and kind | Swear, mock people, or touch finance / investing / money-making / health / medical / legal |
 | Use an original voice | Imitate any real person's voice, catchphrases or streamer persona |
 
-## 9. Voice settings (draft; finalised in V2.3, provider pending decision D6)
+## 9. Voice settings (draft; finalised in V2.3 with ElevenLabs Voice Design)
 
 - **Designed from a text description only.** It is never cloned, and the prompt never says "sounds like <person>".
-- **Base description:** "Energetic young-adult voice, bright mid-range with a slight playful rasp, fast but very clear delivery, smiling tone, neutral accent." V2.3 makes 3 variants from this description for you to pick.
+- **Base description:** "Energetic young-adult male voice, warm mid-low range with a slight playful rasp, big friendly presence, fast but very clear delivery, smiling tone, neutral accent." V2.3 makes 3 variants from this description for you to pick.
 - **Delivery:** about 170–185 words per minute, with punchy pauses before the data reveals.
 - **Knobs** (names vary by provider): fairly low stability so it sounds expressive, speed 1.05–1.10, moderate style.
 - **Must support:** word-level timestamps, which drive the captions.
 
 ## 10. Master image prompt (draft, used in V2.2)
 
-> Photorealistic medium-sized mixed-breed dog, warm caramel-tan short coat with darker sable tips, white blaze from forehead to nose, white chest bib, white front-left paw, right ear upright and left ear folded at the tip, amber-brown eyes with tan eyebrow spots, black nose, teal collar with round silver tag. Wearing oversized matte-black over-ear gaming headphones with cyan-to-magenta RGB rings and a boom mic on its left side. Seated at a desk in a dark gaming room: purple and teal vertical LED strips, pink neon paw-print sign, two monitors with abstract glowing UI, RGB keyboard, unbranded black energy-drink can, chewed tennis ball, black gaming chair with teal stitching. Cool monitor key light, magenta rim light. Chest-up, facing camera, vertical 9:16. No text, no logos, no brands.
+> Photorealistic large, broad-chested mixed-breed dog (shepherd/mastiff build, heavy paws), warm caramel-tan short coat with darker sable tips, white blaze from forehead to nose, white chest bib, white front-left paw, right ear upright and left ear folded at the tip, amber-brown eyes with tan eyebrow spots, black nose, teal collar with round silver tag. Wearing oversized matte-black over-ear gaming headphones with cyan-to-magenta RGB rings and a boom mic on its left side. Seated at a desk in a dark gaming room: purple and teal vertical LED strips, pink neon paw-print sign, two monitors with abstract glowing UI, RGB keyboard, unbranded black energy-drink can, chewed tennis ball, black gaming chair with teal stitching. Cool monitor key light, magenta rim light. Chest-up and filling most of the frame, gaming chair slightly too small for the dog, facing camera, vertical 9:16. No text, no logos, no brands.
 
 In V2.2 we generate the front-facing talking pose once. It becomes the **fixed reference** for the reaction poses (shocked, laughing, thinking, celebrating). The seed, model and settings are stored in `assets/character/`.
