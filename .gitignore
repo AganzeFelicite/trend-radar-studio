@@ -30,3 +30,6 @@ renders/
 # next.js generated
 next-env.d.ts
 *.tsbuildinfo
+
+# downloaded model weights (fetched by scripts, never committed)
+models/

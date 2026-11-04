@@ -86,7 +86,8 @@ Prices checked 2026-11-04: fal.ai lists Kling Avatar v2 at $0.0562/s (Std) and $
 - DoD: [ ] Implemented [ ] Tests/manual test [ ] Docs [ ] Committed & pushed [ ] Verified — how:
 
 ### V2.3 Voice design + 3 sample lines (local Kokoro, D14)
-- [ ] Original mix of Kokoro preset voices (not cloned, no "sounds like <person>" prompts)
+- [x] Original mix of Kokoro preset voices (not cloned, no "sounds like <person>" prompts)
+- [x] 3 samples in `assets/voice/` (`anchor`, `hype`, `warm`); `studio/voice.py` makes them. Local Whisper heard every word of all three.
 - [ ] You pick the voice
 - DoD: [ ] Implemented [ ] Tests/manual test [ ] Docs [ ] Committed & pushed [ ] Verified — how:
 
