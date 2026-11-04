@@ -74,7 +74,7 @@ OUTPUT = "insert into outputs (job_id, video_path, titles, description) values (
 
 
 def test_output_needs_ai_disclosure_and_three_titles(job_id):
-    disclosed = "Big Dog is an AI character."
+    disclosed = "GameReporter is an AI character."
     violates(OUTPUT, j=job_id, titles=["a", "b", "c"], d="no disclosure")
     violates(OUTPUT, j=job_id, titles=["a", "b"], d=disclosed)
     row = run(OUTPUT + " returning review", j=job_id, titles=["a", "b", "c"], d=disclosed).scalar_one()

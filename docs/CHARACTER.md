@@ -1,4 +1,4 @@
-# Character Bible — DRAFT v2 (cartoon news reporter, awaiting your approval)
+# Character Bible: GameReporter (look approved 2026-11-04)
 
 The code always reads the name from `CHARACTER_NAME`. Below, `{NAME}` stands for that value.
 
@@ -7,15 +7,9 @@ The code always reads the name from `CHARACTER_NAME`. Below, `{NAME}` stands for
 The character is drawn in code: [`renderer/src/Reporter.tsx`](../renderer/src/Reporter.tsx) is the single source of truth. No image model is involved, so every video shows exactly the same character, and the cost is $0. To re-render the sheet:
 `docker compose run --rm -T -v "$PWD/renderer/src:/app/src" -v "$PWD/renderer/out:/app/out" renderer npx remotion still src/index.ts CharacterSheet out/sheet.png`
 
-## 1. Name: pick one (a human name)
+## 1. Name
 
-| Option | Notes |
-|---|---|
-| **Leo Ngabo** | Warm and easy to say. Ngabo is a Kinyarwanda name, a nod to home. |
-| **Kai Mensah** | Short and punchy; works as a handle (`@KaiMensahNews`). |
-| **Ray Radar** | Plays on Trend Radar and is easy to remember, but cheesier. |
-
-I'll run a quick check that the name you pick isn't an existing character or creator.
+**`CHARACTER_NAME = "GameReporter"`** (your pick, 2026-11-04). It's one word, so it also works as the handle.
 
 ## 2. Backstory
 
@@ -54,7 +48,7 @@ I'll run a quick check that the name you pick isn't an existing character or cre
 ## 8. Catchphrases
 
 - **Opener (your pick):** "Ping check — {NAME}'s online!", played right after the hook line.
-- **Sign-off (your pick):** "{NAME}, logging off. Stay pawsome." "Pawsome" was a dog pun. For a human, I suggest **"{NAME}, logging off. Stay locked in."** Your call.
+- **Sign-off (your pick):** **"{NAME}, logging off. Stay locked in."**
 - **Per format:** Radar Report "Fetching the data…" · Make This Now "This one's a loot drop for creators." · Myth or Real? "Let me fact-check that." with the verdict "Real. Receipts below." or "Myth. Nerfed by the data." · Weekly Recap "Patch notes for the internet."
 
 ## 9. Do / Don't

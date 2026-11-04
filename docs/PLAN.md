@@ -34,10 +34,10 @@ Every task uses the same Definition of Done (DoD), plus its own checks:
 
 | # | Decision | Status |
 |---|---|---|
-| D13 | Character: a **cartoon human news reporter with a headset** (no longer a dog), with a human name, drawn once and reused | Name and look still to be proposed and approved |
+| D13 | Character: a **cartoon human news reporter with a headset** (no longer a dog), drawn once in code and reused | **GameReporter**; look approved; sign-off "Stay locked in." |
 | D14 | Voice: **free local TTS (Kokoro)**, a male-leaning original voice mix ($0). Replaces ElevenLabs. | decided |
 | D15 | Research and scripts run through **your own Claude Code, headless (`claude -p`)**, the same way as the `video-studio` Studio worker. $0 beyond your subscription. Replaces the paid Claude API. | decided |
-| D16 | Editing follows **your existing FilmCraft pipeline**: the `filmcraft-commentary-short` format (splits, punch-ins, cards, pop captions, end card, beds and SFX from the licensed sound library), rendered with `filmcraft-cli`. The cartoon reporter clip takes the place of your phone footage. | Architecture to confirm |
+| D16 | Editing follows **your existing FilmCraft pipeline**: the `filmcraft-commentary-short` format (splits, punch-ins, cards, pop captions, end card, beds and SFX from the licensed sound library), rendered with `filmcraft-cli`. The cartoon reporter clip takes the place of your phone footage. | **Both**: Remotion renders the reporter clip and our own graphics (data cards); FilmCraft assembles the final edit in your format |
 | D17 | Hard rules still apply: no YouTube/yt-dlp clips and no license-uncertain memes. B-roll comes from Pexels, our own HTML panels, and Trend Radar cards. | decided |
 
 Expected per-video cost after the pivot is about $0, apart from optional Pexels and music credits.
@@ -76,13 +76,13 @@ Prices checked 2026-11-04: fal.ai lists Kling Avatar v2 at $0.0562/s (Std) and $
 - [x] Draft written (name, backstory, look, outfit, room, personality, catchphrases, do/don't, voice settings)
 - [x] Name + opener + sign-off picked by you (D2, D3)
 - [x] Rewritten for the cartoon reporter (D13): draft v2
-- [ ] Human name picked by you (Leo Ngabo / Kai Mensah / Ray Radar / other)
-- [ ] Approved by you
+- [x] Name picked by you: GameReporter
+- [x] Approved by you (look; sign-off "Stay locked in.")
 - DoD: [ ] Implemented [ ] Tests/manual test [ ] Docs [ ] Committed & pushed [ ] Verified — how:
 
 ### V2.2 Master character sheet (talking pose + 4 reactions), drawn in code (D13)
 - [x] Reporter drawn as SVG in `renderer/src/Reporter.tsx`: 5 poses + 9 Rhubarb mouth shapes; sheet in `assets/character/` ($0, reproducible by construction)
-- [ ] Approved by you; same character in every pose
+- [x] Approved by you; same character in every pose
 - DoD: [ ] Implemented [ ] Tests/manual test [ ] Docs [ ] Committed & pushed [ ] Verified — how:
 
 ### V2.3 Voice design + 3 sample lines (local Kokoro, D14)

@@ -3,7 +3,7 @@
 import os
 from decimal import Decimal
 
-CHARACTER_NAME = os.environ.get("CHARACTER_NAME", "Big Dog")
+CHARACTER_NAME = os.environ.get("CHARACTER_NAME", "GameReporter")
 
 # --- Providers: none paid (D14-D16). Scripts/research run on your Claude Code (`claude -p`),
 # voice on local Kokoro, the reporter is drawn in code. Add a setting here only when a real choice appears.
