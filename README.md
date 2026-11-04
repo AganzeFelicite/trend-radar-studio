@@ -84,6 +84,14 @@ cd api && uv run python -m studio.script <job_id>   # prints titles, thumbnail t
 
 Claude Code drafts the script as structured JSON: scenes in arc order (hook → what → why → next), each on a `desk` (reporter + pose), `card` (fact/note IDs) or `headline` shot. `studio/script.py: validate` then checks the hard rules in code: every number is a verified fact, the arc is complete, the reporter is on screen at the start and end, at least one data card, on-screen text ≤ 6 words, and 3 titles plus thumbnail text unlike the last 7 videos. A failed draft goes back with its problems (3 tries). The opener and sign-off are added by code, word for word.
 
+## Safety gate (V3.4, runs on the Mac)
+
+```bash
+cd api && uv run python -m studio.safety <job_id>   # "passed", or "Blocked: <reason>" (the job becomes blocked)
+```
+
+The `SENSITIVE_TOPICS` blocklist runs first, then an AI classifier (Claude Code, no tools) catches what the list misses. The sensational-word rules (`SENSATIONAL_NEVER`, `SENSATIONAL_CITED_ONLY`) run inside the script validator, so a breaking draft goes back for another try.
+
 ## Voice and talking clip (free)
 
 ```bash

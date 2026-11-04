@@ -117,9 +117,10 @@ Prices checked 2026-11-04: fal.ai lists Kling Avatar v2 at $0.0562/s (Std) and $
 - Notes: numbers must be digits and come from the verified facts (labels included, e.g. "6 hours", "GTA 6"), or be the package date. Research notes can be attributed ("Destructoid reports…") but their numbers can't be used. "Similar" title = difflib ratio ≥ 0.75 against the latest script of the 7 most recent other jobs plus the package's published titles. Speech length is estimated at 2.9 words/s (±25 %) until V3.5 measures the real voice. A failed draft goes back to Claude Code with its list of problems, at most 3 tries in all.
 
 ### V3.4 Safety gate: blocklist + classifier for sensitive topics; sensational-word check
-- [ ] Test: a finance topic is blocked with a clear reason
-- [ ] Test: "LEAKED"/"CANCELLED"/"CONFIRMED" without a cited source is rejected
-- DoD: [ ] Implemented [ ] Tests/manual test [ ] Docs [ ] Committed & pushed [ ] Verified — how:
+- [x] Test: a finance topic is blocked with a clear reason
+- [x] Test: "LEAKED"/"CANCELLED"/"CONFIRMED" without a cited source is rejected
+- DoD: [x] Implemented [x] Tests/manual test [x] Docs [x] Committed & pushed [x] Verified — how: real gate runs. "Take-Two share price after the GTA 6 trailer" has no blocklist word, and the AI classifier blocked it: "finance topic (AI classifier: …about stock market performance and investing rather than ordinary game news.)". "How to invest your GTA 6 money in crypto" was blocked by the blocklist (`'invest'`) without calling the AI. Today's package and the map-size topic passed. Both blocked jobs show `status = blocked` with the reason in `jobs.error`. A real script re-run with the word check active passed on the first try ("Until then? Not confirmed yet."). Tests: `test_safety.py` (blocklist, classifier, "health bar" not blocked, 10 sensational cases rejected, 5 honest lines passing, validator wiring).
+- Notes: the order is blocklist (free, instant) → classifier (one tool-less Haiku call) → research. Stricter than the brief on purpose: leaks, rumours, insiders, "breaking" and fake urgency are never allowed, even cited (brief: "No rumours or leaks"; D10: no BREAKING banners). "Confirmed", "cancelled" and "delayed" need a note that says so positively, in the same scene. Negated uses ("not confirmed yet", "hasn't officially confirmed", "unconfirmed") are fine. Titles and thumbnails never use any of these words. All-caps words of 5+ letters are rejected everywhere; short acronyms (GTA, DLC) are fine.
 
 ### V3.5 Voice generation + word timestamps
 - [ ] Cost logged per clip; cap enforced

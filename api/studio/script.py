@@ -13,7 +13,7 @@ from difflib import SequenceMatcher
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
-from studio import llm
+from studio import llm, safety
 from studio.config import CHARACTER_NAME, OPENER, SIGNOFF
 from studio.db import Fact, Job, Script, engine
 
@@ -122,7 +122,9 @@ On-screen "text" is at most 6 words (it must be readable on a phone).
 Hard rules (a program checks them):
 - Every number is written in digits and comes from the verified facts. No other numbers, no spelled-out numbers \
 (two, twice, hundred…), no rounding.
-- No "breaking", "leaked", "confirmed", "cancelled", "insider" or fake urgency. No rumours.
+- No rumours, leaks, insiders, "breaking" or fake urgency, and no all-caps words. "Confirmed", "cancelled" or \
+"delayed" only when a note in that same scene says so (list its note_id); "not confirmed yet" is always fine. \
+Titles and thumbnail_text never use those words.
 - Nothing about finance, investing, money-making, health, medical or legal matters.
 - 3 titles (under 70 characters, no all-caps words) and a thumbnail_text of at most 5 words, each different from \
 these previous ones: {"; ".join(ctx["previous"] + ctx["previous_thumbs"]) or "none yet"}."""
@@ -176,6 +178,7 @@ def validate(script: dict, ctx: dict) -> list[str]:
         errors.append("thumbnail_text must be 1 to 5 words")
     elif p := next((p for p in ctx["previous_thumbs"] if similar(thumb, p)), None):
         errors.append(f"thumbnail text {thumb!r} is too close to a recent one: {p!r}")
+    errors += safety.sensational(script, ctx["notes"])
     target = ctx["job"].target_seconds
     secs = estimate(scenes)
     if not 0.75 * target <= secs <= 1.15 * target:

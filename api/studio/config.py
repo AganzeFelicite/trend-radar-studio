@@ -24,12 +24,14 @@ SENSITIVE_TOPICS = {
     "health": ("diet", "weight loss", "supplement", "vaccine", "mental health", "therapy", "symptom",
                "disease", "cancer", "fitness plan"),
     "medical": ("medical", "medicine", "medication", "dosage", "diagnosis", "treatment", "prescription"),
-    "legal": ("lawsuit", "legal advice", "attorney", "lawyer", "court case", "sue ", "custody"),
+    "legal": ("lawsuit", "legal advice", "attorney", "lawyer", "court case", "sue", "custody"),
 }
-# Allowed only when a cited, reputable source supports them; rumours/leaks are never allowed.
-SENSATIONAL_WORDS = ("cancelled", "canceled", "leaked", "leak", "confirmed", "breaking", "insider",
-                     "rumor", "rumour", "exposed", "you won't believe", "before it's too late",
-                     "last chance", "urgent")
+# Sensational framing (V3.4). These need a cited note that says so, in the same scene; never in titles or thumbnails.
+# Negated uses ("not confirmed yet") are always fine: that's the honest line.
+SENSATIONAL_CITED_ONLY = ("confirmed", "cancelled", "canceled", "delayed")
+# Never allowed, cited or not: no rumours, leaks, "BREAKING" banners or fake urgency (brief §2, D10).
+SENSATIONAL_NEVER = ("leaked", "leaks", "leak", "rumor", "rumors", "rumour", "rumours", "insider", "breaking", "exposed",
+                     "you won't believe", "before it's too late", "last chance", "urgent", "act now")
 
 # --- Research (V3.2): only reputable, citable sources. User-generated platforms are for reading trends, never a source.
 RESEARCH_BLOCKED_DOMAINS = ("youtube.com", "youtu.be", "tiktok.com", "twitch.tv", "reddit.com", "x.com", "twitter.com",
