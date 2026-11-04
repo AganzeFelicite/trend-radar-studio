@@ -8,7 +8,7 @@ Turns a topic (or a Trend Radar Content Package) into a finished 1080×1920 shor
 
 ## Status
 
-Phase V1 is done (repo, Docker Compose, database, config), along with the V2.1 draft (character bible). Next comes V2.2 (character sheet), once you approve the bible.
+Phases V1 (foundation) and V2 (character: GameReporter, voice, talking clip) are done, all at $0 per video. Next comes Phase V3 (the pipeline).
 
 ## Config
 
