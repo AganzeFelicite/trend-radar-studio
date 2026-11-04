@@ -1,6 +1,6 @@
 # Video Studio
 
-Turns a topic (or a Trend Radar Content Package) into a finished 1080×1920 short hosted by our AI gamer-dog character. It researches, writes, voices, animates and edits the video, then hands it over for human review. **Nothing is published automatically.**
+Turns a topic (or a Trend Radar Content Package) into a finished 1080×1920 short hosted by GameReporter, our cartoon AI news reporter. It researches, writes, voices, animates and edits the video, then hands it over for human review. **Nothing is published automatically.**
 
 - Spec: [docs/BRIEF.md](docs/BRIEF.md)
 - Plan & progress: [docs/PLAN.md](docs/PLAN.md)
@@ -13,10 +13,10 @@ Phases V1 (foundation) and V2 (character: GameReporter, voice, talking clip) are
 ## Config
 
 ```bash
-cp .env.example .env   # then paste your API keys
+cp .env.example .env   # no API keys needed
 ```
 
-All settings live in `api/studio/config.py`, which reads `.env`. They are the character name, provider and model choices, monthly cost caps per service ($20 total by default), the sensitive-topic blocklist and the sensational-word list. `studio/costs.py` checks the cap before every paid call (`ensure_budget`) and logs every spend (`record_cost`).
+All settings live in `api/studio/config.py`, which reads `.env`. They are the character name, the Claude Code model, monthly cost caps per service ($0 by default, so nothing paid runs), the sensitive-topic blocklist, the sensational-word list and the research source rules. `studio/costs.py` checks the cap before every paid call (`ensure_budget`) and logs every spend (`record_cost`).
 
 ## Run locally
 
@@ -66,6 +66,14 @@ Secrets go in `.env` only, which git ignores. `.env.example` lists every variabl
 
 ```bash
 curl -s localhost:8000/api/admin/content-package | jq '{input: tojson}' | curl -s -X POST 127.0.0.1:8400/jobs -H 'content-type: application/json' -d @-
+```
+
+## Research (V3.2, runs on the Mac)
+
+Research runs on **your own Claude Code** (`claude -p`, your claude.ai login; `ANTHROPIC_API_KEY` is never passed on), with web search, so it costs $0. The model is `CLAUDE_MODEL` (default `haiku`). It returns up to 8 one-sentence notes, each with the URL of the page that says it, stored as `unverified-context` facts. The code drops user-generated platforms (YouTube, Reddit, X...), rumour/leak wording and homepage citations.
+
+```bash
+cd api && uv run python -m studio.research <job_id>   # prints kept and dropped notes
 ```
 
 ## Voice and talking clip (free)
