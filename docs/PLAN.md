@@ -123,8 +123,9 @@ Prices checked 2026-11-04: fal.ai lists Kling Avatar v2 at $0.0562/s (Std) and $
 - Notes: the order is blocklist (free, instant) → classifier (one tool-less Haiku call) → research. Stricter than the brief on purpose: leaks, rumours, insiders, "breaking" and fake urgency are never allowed, even cited (brief: "No rumours or leaks"; D10: no BREAKING banners). "Confirmed", "cancelled" and "delayed" need a note that says so positively, in the same scene. Negated uses ("not confirmed yet", "hasn't officially confirmed", "unconfirmed") are fine. Titles and thumbnails never use any of these words. All-caps words of 5+ letters are rejected everywhere; short acronyms (GTA, DLC) are fine.
 
 ### V3.5 Voice generation + word timestamps
-- [ ] Cost logged per clip; cap enforced
-- DoD: [ ] Implemented [ ] Tests/manual test [ ] Docs [ ] Committed & pushed [ ] Verified — how:
+- [x] Cost logged per clip; cap enforced
+- DoD: [x] Implemented [x] Tests/manual test [x] Docs [x] Committed & pushed [x] Verified — how: real track for today's package (job 1): 8 scenes, 42.4 s against a 40 s target, in 23 s on the Mac. Whisper large-v3-turbo heard it at 0.957 word match; the only differences are whisper splitting "GameReporter" and "Bluesky" into two words. The first run read "#1" as "hash one", so lines now get speech-only fixes (`#1` → "number 1", `→` → "to", `1.2x` → "1.2 times"). The first track also ran 50.6 s for a 44 s estimate: the real rate is 2.5 script words/s, not 2.9, so the script step now uses the measured value. Provenance row (`voice`, `tts`, Apache-2.0) and a $0 `tts` cost row are written per track, after `ensure_budget`. Tests: `test_voice.py` (speech fixes, whisper diff, track joining with 0.3 s pauses, provenance and cost rows).
+- Output: `storage/jobs/<id>/voice.wav` (one track: your pipeline's A-roll audio) and `voice.json` with real scene start/end times, mouth cues for the talking clip, whisper word timestamps (same model as your FilmCraft pipeline) and the match score.
 
 ### V3.6 Talking-character generation through the chosen provider (adapter interface)
 - [ ] Cost logged per clip; cap enforced

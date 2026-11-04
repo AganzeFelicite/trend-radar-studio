@@ -1,6 +1,7 @@
 """All tunable settings. Values come from .env (see .env.example); defaults match docs/PLAN.md decisions."""
 
 import os
+from pathlib import Path
 from decimal import Decimal
 
 CHARACTER_NAME = os.environ.get("CHARACTER_NAME", "GameReporter")
@@ -38,3 +39,8 @@ RESEARCH_BLOCKED_DOMAINS = ("youtube.com", "youtu.be", "tiktok.com", "twitch.tv"
                             "facebook.com", "instagram.com", "threads.net", "bsky.app", "discord.com", "discord.gg",
                             "4chan.org", "pastebin.com", "fandom.com")
 RESEARCH_EXCLUDE_WORDS = r"\b(leak\w*|rumou?r\w*|insider|pira\w+|jailbreak\w*|cheat\w*|datamin\w+)"
+
+# --- Files and local tools (all on this Mac) ---
+STORAGE = Path(os.environ.get("STORAGE_DIR", Path(__file__).parents[2] / "storage"))  # per-job files, git-ignored
+WHISPER_PYTHON = os.environ.get("WHISPER_PYTHON", str(Path.home() / ".local/share/uv/tools/mlx-whisper/bin/python"))
+WHISPER_MODEL = os.environ.get("WHISPER_MODEL", "mlx-community/whisper-large-v3-turbo")  # same as your FilmCraft pipeline

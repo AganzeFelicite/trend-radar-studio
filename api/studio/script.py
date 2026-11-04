@@ -17,8 +17,8 @@ from studio import llm, safety
 from studio.config import CHARACTER_NAME, OPENER, SIGNOFF
 from studio.db import Fact, Job, Script, engine
 
-WORDS_PER_SECOND = 2.9  # the hype voice, ~175 wpm (docs/CHARACTER.md §10)
-PAUSE = 0.3  # seconds between scenes
+WORDS_PER_SECOND = 2.5  # the hype voice, measured on a real 50 s track (V3.5): ~150 script words/min
+PAUSE = 0.3  # seconds between scenes; studio/voice.py inserts the same pause
 PARTS = ("hook", "what", "why", "next")
 SHOTS = ("desk", "card", "headline")
 POSES = ("talk", "shocked", "laughing", "thinking", "celebrating")

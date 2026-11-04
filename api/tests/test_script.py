@@ -23,7 +23,7 @@ VALID = {
         {"part": "what", "shot": "card", "fact_ids": ["F4", "F5", "F6"],
          "line": "It owns 11.5% of the GTA 6 conversation across 3 sources, with 62 posts and videos in 24 hours."},
         {"part": "why", "shot": "headline", "text": "Your download queue matters",
-         "line": "Why it matters: everyone is planning their install, so creators who explain storage and timing get the clicks."},
+         "line": "Why it matters: everyone is planning their install, so explainers get the clicks."},
         {"part": "why", "shot": "desk", "pose": "thinking", "note_ids": ["N1"],
          "line": "Rockstar's own page lists a pre-load start date, and that is what people keep searching for."},
         {"part": "next", "shot": "desk", "pose": "talk",
