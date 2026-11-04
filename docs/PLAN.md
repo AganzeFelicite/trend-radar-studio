@@ -38,9 +38,10 @@ Every task uses the same Definition of Done (DoD), plus its own checks:
 | D14 | Voice: **free local TTS (Kokoro)**, a male-leaning original voice mix ($0). Replaces ElevenLabs. | decided |
 | D15 | Research and scripts run through **your own Claude Code, headless (`claude -p`)**, the same way as the `video-studio` Studio worker. $0 beyond your subscription. Replaces the paid Claude API. | decided |
 | D16 | Editing follows **your existing FilmCraft pipeline**: the `filmcraft-commentary-short` format (splits, punch-ins, cards, pop captions, end card, beds and SFX from the licensed sound library), rendered with `filmcraft-cli`. The cartoon reporter clip takes the place of your phone footage. | **Both**: Remotion renders the reporter clip and our own graphics (data cards); FilmCraft assembles the final edit in your format |
-| D17 | Hard rules still apply: no YouTube/yt-dlp clips and no license-uncertain memes. B-roll comes from Pexels, our own HTML panels, and Trend Radar cards. | decided |
+| D17 | Hard rules still apply: no YouTube/yt-dlp clips and no license-uncertain memes. B-roll comes from our own graphics and Trend Radar cards (see D18). | decided |
+| D18 | **Pexels paused new API keys** (Nov 2026), so B-roll is **drawn by us in Remotion**: animated data cards, charts, kinetic headlines, radar graphics and GameReporter reaction cutaways. $0, no account, no licence risk, and it all counts as our own content for YouTube originality. Pixabay (free key) can be added later if you want real-world footage. | default; Pixabay optional |
 
-Expected per-video cost after the pivot is about $0, apart from optional Pexels and music credits.
+Expected per-video cost after the pivot is $0.
 
 Prices checked 2026-11-04: fal.ai lists Kling Avatar v2 at $0.0562/s (Std) and $0.115/s (Pro). ElevenLabs Starter is $6/mo. Hedra's cheapest commercial plan is about $15/mo for about 4 min of video.
 
@@ -125,7 +126,7 @@ Prices checked 2026-11-04: fal.ai lists Kling Avatar v2 at $0.0562/s (Std) and $
 - [ ] Cost logged per clip; cap enforced
 - DoD: [ ] Implemented [ ] Tests/manual test [ ] Docs [ ] Committed & pushed [ ] Verified — how:
 
-### V3.7 B-roll: Pexels search per scene; provenance logged; brand/people filter
+### V3.7 B-roll: our own Remotion scenes per script cue (D18; Pexels paused); provenance logged as `own`
 - [ ] Render refused if any asset lacks a licence entry (tested)
 - DoD: [ ] Implemented [ ] Tests/manual test [ ] Docs [ ] Committed & pushed [ ] Verified — how:
 
@@ -145,7 +146,7 @@ Prices checked 2026-11-04: fal.ai lists Kling Avatar v2 at $0.0562/s (Std) and $
 - DoD: [ ] Implemented [ ] Tests/manual test [ ] Docs [ ] Committed & pushed [ ] Verified — how:
 
 ### V4.3 Output bundle: MP4, own thumbnail options, 3 titles, caption, hashtags, description, posting checklist
-- [ ] Description has AI disclosure ("<CHARACTER_NAME> is an AI character."), sources, Pexels link
+- [ ] Description has AI disclosure ("<CHARACTER_NAME> is an AI character."), sources, and a stock-site credit link only if stock footage was used
 - [ ] Posting checklist includes the AI-label step for YouTube Shorts, TikTok, Instagram Reels and Facebook Reels (D11)
 - [ ] Titles/thumbnail differ from the last 7 videos (checked)
 - DoD: [ ] Implemented [ ] Tests/manual test [ ] Docs [ ] Committed & pushed [ ] Verified — how:
