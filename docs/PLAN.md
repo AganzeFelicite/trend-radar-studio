@@ -43,6 +43,20 @@ Every task uses the same Definition of Done (DoD), plus its own checks:
 
 Expected per-video cost after the pivot is $0.
 
+### Pivot 2, 2026-11-06: story videos (replaces D10, D13 and D18 where they conflict)
+
+The Radar-report format (the character reading ranks and scores) is dropped. Each video tells **the story behind a
+trending topic**, with a funny character reacting, real pictures, and our data for one line: why this is the thing
+GTA fans are talking about today.
+
+| # | Decision | Status |
+|---|---|---|
+| D19 | **Content** = the news behind the topic (what happened, when, who said it, cited) + the character's reaction/jokes. Our data gives the "why now" line and one card; it is never the whole script. | decided by you |
+| D20 | **Media**: (a) stock footage/photos from **Pixabay** (free key, CC0-style licence), (b) **AI-generated images** in our own style (provider and $ cap to confirm before the first paid call), (c) **official Rockstar media**: only files Rockstar hosts for download on rockstargames.com (newswire, media page), shown briefly as commentary with an on-screen "Rockstar Games" credit. Third-party media ≤ 25% of the runtime and never the whole video; at least one of our own graphics per video. New asset sources `pixabay`, `official_rockstar`, each with URL and fetch time in provenance. Risk you accept: Rockstar media is their copyright. | decided by you (a, b, c) |
+| D21 | **Trending YouTube videos are never downloaded** (YouTube API terms; the Radar's data feed depends on that key). They appear on our own cards: title, channel, views. D17 stays. | decided (owner declined the download option on this advice) |
+| D22 | **Character**: a new, funnier one, drawn in code and voiced with Kokoro like GameReporter ($0). Three candidates in `docs/CHARACTER-CANDIDATES.md`; **you pick one before any art or video**. GameReporter stays usable until then. | open: your pick |
+| D23 | **Hooks**: every script starts from 5 hook candidates; code scores them (≤ 10 words, names a concrete detail, no sensational words, differs from the last 7) and keeps the best for you to override on the review page. | decided |
+
 Prices checked 2026-11-04: fal.ai lists Kling Avatar v2 at $0.0562/s (Std) and $0.115/s (Pro). ElevenLabs Starter is $6/mo. Hedra's cheapest commercial plan is about $15/mo for about 4 min of video.
 
 ---
@@ -191,4 +205,46 @@ Prices checked 2026-11-04: fal.ai lists Kling Avatar v2 at $0.0562/s (Std) and $
 - DoD: [ ] Implemented [ ] Tests/manual test [ ] Docs [ ] Committed & pushed [ ] Verified — how:
 
 ### V6.4 Your own gameplay as B-roll (after D9)
+- DoD: [ ] Implemented [ ] Tests/manual test [ ] Docs [ ] Committed & pushed [ ] Verified — how:
+
+## Phase V7 — Story videos (pivot 2, 2026-11-06)
+
+### V7.1 Character v3: your pick from the 3 candidates → bible, SVG sheet (5 poses + 9 mouths), voice mix, 10 s talking test
+- [ ] Candidate picked by you (D22); `CHARACTER_NAME`, opener and sign-off updated; Radar `HOST_NAME` matched
+- [ ] Sheet drawn in `renderer/src/`, same character in every pose; approved by you
+- [ ] Voice: original Kokoro mix; 3 sample lines; Whisper hears every word
+- DoD: [ ] Implemented [ ] Tests/manual test [ ] Docs [ ] Committed & pushed [ ] Verified — how:
+
+### V7.2 Story research: per topic, the event (what, when, who, where it was said), 2 angles, a joke bank
+- [ ] Official and press sources first (rockstargames.com, take2games.com, platform blogs, then outlets); user-generated platforms dropped as now
+- [ ] Every claim keeps its URL (`unverified-context`); the Radar's numbers stay `verified`
+- [ ] Output: `story.json` (event, timeline, angles, jokes, media leads with URLs)
+- DoD: [ ] Implemented [ ] Tests/manual test [ ] Docs [ ] Committed & pushed [ ] Verified — how:
+
+### V7.3 Hook engine + story script: arc hook → the story → reaction → "why now" data line → what to watch
+- [ ] 5 hook candidates scored and ranked (D23); the winner is editable on the review page
+- [ ] Validator: numbers only from verified facts or cited notes, arc complete, ≤ 60 s, no sensational words, titles/thumbnail unlike the last 7
+- [ ] Every scene carries a media cue (`pixabay:<query>`, `rockstar:<url>`, `ai:<prompt>`, `card:<fact ids>`, `desk:<pose>`)
+- DoD: [ ] Implemented [ ] Tests/manual test [ ] Docs [ ] Committed & pushed [ ] Verified — how:
+
+### V7.4 Media fetcher: Pixabay search, Rockstar media download, AI image generation; provenance and credits
+- [ ] `PIXABAY_API_KEY` in `.env`; search by scene query; licence and page URL logged
+- [ ] Rockstar: only direct downloads from rockstargames.com; URL, fetch time and "Rockstar Games" credit logged
+- [ ] AI images: provider and cap confirmed with you first; `ensure_budget` before each call
+- [ ] Gate: render refused if third-party media > 25% of runtime or any asset lacks licence/credit
+- DoD: [ ] Implemented [ ] Tests/manual test [ ] Docs [ ] Committed & pushed [ ] Verified — how:
+
+### V7.5 Scene builder + edit: media per scene, punch-ins, pop captions, credits, end card, bed and SFX (FilmCraft, as V4.1)
+- [ ] Character on screen for hook, reactions and sign-off; media and cards the rest
+- [ ] Credits strip for Rockstar and Pixabay media; AI-generated frames marked in the description
+- DoD: [ ] Implemented [ ] Tests/manual test [ ] Docs [ ] Committed & pushed [ ] Verified — how:
+
+### V7.6 Output bundle: MP4, thumbnail, 3 titles, caption, hashtags, description with sources, credits and AI label; posting checklist
+- DoD: [ ] Implemented [ ] Tests/manual test [ ] Docs [ ] Committed & pushed [ ] Verified — how:
+
+### V7.7 Studio admin page (port 3400): load today's package or paste a topic, Make video, live log, preview, hook override, approve/reject, download
+- [ ] Replaces the temporary page in the Radar repo (`scripts/radar.sh video-ui`, port 3600), which is then removed
+- DoD: [ ] Implemented [ ] Tests/manual test [ ] Docs [ ] Committed & pushed [ ] Verified — how:
+
+### V7.8 Five sample story videos for your review before anything is posted
 - DoD: [ ] Implemented [ ] Tests/manual test [ ] Docs [ ] Committed & pushed [ ] Verified — how:
