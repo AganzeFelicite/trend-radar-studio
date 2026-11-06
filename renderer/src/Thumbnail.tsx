@@ -1,7 +1,8 @@
 // Thumbnail options (V4.3): our own design, the reporter in a reaction pose with the script's thumbnail text.
 import { AbsoluteFill } from "remotion";
 import { ANTON, useAnton } from "./Broll";
-import { COLORS as c, Reporter, type Pose } from "./Reporter";
+import { Host } from "./Cast";
+import { COLORS as c, type Pose } from "./Reporter";
 
 export type ThumbProps = { text: string; pose: Pose; accent: string };
 
@@ -9,7 +10,7 @@ export const Thumbnail: React.FC<ThumbProps> = ({ text, pose, accent }) => {
   useAnton();
   return (
     <AbsoluteFill>
-      <Reporter pose={pose} mouth="X" />
+      <Host pose={pose} mouth="X" />
       {/* over the blazer, under the face: readable in the feed's centre crop */}
       <div style={{ position: "absolute", left: 60, right: 60, top: 1130, display: "flex", flexDirection: "column", alignItems: "center" }}>
         <div style={{ fontFamily: ANTON, fontSize: 168, lineHeight: 1.02, textAlign: "center", color: c.yellow,

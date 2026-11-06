@@ -28,7 +28,8 @@ def test_env_example_lists_every_setting_the_code_reads():
 
 def test_character_name_is_only_hardcoded_in_config():
     sources = [*(REPO / "api/studio").glob("*.py"), *(REPO / "admin/app").glob("*.tsx"), *(REPO / "renderer/src").glob("*.tsx")]
-    offenders = [p.name for p in sources if config.CHARACTER_NAME in p.read_text() and p.name != "config.py"]
+    # Cast.tsx holds the three candidates' labels for the comparison sheet (D22), not the host name the videos use.
+    offenders = [p.name for p in sources if config.CHARACTER_NAME in p.read_text() and p.name not in ("config.py", "Cast.tsx")]
     assert offenders == []
 
 

@@ -4,9 +4,9 @@ import os
 from pathlib import Path
 from decimal import Decimal
 
-CHARACTER_NAME = os.environ.get("CHARACTER_NAME", "GameReporter")
-OPENER = f"Ping check — {CHARACTER_NAME}'s online!"  # your picks (docs/CHARACTER.md §8)
-SIGNOFF = f"{CHARACTER_NAME}, logging off. Stay locked in."
+CHARACTER_NAME = os.environ.get("CHARACTER_NAME", "Coach Dub")
+OPENER = "Huddle up!"  # your picks (docs/CHARACTER.md §8; D22, 2026-11-06)
+SIGNOFF = "Hydrate. Pre-load. Coach out."
 
 # --- Providers: none paid (D14-D16). Scripts/research run on your Claude Code (`claude -p`),
 # voice on local Kokoro, the reporter is drawn in code. Add a setting here only when a real choice appears.

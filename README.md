@@ -1,6 +1,6 @@
 # Video Studio
 
-Turns a topic (or a Trend Radar Content Package) into a finished 1080×1920 short hosted by GameReporter, our cartoon AI news reporter. It researches, writes, voices, animates and edits the video, then hands it over for human review. **Nothing is published automatically.**
+Turns a topic (or a Trend Radar Content Package) into a finished 1080×1920 short hosted by Coach Dub, our cartoon AI launch-day coach (D22). It researches, writes, voices, animates and edits the video, then hands it over for human review. **Nothing is published automatically.**
 
 - Spec: [docs/BRIEF.md](docs/BRIEF.md)
 - Plan & progress: [docs/PLAN.md](docs/PLAN.md)
@@ -8,7 +8,7 @@ Turns a topic (or a Trend Radar Content Package) into a finished 1080×1920 shor
 
 ## Status
 
-Phases V1 (foundation) and V2 (character: GameReporter, voice, talking clip) are done, all at $0 per video. Next comes Phase V3 (the pipeline).
+Phases V1 (foundation) and V2 (character, voice, talking clip) are done; V7.1 switched the host to Coach Dub, all at $0 per video. Next comes Phase V3 (the pipeline).
 
 ## Config
 

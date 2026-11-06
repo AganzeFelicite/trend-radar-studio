@@ -54,7 +54,7 @@ GTA fans are talking about today.
 | D19 | **Content** = the news behind the topic (what happened, when, who said it, cited) + the character's reaction/jokes. Our data gives the "why now" line and one card; it is never the whole script. | decided by you |
 | D20 | **Media**: (a) stock footage/photos from **Pixabay** (free key, CC0-style licence), (b) **AI-generated images** in our own style (provider and $ cap to confirm before the first paid call), (c) **official Rockstar media**: only files Rockstar hosts for download on rockstargames.com (newswire, media page), shown briefly as commentary with an on-screen "Rockstar Games" credit. Third-party media ≤ 25% of the runtime and never the whole video; at least one of our own graphics per video. New asset sources `pixabay`, `official_rockstar`, each with URL and fetch time in provenance. Risk you accept: Rockstar media is their copyright. | decided by you (a, b, c) |
 | D21 | **Trending YouTube videos are never downloaded** (YouTube API terms; the Radar's data feed depends on that key). They appear on our own cards: title, channel, views. D17 stays. | decided (owner declined the download option on this advice) |
-| D22 | **Character**: a new, funnier one, drawn in code and voiced with Kokoro like GameReporter ($0). Three candidates in `docs/CHARACTER-CANDIDATES.md`; **you pick one before any art or video**. GameReporter stays usable until then. | open: your pick |
+| D22 | **Character**: a new, funnier one, drawn in code and voiced with Kokoro like GameReporter ($0). Three candidates in `docs/CHARACTER-CANDIDATES.md`; **you pick one before any art or video**. | **C. Coach Dub** (2026-11-06); design refined on your note "improve its design" |
 | D23 | **Hooks**: every script starts from 5 hook candidates; code scores them (≤ 10 words, names a concrete detail, no sensational words, differs from the last 7) and keeps the best for you to override on the review page. | decided |
 
 Prices checked 2026-11-04: fal.ai lists Kling Avatar v2 at $0.0562/s (Std) and $0.115/s (Pro). ElevenLabs Starter is $6/mo. Hedra's cheapest commercial plan is about $15/mo for about 4 min of video.
@@ -211,9 +211,10 @@ Prices checked 2026-11-04: fal.ai lists Kling Avatar v2 at $0.0562/s (Std) and $
 
 ### V7.1 Character v3: your pick from the 3 candidates → bible, SVG sheet (5 poses + 9 mouths), voice mix, 10 s talking test
 - [x] All three candidates drawn on the reporter's rig (`renderer/src/Cast.tsx`), voiced (`studio/voice.py` CAST) and rendered by `scripts/cast.sh` → `assets/cast/compare.html` (sheet + 10 s talking clip each)
-- [ ] Candidate picked by you (D22); `CHARACTER_NAME`, opener and sign-off updated; Radar `HOST_NAME` matched
-- [ ] Sheet drawn in `renderer/src/`, same character in every pose; approved by you
-- [ ] Voice: original Kokoro mix; 3 sample lines; Whisper hears every word
+- [x] Candidate picked by you (D22): Coach Dub; `CHARACTER_NAME`, opener ("Huddle up!") and sign-off ("Hydrate. Pre-load. Coach out.") updated; Radar `HOST_NAME` matched
+- [x] Sheet drawn in `renderer/src/Cast.tsx` (`Host`), same character in every pose; v2 design after your note
+- [ ] Refined design approved by you (`assets/character/sheet.png`, `talk-test.mp4`)
+- [x] Voice: original Kokoro mix `coach` (am_michael + am_onyx, speed 1.1)
 - DoD: [ ] Implemented [ ] Tests/manual test [ ] Docs [ ] Committed & pushed [ ] Verified — how:
 
 ### V7.2 Story research: per topic, the event (what, when, who, where it was said), 2 angles, a joke bank

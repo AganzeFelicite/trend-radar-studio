@@ -22,7 +22,7 @@ from studio.db import Asset, Script, engine
 MODELS = Path(os.environ.get("KOKORO_DIR", Path(__file__).parents[2] / "models" / "kokoro"))
 
 # {preset: weight}, speed. "hype" is the channel voice (V2.3, 2026-11-04); the others stay for comparison.
-VOICE = "hype"
+VOICE = "coach"  # D22 (2026-11-06); "hype" was GameReporter's
 VOICES = {
     "anchor": ({"am_michael": 0.7, "am_fenrir": 0.3}, 1.10),
     "hype": ({"am_puck": 0.6, "am_michael": 0.4}, 1.15),

@@ -15,9 +15,9 @@ render() {  # render <who> <remotion args...>
 for who in $who_list; do
   mkdir -p "assets/cast/$who"
   echo "== $who: sheet"
-  render "$who" npx remotion still src/index.ts CharacterSheet out/sheet.png --props="{\"who\":\"$who\"}"
+  render "$who" npx remotion still src/index.ts CharacterSheet out/sheet.png --props="{\"who\":\"$who\"}" --bundle-cache=false
   echo "== $who: talking clip"
-  render "$who" npx remotion render src/index.ts TalkingClip out/talk.mp4 --props="props/$who-props.json"
+  render "$who" npx remotion render src/index.ts TalkingClip out/talk.mp4 --props="props/$who-props.json" --bundle-cache=false
 done
 ls -lh assets/cast/*/
 open -a Arc "$PWD/assets/cast/compare.html"

@@ -5,7 +5,8 @@ import {
   AbsoluteFill, cancelRender, continueRender, delayRender, spring, staticFile, useCurrentFrame, useVideoConfig,
   type CalculateMetadataFunction,
 } from "remotion";
-import { COLORS as c, Studio } from "./Reporter";
+import { HostSet } from "./Cast";
+import { COLORS as c } from "./Reporter";
 import { FPS } from "./TalkingClip";
 
 export type Row = { topic: string; metric: string; value: string };
@@ -108,7 +109,7 @@ export const Broll: React.FC<BrollProps> = (props) => {
   const push = 1 + 0.03 * (frame / durationInFrames); // slow push-in, like your full-frame shots
   return (
     <AbsoluteFill style={{ background: c.bg2 }}>
-      <svg viewBox="0 0 1080 1920" width="100%" height="100%" style={{ position: "absolute" }}><Studio /></svg>
+      <svg viewBox="0 0 1080 1920" width="100%" height="100%" style={{ position: "absolute" }}><HostSet /></svg>
       <AbsoluteFill style={{ transform: `scale(${push})` }}>
         {props.kind === "card" ? <Card {...props} /> : <Headline {...props} />}
       </AbsoluteFill>

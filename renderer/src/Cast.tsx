@@ -175,23 +175,34 @@ const Auntie: React.FC<{ pose: Pose; mouth: Mouth; eyes: Eyes; nod: number; p: P
   );
 };
 
-// ---------- C. Coach Dub: the launch-day coach in the locker room ----------
+// ---------- C. Coach Dub: the launch-day coach in the locker room (v2 design, 2026-11-06) ----------
 const CoachSet: React.FC<{ p: Palette }> = ({ p }) => (
   <g>
     <Bg id="bg-coach" p={p} />
-    {[40, 180, 760, 900].map((x) => (
+    <ellipse cx={540} cy={120} rx={520} ry={260} fill="#ffffff" opacity={0.05} /> {/* overhead light */}
+    {[30, 170, 770, 910].map((x, i) => (
       <g key={x}>
-        <rect x={x} y={200} width={130} height={1460} rx={8} fill="#3b4a5a" stroke="#2a3542" strokeWidth={6} />
-        {[300, 330, 360].map((y) => <rect key={y} x={x + 25} y={y} width={80} height={8} rx={4} fill="#2a3542" />)}
-        <rect x={x + 100} y={900} width={14} height={40} rx={4} fill="#9aa7b4" />
+        <rect x={x} y={180} width={134} height={1480} rx={6} fill="#3b4a5a" stroke="#26313d" strokeWidth={6} />
+        <rect x={x + 6} y={186} width={122} height={1468} rx={4} fill="none" stroke="#4b5c6e" strokeWidth={3} />
+        {[290, 316, 342].map((y) => <rect key={y} x={x + 28} y={y} width={78} height={7} rx={3} fill="#26313d" />)}
+        {[1180, 1206, 1232].map((y) => <rect key={y} x={x + 28} y={y} width={78} height={7} rx={3} fill="#26313d" />)}
+        <rect x={x + 34} y={230} width={66} height={26} rx={4} fill="#c9d1d9" />
+        <text x={x + 67} y={249} fontSize={16} fontWeight={700} textAnchor="middle" fill="#26313d" fontFamily={FONT}>{["QB", "WR", "TE", "RB"][i]}</text>
+        <rect x={x + 104} y={880} width={12} height={46} rx={4} fill="#9aa7b4" />
       </g>
     ))}
-    <rect x={330} y={260} width={420} height={330} rx={12} fill="#f7f7f2" stroke="#8a8a80" strokeWidth={10} />
-    <g stroke="#1f5fbf" strokeWidth={8} fill="none" strokeLinecap="round">
-      <path d="M380,330 L520,330 M380,400 Q450,360 520,400 T660,400 M380,480 L700,480" />
-      <circle cx={660} cy={330} r={22} stroke="#d9342b" />
+    {/* the launch board: our own countdown (the day's data card is pinned here in videos) */}
+    <g transform="translate(790 200) rotate(2)">
+      <rect x={0} y={0} width={270} height={250} rx={14} fill="#15171c" stroke="#5c6673" strokeWidth={8} />
+      <rect x={14} y={14} width={242} height={42} rx={6} fill={p.accent} />
+      <text x={135} y={44} fontSize={24} fontWeight={900} textAnchor="middle" fill="#15171c" fontFamily={FONT} letterSpacing={4}>LAUNCH DAY</text>
+      <text x={135} y={178} fontSize={120} fontWeight={900} textAnchor="middle" fill={p.accent} fontFamily={FONT}>13</text>
+      <text x={135} y={226} fontSize={24} fontWeight={700} textAnchor="middle" fill="#c9d1d9" fontFamily={FONT} letterSpacing={6}>DAYS OUT</text>
     </g>
-    <path d="M620,300 L700,300 L700,560" stroke="#d9342b" strokeWidth={6} strokeDasharray="14 10" fill="none" />
+    {/* bench props: the towel and the water bottle (hydrate) */}
+    <path d="M60,1660 Q110,1700 80,1800 Q160,1760 150,1660 Z" fill="#f2f2ee" />
+    <rect x={930} y={1560} width={56} height={110} rx={14} fill="#2f80ed" /><rect x={944} y={1540} width={28} height={30} rx={6} fill="#1b4f9c" />
+    <rect x={940} y={1600} width={36} height={40} fill="#fbf7f2" opacity={0.8} />
   </g>
 );
 
@@ -199,36 +210,58 @@ const Coach: React.FC<{ pose: Pose; mouth: Mouth; eyes: Eyes; nod: number; p: Pa
   const f = FACES[pose];
   const a = ARMS[pose];
   const [cx, cy] = a.hands[0];
+  const clipboard = pose !== "celebrating" && pose !== "shocked";
   return (
     <g transform={`translate(540 ${DESK_Y}) scale(${SCALE}) translate(-540 ${-DESK_Y})`}>
-      <Torso p={p} neck={150} />
-      <path d="M470,1050 L540,1150 L610,1050 L585,1040 L540,1110 L495,1040 Z" fill="#fbf7f2" />
-      <path d="M540,1150 L540,1420" stroke="#1b1b1b" strokeWidth={6} />
-      <rect x={520} y={1410} width={48} height={30} rx={10} fill="#c0c6d0" /><circle cx={575} cy={1440} r={16} fill="#c0c6d0" />
-      <path d="M640,1180 l14,0 l-7,20 z M640,1180 l14,0 l0,-10 l-14,0 z" fill={p.accent} />
-      {a.arms.map((d) => <path key={d} d={d} stroke={p.top} strokeWidth={92} fill="none" strokeLinecap="round" />)}
+      {/* broad shoulders, thick neck */}
+      <rect x={462} y={900} width={156} height={170} rx={44} fill={p.shade} />
+      <path d="M250,1270 C260,1100 400,1040 540,1040 C680,1040 820,1100 830,1270 L900,1920 L180,1920 Z" fill={p.top} />
+      <path d="M250,1270 C260,1100 400,1040 540,1040 L540,1920 L180,1920 Z" fill={p.topShade} opacity={0.35} />
+      {/* collar, placket, chest stripe, tiny trophy, whistle on a lanyard, COACH badge */}
+      <path d="M452,1046 L540,1180 L628,1046 L598,1030 L540,1120 L482,1030 Z" fill="#fbf7f2" />
+      <path d="M540,1180 L540,1300" stroke={p.topShade} strokeWidth={6} />
+      <path d="M300,1400 L780,1400" stroke="#fbf7f2" strokeWidth={14} opacity={0.9} />
+      <path d="M650,1180 l18,0 l-9,24 z M650,1180 l18,0 l0,-12 l-18,0 z" fill={p.accent} />
+      <path d="M470,1060 Q540,1420 610,1060" stroke="#1b1b1b" strokeWidth={6} fill="none" />
+      <rect x={512} y={1392} width={56} height={32} rx={10} fill="#d7dde6" /><circle cx={576} cy={1424} r={18} fill="#d7dde6" /><circle cx={576} cy={1424} r={6} fill="#1b1b1b" />
+      <rect x={380} y={1300} width={96} height={64} rx={8} fill="#fbf7f2" /><rect x={380} y={1300} width={96} height={20} rx={8} fill={p.accent} />
+      <text x={428} y={1348} fontSize={24} fontWeight={900} textAnchor="middle" fill="#15171c" fontFamily={FONT}>COACH</text>
+      {/* short sleeves: bare forearms */}
+      {a.arms.map((d) => <path key={d} d={d} stroke={p.skin} strokeWidth={88} fill="none" strokeLinecap="round" />)}
+      {/* short sleeves: the first stretch of each arm path, drawn over the bare arm */}
+      {a.arms.map((d) => <path key={`s${d}`} d={d} stroke={p.top} strokeWidth={104} fill="none" strokeLinecap="butt" strokeDasharray="170 9999" />)}
       <rect x={0} y={1660} width={1080} height={260} fill="#6b4a2b" />
-      <rect x={0} y={1654} width={1080} height={16} fill="#8a6238" />
+      <rect x={0} y={1654} width={1080} height={18} fill="#8a6238" /><rect x={0} y={1672} width={1080} height={6} fill="#4f3620" />
       <g transform={`rotate(${f.head + nod} 540 900)`}>
-        <ellipse cx={372} cy={795} rx={26} ry={40} fill={p.shade} /><ellipse cx={708} cy={795} rx={26} ry={40} fill={p.shade} />
-        <ellipse cx={540} cy={775} rx={178} ry={198} fill={p.skin} />
-        <path d="M366,720 C360,590 450,560 540,560 C630,560 720,590 714,720 C690,660 640,640 540,642 C440,640 390,660 366,720 Z" fill={p.hair} />
-        <rect x={366} y={640} width={348} height={54} rx={27} fill={p.accent} /><rect x={366} y={660} width={348} height={12} fill="#fbf7f2" />
+        <ellipse cx={368} cy={800} rx={28} ry={42} fill={p.shade} /><ellipse cx={712} cy={800} rx={28} ry={42} fill={p.shade} />
+        <ellipse cx={368} cy={800} rx={12} ry={20} fill={p.skin} opacity={0.6} /><ellipse cx={712} cy={800} rx={12} ry={20} fill={p.skin} opacity={0.6} />
+        <path d="M358,780 C352,620 420,560 540,560 C660,560 728,620 722,780 C724,900 690,975 540,978 C390,975 356,900 358,780 Z" fill={p.skin} />
+        <path d="M540,978 C440,975 400,930 384,870 L696,870 C680,930 640,975 540,978 Z" fill={p.shade} opacity={0.18} /> {/* jaw shadow */}
+        <path d="M400,885 Q540,990 680,885" stroke={p.shade} strokeWidth={5} fill="none" opacity={0.45} strokeDasharray="2 10" /> {/* stubble */}
+        <path d="M362,720 C356,590 450,556 540,556 C630,556 724,590 718,720 C690,660 640,640 540,642 C440,640 390,660 362,720 Z" fill={p.hair} />
+        {[430, 480, 530, 580, 630].map((x) => <path key={x} d={`M${x},600 q10,-18 24,-26`} stroke="#3d2a1a" strokeWidth={5} fill="none" strokeLinecap="round" />)}
+        <rect x={362} y={638} width={356} height={58} rx={29} fill={p.accent} /><rect x={362} y={661} width={356} height={12} fill="#fbf7f2" />
         <Brow x={470} lift={f.lift[0]} tilt={f.tilt} /><Brow x={610} lift={f.lift[1]} tilt={f.tilt} flip />
         <Eye x={470} kind={eyes} look={f.look} /><Eye x={610} kind={eyes} look={f.look} />
-        <path d="M540,790 C524,836 516,850 544,856 C560,860 570,850 572,842" stroke={p.shade} strokeWidth={8} fill="none" strokeLinecap="round" />
-        <path d="M400,880 Q540,1000 680,880" stroke={p.shade} strokeWidth={4} fill="none" opacity={0.35} strokeDasharray="3 9" /> {/* stubble */}
+        <path d="M540,786 C522,838 514,852 546,858 C564,862 574,850 576,840" stroke={p.shade} strokeWidth={8} fill="none" strokeLinecap="round" />
+        <ellipse cx={436} cy={868} rx={30} ry={16} fill="#d9604a" opacity={0.28} /><ellipse cx={644} cy={868} rx={30} ry={16} fill="#d9604a" opacity={0.28} />
         <g transform="translate(540 905)"><MouthShape m={mouth !== "X" ? mouth : f.mouth ?? mouth} /></g>
       </g>
       {a.hands.map(([x, y]) => <Hand key={`${x},${y}`} x={x} y={y} p={p} />)}
-      {pose !== "celebrating" && pose !== "shocked" && (
+      {clipboard && (
         <g transform={`translate(${cx - 10} ${cy - 90}) rotate(-10)`}>
-          <rect x={-60} y={-90} width={120} height={170} rx={8} fill="#8a6238" />
-          <rect x={-50} y={-70} width={100} height={140} fill="#fbf7f2" />
-          <rect x={-24} y={-100} width={48} height={26} rx={6} fill="#c0c6d0" />
-          {[-40, -15, 10, 35].map((y) => <rect key={y} x={-38} y={y} width={76 - (y + 40) / 2} height={7} fill="#9aa7b4" />)}
+          <rect x={-62} y={-92} width={124} height={174} rx={10} fill="#8a6238" />
+          <rect x={-52} y={-72} width={104} height={144} fill="#fbf7f2" />
+          <rect x={-26} y={-104} width={52} height={28} rx={6} fill="#c0c6d0" />
+          {[-44, -20, 4, 28].map((y) => <rect key={y} x={-40} y={y} width={80 - (y + 44) / 2} height={7} fill="#9aa7b4" />)}
+          <rect x={6} y={30} width={40} height={34} fill={p.accent} transform="rotate(6 26 47)" />
         </g>
       )}
+      {pose === "celebrating" && [[180, 640], [900, 640]].map(([x, y]) => (
+        <g key={x} stroke={p.accent} strokeWidth={10} strokeLinecap="round">
+          <path d={`M${x},${y} l${x < 540 ? -30 : 30},-40 M${x},${y + 60} l${x < 540 ? -44 : 44},0 M${x},${y + 120} l${x < 540 ? -30 : 30},40`} />
+        </g>
+      ))}
     </g>
   );
 };
@@ -251,5 +284,10 @@ export const Character: React.FC<{ who: Cast; pose?: Pose; mouth?: Mouth; blink?
     </svg>
   );
 };
+
+// The host (D22, 2026-11-06). Everything that used to draw the reporter draws the host.
+export const HOST: Cast = "coach";
+export const HostSet: React.FC = () => <CoachSet p={PALETTES[HOST]} />;
+export const Host: React.FC<Omit<React.ComponentProps<typeof Character>, "who">> = (p) => <Character who={HOST} {...p} />;
 
 export { COLORS };

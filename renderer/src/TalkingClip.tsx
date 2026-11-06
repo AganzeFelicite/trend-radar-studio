@@ -1,7 +1,7 @@
 import React from "react";
 import { AbsoluteFill, type CalculateMetadataFunction, Html5Audio, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
-import { Character, type Cast } from "./Cast";
-import { Reporter, type Mouth, type Pose } from "./Reporter";
+import { Character, HOST, type Cast } from "./Cast";
+import { type Mouth, type Pose } from "./Reporter";
 
 // The host's A-roll: the voice track plus mouth cues from api/studio/voice.py (Rhubarb-style).
 // FilmCraft uses this clip where the real shorts use phone footage.
@@ -11,7 +11,7 @@ export type TalkProps = {
   duration: number; // seconds
   cues: (Span & { value: Mouth })[];
   poses: (Span & { pose: Pose })[];
-  who?: Cast; // a candidate from Cast.tsx; the reporter when unset
+  who?: Cast; // a candidate from Cast.tsx; the host when unset
 };
 
 export const FPS = 30;
@@ -23,14 +23,14 @@ const at = <T extends Span>(spans: T[], t: number) => spans.find((s) => s.start 
 // ~every 3.5 s for 4 frames, with a second irregular rhythm so blinks don't look mechanical.
 const blinking = (f: number) => f % 105 < 4 || (f + 41) % 167 < 3;
 
-export const TalkingClip: React.FC<TalkProps> = ({ audio, cues, poses, who }) => {
+export const TalkingClip: React.FC<TalkProps> = ({ audio, cues, poses, who = HOST }) => {
   const frame = useCurrentFrame();
   const t = frame / useVideoConfig().fps;
   const mouth = at(cues, t)?.value ?? "X";
   const p = { pose: at(poses, t)?.pose ?? "talk", mouth, blink: blinking(frame), nod: mouth === "X" ? 0 : Math.sin(frame / 7) * 1.2 };
   return (
     <AbsoluteFill>
-      {who ? <Character who={who} {...p} /> : <Reporter {...p} />}
+      <Character who={who} {...p} />
       <Html5Audio src={staticFile(audio)} />
     </AbsoluteFill>
   );

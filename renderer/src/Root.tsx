@@ -1,11 +1,12 @@
 import { Composition, Still } from "remotion";
 import { Broll, brollMetadata, type BrollProps } from "./Broll";
-import { COLORS, Reporter, type Mouth, type Pose } from "./Reporter";
+import { Host } from "./Cast";
+import { COLORS, type Mouth, type Pose } from "./Reporter";
 import { Sheet, type SheetProps } from "./Sheet";
 import { Thumbnail, type ThumbProps } from "./Thumbnail";
 import { FPS, TalkingClip, talkMetadata, type TalkProps } from "./TalkingClip";
 
-const Frame: React.FC<{ pose: Pose; mouth: Mouth }> = (p) => <Reporter {...p} />;
+const Frame: React.FC<{ pose: Pose; mouth: Mouth }> = (p) => <Host {...p} />;
 const noTalk: TalkProps = { audio: "test/line.wav", duration: 1, cues: [], poses: [] };
 const sampleCard: BrollProps = {
   kind: "card", duration: 4, title: "Pre-load holds #1", sources: ["destructoid.com"], footer: "Data: Trend Radar · 2026-11-04 09:00 UTC",
