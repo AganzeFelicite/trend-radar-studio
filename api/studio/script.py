@@ -28,6 +28,8 @@ NUMBER = re.compile(r"(?<![A-Za-z0-9.])\d+(?:[.,]\d+)*")
 NUMBER_WORDS = re.compile(r"\b(two|three|four|five|six|seven|eight|nine|ten|eleven|twelve|thirteen|fourteen|fifteen|"
                           r"sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|"
                           r"hundred|thousand|million|billion|twice|thrice|triple)\b", re.I)
+# Names that contain a number word: Take-Two (GTA 6's publisher, a Trend Radar topic) is a name, not "two".
+NAMES_WITH_NUMBER_WORDS = re.compile(r"\btake[- ]two\b", re.I)
 
 FORMATS = {
     "radar_report": "Radar Report: today's top trends (up to 3) from the Trend Radar data, each with a data card. "
@@ -167,7 +169,7 @@ def validate(script: dict, ctx: dict) -> list[str]:
     texts = [s["line"] for s in scenes] + [s.get("text", "") for s in scenes] + titles + [thumb]
     if invented := sorted(set().union(*map(numbers, texts)) - ctx["allowed"]):
         errors.append(f"numbers not in the verified facts: {', '.join(invented)}")
-    if spelled := sorted({m.lower() for t in texts for m in NUMBER_WORDS.findall(t)}):
+    if spelled := sorted({m.lower() for t in texts for m in NUMBER_WORDS.findall(NAMES_WITH_NUMBER_WORDS.sub(' ', t))}):
         errors.append(f"spelled-out numbers: {', '.join(spelled)} (use digits from the verified facts, or drop them)")
     if len(titles) != 3 or any(len(t) > 70 for t in titles):
         errors.append("need exactly 3 titles under 70 characters")

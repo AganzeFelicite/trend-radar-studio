@@ -55,6 +55,7 @@ def mutate(path, value):
     (mutate(["scenes", 1, "line"], "Pre-load sits at #1 with a score of 70."), "numbers not in the verified facts: 70"),
     (mutate(["scenes", 2, "line"], "It owns 12% of the conversation."), "numbers not in the verified facts: 12"),
     (mutate(["scenes", 4, "line"], "The map is twice the size of the last one."), "spelled-out numbers: twice"),
+    (mutate(["scenes", 4, "line"], "Take-Two says twenty-two things."), "spelled-out numbers: twenty, two"),
     (mutate(["titles", 0], "Pre-load hits 500 searches"), "numbers not in the verified facts: 500"),
     (mutate(["scenes"], [VALID["scenes"][i] for i in (0, 1, 2, 5)]), "arc is missing: why"),
     (mutate(["scenes"], [VALID["scenes"][i] for i in (0, 3, 1, 2, 4, 5)]), "out of arc order"),
@@ -106,3 +107,8 @@ def test_gives_up_after_three_tries(monkeypatch):
     assert len(calls) == 3
     with Session(engine) as s:
         assert s.scalar(select(func.count()).select_from(Script).where(Script.job_id == job.id)) == 0
+
+
+def test_take_two_is_a_name_not_a_number(ctx):
+    s = mutate(["scenes", 4, "line"], "Take-Two and Take Two Interactive keep pre-load in the news.")
+    assert not [e for e in script.validate(s, ctx) if "spelled-out" in e]  # (titles may clash with earlier tests' jobs)
