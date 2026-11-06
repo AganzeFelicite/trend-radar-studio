@@ -17,6 +17,7 @@ PERSONA = (f"{CHARACTER_NAME} is a small cartoon AI gremlin who lives in an upda
 # voice on local Kokoro, the reporter is drawn in code. Add a setting here only when a real choice appears.
 CLAUDE_MODEL = os.environ.get("CLAUDE_MODEL", "haiku")  # your pick; lightest on the Pro plan's limits
 RESEARCH_MAX_SEARCHES = 3  # your pick: up to 3 searches per video
+RESEARCH_MAX_FETCHES = 4  # page reads on top of the searches (official images live on rockstargames.com pages)
 
 # --- Monthly cost caps in USD. Default $0: any paid call is refused until you raise its cap in .env. ---
 _DEFAULT_CAPS = {"llm": "0", "tts": "0", "avatar": "0", "image": "0", "video": "0"}

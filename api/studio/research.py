@@ -10,7 +10,8 @@ from urllib.parse import urlparse
 from sqlalchemy.orm import Session
 
 from studio import llm
-from studio.config import OFFICIAL_MEDIA_DOMAINS, RESEARCH_BLOCKED_DOMAINS, RESEARCH_EXCLUDE_WORDS, RESEARCH_MAX_SEARCHES, STORAGE
+from studio.config import (OFFICIAL_MEDIA_DOMAINS, RESEARCH_BLOCKED_DOMAINS, RESEARCH_EXCLUDE_WORDS, RESEARCH_MAX_FETCHES,
+                           RESEARCH_MAX_SEARCHES, STORAGE)
 from studio.db import Fact, Job, engine
 
 MAX_NOTES = 8
@@ -39,7 +40,7 @@ def prompt(job: Job) -> str:
 {subject}
 
 Find out what is actually happening and why it matters to gamers and creators. Use at most \
-{RESEARCH_MAX_SEARCHES} web searches. Return up to {MAX_NOTES} notes. Each note is one plain sentence (under 200 \
+{RESEARCH_MAX_SEARCHES} web searches and at most {RESEARCH_MAX_FETCHES} page reads, then answer. Return up to {MAX_NOTES} notes. Each note is one plain sentence (under 200 \
 characters) with the URL of the exact article or page that says it (never a homepage).
 
 Rules:
@@ -52,7 +53,8 @@ YouTube, TikTok, Twitch, Reddit, X/Twitter, Facebook, Instagram, Discord, forums
 Also list up to {MAX_IMAGES} official_images for B-roll: images on {" or ".join(OFFICIAL_MEDIA_DOMAINS)} pages \
 (Newswire posts, the game's media page) that show what the notes talk about. For each give the direct image URL \
 (it must be hosted on {OFFICIAL_MEDIA_DOMAINS[0]}), the page it is on, and what it shows in under 10 words. Never \
-images from other sites, and none when the pages have no fitting image."""
+images from other sites, and none when the pages have no fitting image. One page read is enough for the images \
+(the game's media page); if you run low on reads, skip the images rather than the notes."""
 
 
 def keep(note: dict) -> str | None:
@@ -89,7 +91,8 @@ def research(job_id: int) -> tuple[list[dict], list[tuple[dict, str]]]:
     with Session(engine) as s:
         p = prompt(s.get(Job, job_id))
     # no DB transaction stays open while Claude Code works (minutes)
-    out = llm.ask(p, SCHEMA, tools="WebSearch,WebFetch", max_turns=RESEARCH_MAX_SEARCHES + 6, job_id=job_id, step="research")
+    out = llm.ask(p, SCHEMA, tools="WebSearch,WebFetch", max_turns=RESEARCH_MAX_SEARCHES + RESEARCH_MAX_FETCHES + 6,
+                  job_id=job_id, step="research")
     notes = out["notes"]
     job_dir = STORAGE / "jobs" / str(job_id)
     job_dir.mkdir(parents=True, exist_ok=True)
