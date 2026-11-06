@@ -286,7 +286,7 @@ export const Character: React.FC<{ who: Cast; pose?: Pose; mouth?: Mouth; blink?
 };
 
 // The host (D22, 2026-11-06). Everything that used to draw the reporter draws the host.
-export const HOST: Cast = "coach";
+export const HOST: Cast = "patch";
 export const HostSet: React.FC = () => <CoachSet p={PALETTES[HOST]} />;
 export const Host: React.FC<Omit<React.ComponentProps<typeof Character>, "who">> = (p) => <Character who={HOST} {...p} />;
 

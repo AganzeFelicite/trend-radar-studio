@@ -22,7 +22,7 @@ from studio.db import Asset, Script, engine
 MODELS = Path(os.environ.get("KOKORO_DIR", Path(__file__).parents[2] / "models" / "kokoro"))
 
 # {preset: weight}, speed. "hype" is the channel voice (V2.3, 2026-11-04); the others stay for comparison.
-VOICE = "coach"  # D22 (2026-11-06); "hype" was GameReporter's
+VOICE = "patch"  # D22 (2026-11-06); "hype" was GameReporter's
 VOICES = {
     "anchor": ({"am_michael": 0.7, "am_fenrir": 0.3}, 1.10),
     "hype": ({"am_puck": 0.6, "am_michael": 0.4}, 1.15),
@@ -35,9 +35,9 @@ VOICES = {
 
 # 10 s test line per candidate and where a reaction pose lands (first word of the stretch, pose).
 CAST = {
-    "patch": ("Patch notes incoming. Version one point oh point seven: Rockstar dropped new screenshots. "
-              "Severity: I can't breathe. Known issues: none. Patch out.",
-              [("Severity", "shocked"), ("Known", "thinking"), ("Patch out", "celebrating")]),
+    "patch": ("Changelog incoming. Version one point oh point seven: Rockstar dropped new screenshots. "
+              "Severity: I can't breathe. Known issues: none. Logging off.",
+              [("Severity", "shocked"), ("Known", "thinking"), ("Logging", "celebrating")]),
     "auntie": ("Come, come, sit. You won't believe this. Rockstar posted new pictures and I have not slept. "
                "Okay, go and play. And drink water. Auntie out.",
                [("Rockstar", "shocked"), ("drink", "laughing")]),

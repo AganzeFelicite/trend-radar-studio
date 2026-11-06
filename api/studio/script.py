@@ -39,7 +39,7 @@ FORMATS = {
     "myth_or_real": "Myth or Real?: one viral claim checked against our data and the cited notes. Say \"Let me "
                     "fact-check that.\" and end the check with \"Real. Receipts below.\", \"Myth. Nerfed by the data.\" "
                     "or, if the sources don't settle it, \"Not confirmed yet.\"",
-    "weekly_recap": "Weekly Recap: the biggest moves of the week. Catchphrase you may use: \"Patch notes for the internet.\"",
+    "weekly_recap": "Weekly Recap: the biggest moves of the week. Catchphrase you may use: \"Changelog for the internet.\"",
 }
 
 SCENE = {"type": "object", "required": ["part", "shot", "line"], "properties": {
