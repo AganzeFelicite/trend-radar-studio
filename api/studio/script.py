@@ -184,6 +184,8 @@ def validate(script: dict, ctx: dict) -> list[str]:
                 errors.append(f"scene {i} is broll: give exactly one of query or media_id")
             elif m and m not in ctx["media"]:
                 errors.append(f"scene {i} broll uses unknown media_id {m!r}")
+            elif m and i > 1 and scenes[i - 2].get("media_id") == m:
+                errors.append(f"scene {i} broll repeats media_id {m!r} from the scene before; use another image, a query or a card")
             elif q and not (2 <= words(q) <= 5 and not NUMBER.search(q)):
                 errors.append(f"scene {i} broll query {q!r} must be 2 to 5 words, no numbers")
     titles, thumb = script.get("titles", []), script.get("thumbnail_text", "")

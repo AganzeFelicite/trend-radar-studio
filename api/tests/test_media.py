@@ -70,3 +70,7 @@ def test_script_broll_rules():
     assert errs(ok | {"media_id": "M1"}) and errs({**ok, "query": ""})
     assert errs({**ok, "query": "", "media_id": "M9"}) and not errs({**ok, "query": "", "media_id": "M1"})
     assert errs({**ok, "query": "top 5 consoles 2026"}) and errs({**ok, "query": "controller"})
+    two = {"titles": ["a", "b", "c"], "thumbnail_text": "t", "scenes": [
+        {"part": "hook", "shot": "desk", "line": "Hook."}, {**ok, "query": "", "media_id": "M1"}, {**ok, "query": "", "media_id": "M1"},
+        {"part": "why", "shot": "card", "fact_ids": ["F1"], "line": "y"}, {"part": "next", "shot": "desk", "line": "z"}]}
+    assert any("repeats media_id" in e for e in script.validate(two, ctx | {"job": type("J", (), {"target_seconds": 15})()}))
