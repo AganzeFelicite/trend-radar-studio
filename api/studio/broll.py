@@ -10,9 +10,9 @@ from urllib.parse import urlparse
 
 from sqlalchemy.orm import Session
 
-from studio import script
+from studio import media, script
 from studio.clip import REPO
-from studio.config import STORAGE
+from studio.config import STORAGE, THIRD_PARTY_MAX_SHARE
 from studio.costs import ensure_budget, record_cost
 from studio.db import Asset, Job, engine
 from studio.voice import PAUSE
@@ -37,7 +37,10 @@ def broll(job_id: int) -> list[dict]:
     ensure_budget("video", 0)
     job_dir = STORAGE / "jobs" / str(job_id)
     track = json.loads((job_dir / "voice.json").read_text())
+    if (share := media.third_party_share(track["scenes"])) > THIRD_PARTY_MAX_SHARE:
+        raise RuntimeError(f"refusing: {share:.0%} of the video would be fetched footage (max {THIRD_PARTY_MAX_SHARE:.0%}, D20)")
     ctx = script.context(job_id)
+    fetched = fetch_broll(job_id, job_dir, track["scenes"], ctx["media"])
     with Session(engine) as s:
         pkg = s.get(Job, job_id).input
     facts = {f["id"]: f for f in pkg.get("facts", []) if f["type"] == "verified"}
@@ -68,6 +71,33 @@ def broll(job_id: int) -> list[dict]:
             out.append({"scene": x["scene"], "start": x["start"], "end": x["end"], "path": str(path)})
     record_cost("video", "remotion-local", 0, job_id=job_id, quantity=sum(x["props"]["duration"] for x in items),
                 unit="seconds", note=f"{len(items)} B-roll clips, local, free")
+    return sorted(out + fetched, key=lambda x: x["scene"])
+
+
+def fetch_broll(job_id: int, job_dir, scenes: list[dict], leads: dict) -> list[dict]:
+    """V7.4: every "broll" scene -> a fetched, credited clip (Pixabay or official Rockstar media), logged in provenance.
+    Writes broll/credits.json {scene: credit} for the edit's on-screen credit line."""
+    out, credits, raw = [], {}, job_dir / "media"
+    for i, sc in enumerate(scenes):
+        if sc["shot"] != "broll":
+            continue
+        seconds = round(sc["end"] - sc["start"] + PAUSE, 3)
+        if sc.get("media_id"):
+            got, source, lic, lic_url = media.official(leads[sc["media_id"]]["url"], raw), "official_rockstar", media.ROCKSTAR_LICENSE, None
+        else:
+            got, source, lic, lic_url = media.pixabay(sc["query"], raw), "pixabay", media.PIXABAY_LICENSE, media.PIXABAY_LICENSE_URL
+            if got is None:
+                raise RuntimeError(f"no stock footage for scene {i} query {sc['query']!r}; rewrite the query or make it a card")
+        (job_dir / "broll").mkdir(parents=True, exist_ok=True)
+        path = media.to_clip(got["path"], seconds, job_dir / "broll" / f"scene-{i:02d}.mp4")
+        credits[i] = got["credit"]
+        with Session(engine) as s, s.begin():
+            s.add(Asset(job_id=job_id, kind="broll", source=source, source_ref=got["page"], license=lic, license_url=lic_url,
+                        path=str(path), meta={"scene": i, "by": got["by"], "credit": got["credit"], "media_kind": got["kind"],
+                                              "query": sc.get("query"), "media_id": sc.get("media_id"), "raw": got["path"]}))
+        out.append({"scene": i, "start": sc["start"], "end": sc["end"], "path": str(path)})
+    if credits:
+        (job_dir / "broll" / "credits.json").write_text(json.dumps(credits))
     return out
 
 

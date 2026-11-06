@@ -14,13 +14,13 @@ from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from studio import llm, safety
-from studio.config import CHARACTER_NAME, OPENER, SIGNOFF
+from studio.config import CHARACTER_NAME, OPENER, PERSONA, SIGNOFF, STORAGE, THIRD_PARTY_MAX_SHARE
 from studio.db import Fact, Job, Script, engine
 
 WORDS_PER_SECOND = 2.5  # the hype voice, measured on a real 50 s track (V3.5): ~150 script words/min
 PAUSE = 0.3  # seconds between scenes; studio/voice.py inserts the same pause
 PARTS = ("hook", "what", "why", "next")
-SHOTS = ("desk", "card", "headline")
+SHOTS = ("desk", "card", "headline", "broll")
 POSES = ("talk", "shocked", "laughing", "thinking", "celebrating")
 TRIES = 3
 SIMILAR = 0.75  # difflib ratio at which a title counts as a repeat
@@ -32,8 +32,9 @@ NUMBER_WORDS = re.compile(r"\b(two|three|four|five|six|seven|eight|nine|ten|elev
 NAMES_WITH_NUMBER_WORDS = re.compile(r"\btake[- ]two\b", re.I)
 
 FORMATS = {
-    "radar_report": "Radar Report: today's top trends (up to 3) from the Trend Radar data, each with a data card. "
-                    "Catchphrase you may use: \"Fetching the data…\"",
+    "radar_report": "Story Radar: the story behind today's top topics (up to 3): what actually happened (from the "
+                    "research notes, attributed), the host's reaction, and one data card per topic as the receipt that "
+                    "it is what fans talk about today. Catchphrase you may use: \"Changelog:\"",
     "make_this_now": "Make This Now: one opportunity for creators and why it's hot right now. "
                      "Catchphrase you may use: \"This one's a loot drop for creators.\"",
     "myth_or_real": "Myth or Real?: one viral claim checked against our data and the cited notes. Say \"Let me "
@@ -45,7 +46,8 @@ FORMATS = {
 SCENE = {"type": "object", "required": ["part", "shot", "line"], "properties": {
     "part": {"enum": list(PARTS)}, "shot": {"enum": list(SHOTS)}, "pose": {"enum": list(POSES)},
     "line": {"type": "string"}, "text": {"type": "string"},
-    "fact_ids": {"type": "array", "items": {"type": "string"}}, "note_ids": {"type": "array", "items": {"type": "string"}}}}
+    "fact_ids": {"type": "array", "items": {"type": "string"}}, "note_ids": {"type": "array", "items": {"type": "string"}},
+    "query": {"type": "string"}, "media_id": {"type": "string"}}}
 SCHEMA = {"type": "object", "required": ["titles", "thumbnail_text", "scenes"], "properties": {
     "titles": {"type": "array", "items": {"type": "string"}, "minItems": 3, "maxItems": 3},
     "thumbnail_text": {"type": "string"}, "scenes": {"type": "array", "items": SCENE}}}
@@ -81,7 +83,9 @@ def context(job_id: int) -> dict:
     day = date.fromisoformat(pkg["brief_date"]) if pkg.get("brief_date") else date.today()
     allowed = set().union(*map(numbers, verified.values()), numbers(job.input.get("topic", "")),
                           {str(day.day), str(day.year), str(len(pkg.get("segments", [])) or 1)})
-    return {"job": job, "verified": verified, "notes": notes, "allowed": allowed, "day": day,
+    leads = STORAGE / "jobs" / str(job_id) / "media-leads.json"  # official images found by research (V7.2)
+    media = {m["id"]: m for m in json.loads(leads.read_text())} if leads.exists() else {}
+    return {"job": job, "verified": verified, "notes": notes, "allowed": allowed, "day": day, "media": media,
             "previous": [t for b in bodies for t in b["titles"]] + pkg.get("previous_titles", []),
             "previous_thumbs": [b["thumbnail_text"] for b in bodies]}
 
@@ -93,15 +97,16 @@ def prompt(ctx: dict) -> str:
     notes = "\n".join(f"- {i}: {t} ({u})" for i, (t, u) in ctx["notes"].items()) or "- none"
     moves = "\n".join(f"- {x['topic']['name']}: {x['movement']}" for s in pkg.get("segments", []) for x in s["topics"])
     draft = (pkg.get("script") or "").replace(pkg.get("host") or "\0", CHARACTER_NAME)
-    return f"""You write the script for one vertical gaming-news short ({job.target_seconds} seconds, about {budget} \
-spoken words in total) hosted by {CHARACTER_NAME}, a cartoon AI news reporter in a headset at a news desk. \
-Date: {ctx['day']:%B} {ctx['day'].day}, {ctx['day'].year}.
+    media = "\n".join(f"- {i}: {m['shows']} ({m['page']})" for i, m in ctx["media"].items()) or "- none"
+    return f"""You write the script for one vertical gaming short ({job.target_seconds} seconds, about {budget} \
+spoken words in total) hosted by {CHARACTER_NAME}. Date: {ctx['day']:%B} {ctx['day'].day}, {ctx['day'].year}.
 
 {"Topic: " + pkg["topic"] if job.input_kind == "topic" else "Source: today's Trend Radar Content Package."}
 Format: {FORMATS[job.format]}
 
-{CHARACTER_NAME}'s voice: hyped but honest, quick self-aware jokes (at most one pun), light gamer slang (GG, W/L, \
-patch notes, buff/nerf, meta), never mean or toxic, news-anchor energy. Says "not confirmed yet" when that's the truth.
+{CHARACTER_NAME}'s voice: {PERSONA}
+Tell the STORY first (what happened, who said it, why it matters to players and creators), in the host's voice, with \
+one or two real jokes. Our data is the receipt, not the story: one line per topic on why it is trending now.
 
 Verified facts (Trend Radar data; use them word for word):
 {facts}
@@ -116,10 +121,18 @@ Structure: scenes in arc order. "part" is hook, then what (what's happening), th
 (what to watch next). The first scene is the hook: one punchy line of at most 10 words, shot "desk". The last scene \
 is shot "desk". Don't write a greeting or a sign-off: they are added for you.
 Shots:
-- "desk": {CHARACTER_NAME} on camera, with a "pose" ({", ".join(POSES)}). Use 2 to 4 desk scenes.
+- "desk": {CHARACTER_NAME} on camera, with a "pose" ({", ".join(POSES)}): the hook, reactions and the end. 2 to 4 desk scenes.
+- "broll": voice-over on real footage of the thing being talked about. Either "query": 2 to 5 plain English words for \
+royalty-free stock footage of a real-world visual that fits the line (e.g. "game controller close up", "night city \
+traffic", "glass office building", "download progress screen"; never brand names, game titles or people), or \
+"media_id": one of the official images below, when the line is about what that image shows. Use broll for most \
+what/why scenes so the viewer sees what we talk about, up to about {int(THIRD_PARTY_MAX_SHARE * 100)}% of the video.
 - "card": voice-over on a data card showing "fact_ids" (verified) and/or "note_ids" (notes). At least one card. Optional "text": the card's title.
 - "headline": voice-over on a big animated headline in "text".
 On-screen "text" is at most 6 words (it must be readable on a phone).
+
+Official images available (Rockstar-hosted; use by media_id):
+{media}
 
 Hard rules (a program checks them):
 - Every number is written in digits and comes from the verified facts. No other numbers, no spelled-out numbers \
@@ -165,6 +178,14 @@ def validate(script: dict, ctx: dict) -> list[str]:
             errors.append(f"scene {i} is a headline with no text")
         if words(s.get("text", "")) > 6:
             errors.append(f"scene {i} on-screen text has {words(s['text'])} words; at most 6 (readable on a phone)")
+        if s["shot"] == "broll":
+            q, m = s.get("query", "").strip(), s.get("media_id", "").strip()
+            if bool(q) == bool(m):
+                errors.append(f"scene {i} is broll: give exactly one of query or media_id")
+            elif m and m not in ctx["media"]:
+                errors.append(f"scene {i} broll uses unknown media_id {m!r}")
+            elif q and not (2 <= words(q) <= 5 and not NUMBER.search(q)):
+                errors.append(f"scene {i} broll query {q!r} must be 2 to 5 words, no numbers")
     titles, thumb = script.get("titles", []), script.get("thumbnail_text", "")
     texts = [s["line"] for s in scenes] + [s.get("text", "") for s in scenes] + titles + [thumb]
     if invented := sorted(set().union(*map(numbers, texts)) - ctx["allowed"]):
@@ -185,6 +206,8 @@ def validate(script: dict, ctx: dict) -> list[str]:
     secs = estimate(scenes)
     if not 0.75 * target <= secs <= 1.15 * target:
         errors.append(f"about {secs:.0f} s of speech; the target is {target} s ({round(target * WORDS_PER_SECOND)} words)")
+    if secs and (share := sum(words(s["line"]) / WORDS_PER_SECOND for s in scenes if s["shot"] == "broll") / secs) > THIRD_PARTY_MAX_SHARE:
+        errors.append(f"about {share:.0%} of the video is on fetched footage; at most {THIRD_PARTY_MAX_SHARE:.0%} (use desk or card scenes)")
     return errors
 
 
@@ -230,5 +253,5 @@ if __name__ == "__main__":
     body = write(int(sys.argv[1]))
     print(" | ".join(body["titles"]), f"· thumbnail: {body['thumbnail_text']} · ~{body['est_seconds']} s")
     for s in body["scenes"]:
-        cue = s.get("pose") or s.get("text") or ", ".join(s.get("fact_ids", []) + s.get("note_ids", []))
+        cue = s.get("pose") or s.get("query") or s.get("media_id") or s.get("text") or ", ".join(s.get("fact_ids", []) + s.get("note_ids", []))
         print(f"[{s['part']:4} {s['shot']:8} {cue}] {s['line']}")

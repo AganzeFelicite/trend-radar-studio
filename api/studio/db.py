@@ -31,7 +31,7 @@ JOB_STATUSES = ("queued", "running", "blocked", "failed", "review")
 FACT_KINDS = ("verified", "unverified-context")
 ASSET_KINDS = ("character", "cutaway", "voice", "avatar_clip", "broll", "data_card", "music", "sfx", "thumbnail")
 # Allowed visual/audio sources (brief §2). "gameplay" is deliberately absent until V6.4 is approved.
-ASSET_SOURCES = ("own", "trend_radar", "pexels", "ai_generated", "tts", "royalty_free")
+ASSET_SOURCES = ("own", "trend_radar", "pexels", "pixabay", "official_rockstar", "ai_generated", "tts", "royalty_free")
 REVIEW_STATES = ("pending", "approved", "rejected")
 COST_SERVICES = tuple(COST_CAPS_USD)  # one list: every paid service has a cap
 

@@ -25,6 +25,7 @@ FACE, HEAD_TOP = [540, 503], 152  # renderer/src/Reporter.tsx FACE: where the re
 # The PRESS badge spans y 1224-1386 at 1x and moves down with a face-held zoom (y' = 503 + (y - 503) * z):
 # captions at 1530 stay clear of it up to a 1.1x punch-in, above the "+ Follow" pill (1595+).
 CAPTION_Y, PUNCH = 1530, 1.1
+CREDIT_Y = 1400  # the footage credit line, just above the captions
 REACTIONS = {"shocked", "celebrating", "laughing"}
 CYAN, WHITE = "#00e5d4", "#ffffff"
 # Beds from your skill's cleared list (CC0 / Mixkit Free License, no credit needed), rotated per job.
@@ -36,14 +37,16 @@ BEDS = ["Impacts & Cinematic/Cinematic Ambience/lo-fi-beat-atmo-music-piano-drum
         "Music & Background/Tension Beds/tension-and-progress-drum-loop-at-120bpm-freesound-843467.mp3"]
 
 
-def beats(scenes: list[dict], package: bool) -> list:
-    """News format: desk scenes on the reporter (punch-in for the hook, reactions and sign-off, slow push
-    otherwise), card/headline scenes as full-frame B-roll, a name lower-third on the opener."""
-    out = []
+def beats(scenes: list[dict], package: bool, credits: dict | None = None) -> list:
+    """News format: desk scenes on the host (punch-in for the hook, reactions and sign-off, slow push otherwise),
+    card/headline/broll scenes as full-frame B-roll (fetched footage carries its credit line), a name lower-third
+    on the opener."""
+    out, credits = [], credits or {}
     for i, s in enumerate(scenes):
         t = 0.0 if i == 0 else round(s["start"] - 0.05, 3)  # a beat starts just before its first word
         if s["shot"] != "desk":
-            out.append([t, "broll", f"scene-{i:02d}", {}])
+            credit = credits.get(str(i)) or credits.get(i)
+            out.append([t, "broll", f"scene-{i:02d}", {"title": [[credit, 34, "F", WHITE, CREDIT_Y]]} if credit else {}])
         elif i == 0:
             out.append([t, "punch", None, {"zoom": PUNCH, "boom": True}])
         elif i == len(scenes) - 1:
@@ -84,9 +87,11 @@ def write_plan(job_id: int) -> Path:
         with Session(engine) as s, s.begin():
             s.add(Asset(job_id=job_id, kind="broll", source="own", source_ref="ffmpeg color 0x0b1026",
                         license="Own work: plain navy frame", path=str(assets / "meme_bg.png")))
+    credits_file = assets / "credits.json"
+    credits = json.loads(credits_file.read_text()) if credits_file.exists() else {}
     plan = {"name": f"{CHARACTER_NAME} job {job_id}", "src": str(job_dir / "reporter.mp4"), "face": FACE,
             "head_top": HEAD_TOP, "caption_low": CAPTION_Y, "music": str(SOUND_LIBRARY / BEDS[job_id % len(BEDS)]), "takes": [[0.0, duration]],
-            "beats": beats(track["scenes"], "facts" in pkg), "hl": highlights(pkg), "work": str(work),
+            "beats": beats(track["scenes"], "facts" in pkg, credits), "hl": highlights(pkg), "work": str(work),
             "assets": str(assets)}
     (work / "plan.json").write_text(json.dumps(plan, indent=1, ensure_ascii=False))
     return work / "plan.json"

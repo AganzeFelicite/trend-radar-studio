@@ -7,6 +7,11 @@ from decimal import Decimal
 CHARACTER_NAME = os.environ.get("CHARACTER_NAME", "Patch")
 OPENER = "Patch notes incoming."  # your picks (docs/CHARACTER.md §8; D22, 2026-11-06)
 SIGNOFF = "Known issues: none. Patch out."
+# How the host talks (docs/CHARACTER.md §7). Used by the script prompt; the name comes from CHARACTER_NAME.
+PERSONA = (f"{CHARACTER_NAME} is a small cartoon AI gremlin who lives in an update server and delivers gaming news as "
+           "patch notes: deadpan, dry one-liners, version numbers (\"Patch 1.0.7\"), severity ratings (\"Severity: I can't "
+           "breathe\"), \"known issues\", \"hotfix: none\", \"rolling back my feelings\". Fans scream; "
+           f"{CHARACTER_NAME} files a ticket. Never mean, never toxic. Says \"Status: not confirmed\" when that is the truth.")
 
 # --- Providers: none paid (D14-D16). Scripts/research run on your Claude Code (`claude -p`),
 # voice on local Kokoro, the reporter is drawn in code. Add a setting here only when a real choice appears.
@@ -39,6 +44,13 @@ RESEARCH_BLOCKED_DOMAINS = ("youtube.com", "youtu.be", "tiktok.com", "twitch.tv"
                             "facebook.com", "instagram.com", "threads.net", "bsky.app", "discord.com", "discord.gg",
                             "4chan.org", "pastebin.com", "fandom.com")
 RESEARCH_EXCLUDE_WORDS = r"\b(leak\w*|rumou?r\w*|insider|pira\w+|jailbreak\w*|cheat\w*|datamin\w+)"
+
+# --- B-roll (V7.4, D20/D21): stock + official media, credited; never YouTube downloads ---
+PIXABAY_API_KEY = os.environ.get("PIXABAY_API_KEY", "")
+OFFICIAL_MEDIA_DOMAINS = ("rockstargames.com",)  # only files Rockstar hosts itself
+# Share of the runtime that may be fetched media. D20 said a quarter; raised to half on 2026-11-06 ("show all the
+# things we talk about"): the host, captions and our cards carry the rest, which keeps the video ours.
+THIRD_PARTY_MAX_SHARE = 0.5
 
 # --- Files and local tools (all on this Mac) ---
 STORAGE = Path(os.environ.get("STORAGE_DIR", Path(__file__).parents[2] / "storage"))  # per-job files, git-ignored
