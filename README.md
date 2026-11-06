@@ -60,6 +60,10 @@ uv run pytest                      # uses its own studio_test database
 
 Secrets go in `.env` only, which git ignores. `.env.example` lists every variable, and a test fails if the code reads one that isn't listed.
 
+## Character candidates (V7.1)
+
+`scripts/cast.sh` renders the three hosts from `docs/CHARACTER-CANDIDATES.md` (sheet + 10 s talking clip each, $0) into `assets/cast/` and opens `assets/cast/compare.html`.
+
 ## Input (V3.1)
 
 `POST /jobs` takes `{"input": "...", "format": "radar_report", "target_seconds": 50}` (format and length are optional). `input` is one topic line, or a whole Trend Radar Content Package: the JSON from Trend Radar's `GET /api/admin/content-package`, or the Markdown it renders. The package's facts are stored as `verified`, word for word.

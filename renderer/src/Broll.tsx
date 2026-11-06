@@ -14,10 +14,10 @@ export const brollMetadata: CalculateMetadataFunction<BrollProps> = ({ props }) 
   durationInFrames: Math.max(1, Math.ceil(props.duration * FPS)),
 });
 
-const ANTON = "Anton, DejaVu Sans, sans-serif";
+export const ANTON = "Anton, DejaVu Sans, sans-serif";
 const SANS = "DejaVu Sans, sans-serif";
 
-const useAnton = () => {
+export const useAnton = () => {
   const [handle] = useState(() => delayRender("Anton font"));
   useEffect(() => {
     new FontFace("Anton", `url('${staticFile("fonts/Anton-Regular.ttf")}')`).load()

@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Character Candidates</title>
+<style>
+:root{--bg:#0d1117;--panel:#161b22;--line:#30363d;--text:#e6edf3;--muted:#8b949e}
+@media (prefers-color-scheme: light){:root{--bg:#f6f8fa;--panel:#fff;--line:#d0d7de;--text:#1f2328;--muted:#59636e}}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 system-ui,sans-serif}
+main{max-width:1400px;margin:0 auto;padding:24px 16px}
+h1{font-size:22px;margin:0 0 4px} p{color:var(--muted);margin:0 0 20px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px}
+.card h2{font-size:18px;margin:0 0 2px} .card small{color:var(--muted)}
+video{width:100%;max-width:300px;border-radius:12px;background:#000;display:block;margin:12px auto}
+img{width:100%;border-radius:8px;margin-top:8px}
+ul{margin:8px 0 0 18px;padding:0;color:var(--muted)}
+</style></head><body><main>
+<h1>Character candidates</h1>
+<p>Same rig, same lip-sync, three personalities. Each clip is the candidate's own voice reading its opener, one hook and its sign-off. Details in <code>docs/CHARACTER-CANDIDATES.md</code>. Reply with A, B or C.</p>
+<div class="grid">
+  <div class="card"><h2>A. Patch</h2><small>the patch-notes gremlin · deadpan</small>
+    <video src="patch/talk.mp4" controls></video>
+    <ul><li>Every event is a patch note with a severity</li><li>Works on boring topics</li><li>Opener: "Patch notes incoming."</li></ul>
+    <img src="patch/sheet.png" alt="Patch character sheet"></div>
+  <div class="card"><h2>B. Auntie Ping</h2><small>the group-chat auntie · warm gossip</small>
+    <video src="auntie/talk.mp4" controls></video>
+    <ul><li>Corporate news as neighbourhood drama</li><li>Nobody else in GTA content sounds like her</li><li>Opener: "Come, come, sit."</li></ul>
+    <img src="auntie/sheet.png" alt="Auntie Ping character sheet"></div>
+  <div class="card"><h2>C. Coach Dub</h2><small>the launch-day coach · loud and sincere</small>
+    <video src="coach/talk.mp4" controls></video>
+    <ul><li>Countdown, whistle, locker-room speeches</li><li>Easy running gags</li><li>Opener: "Huddle up!"</li></ul>
+    <img src="coach/sheet.png" alt="Coach Dub character sheet"></div>
+</div>
+</main></body></html>

@@ -22,7 +22,7 @@ const DESK_Y = 1660;
 // Where the face lands after scaling, for FilmCraft layouts (plan.json `face` / `head_top`) and crops.
 export const FACE = { x: 540, y: 503, headTop: 152 };
 
-const MouthShape: React.FC<{ m: Mouth | "side" }> = ({ m }) => {
+export const MouthShape: React.FC<{ m: Mouth | "side" }> = ({ m }) => {
   const teeth = (w: number, y: number) => (
     <path d={`M${-w},${y} Q0,${y - 8} ${w},${y} L${w - 3},${y + 10} Q0,${y + 5} ${-w + 3},${y + 10} Z`} fill={c.white} />
   );
@@ -57,8 +57,8 @@ const MouthShape: React.FC<{ m: Mouth | "side" }> = ({ m }) => {
   }
 };
 
-type Eyes = "open" | "wide" | "happy" | "closed";
-const Eye: React.FC<{ x: number; kind: Eyes; look: [number, number] }> = ({ x, kind, look }) => {
+export type Eyes = "open" | "wide" | "happy" | "closed";
+export const Eye: React.FC<{ x: number; kind: Eyes; look: [number, number] }> = ({ x, kind, look }) => {
   const y = 770;
   if (kind === "happy") return <path d={`M${x - 30},${y + 8} Q${x},${y - 24} ${x + 30},${y + 8}`} stroke={c.iris} strokeWidth={10} fill="none" strokeLinecap="round" />;
   if (kind === "closed") return <path d={`M${x - 30},${y + 4} Q${x},${y + 16} ${x + 30},${y + 4}`} stroke={c.iris} strokeWidth={9} fill="none" strokeLinecap="round" />;
@@ -74,7 +74,7 @@ const Eye: React.FC<{ x: number; kind: Eyes; look: [number, number] }> = ({ x, k
   );
 };
 
-const Brow: React.FC<{ x: number; lift: number; tilt: number; flip?: boolean }> = ({ x, lift, tilt, flip }) => {
+export const Brow: React.FC<{ x: number; lift: number; tilt: number; flip?: boolean }> = ({ x, lift, tilt, flip }) => {
   const s = flip ? -1 : 1;
   const y = 712 + lift;
   return <path d={`M${x - 36 * s},${y + tilt} Q${x},${y - 14} ${x + 36 * s},${y - tilt}`} stroke={c.hair} strokeWidth={15} fill="none" strokeLinecap="round" />;
@@ -89,8 +89,8 @@ const Fist: React.FC<{ x: number; y: number }> = ({ x, y }) => (
 
 const Arm: React.FC<{ d: string }> = ({ d }) => <path d={d} stroke={c.blazer} strokeWidth={92} fill="none" strokeLinecap="round" />;
 
-type Face = { lift: [number, number]; tilt: number; eyes: Eyes; look: [number, number]; mouth?: Mouth | "side"; head: number };
-const FACES: Record<Pose, Face> = {
+export type Face = { lift: [number, number]; tilt: number; eyes: Eyes; look: [number, number]; mouth?: Mouth | "side"; head: number };
+export const FACES: Record<Pose, Face> = {
   talk: { lift: [0, 0], tilt: 0, eyes: "open", look: [0, 0], head: 0 },
   shocked: { lift: [-30, -30], tilt: 0, eyes: "wide", look: [0, 0], mouth: "E", head: 0 },
   laughing: { lift: [-12, -12], tilt: -4, eyes: "happy", look: [0, 0], mouth: "D", head: -5 },

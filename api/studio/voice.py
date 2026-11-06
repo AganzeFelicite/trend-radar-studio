@@ -27,6 +27,23 @@ VOICES = {
     "anchor": ({"am_michael": 0.7, "am_fenrir": 0.3}, 1.10),
     "hype": ({"am_puck": 0.6, "am_michael": 0.4}, 1.15),
     "warm": ({"am_fenrir": 0.5, "am_onyx": 0.5}, 1.05),
+    # V7.1 candidates (docs/CHARACTER-CANDIDATES.md): original blends, one per character
+    "patch": ({"am_adam": 0.7, "af_sky": 0.3}, 1.2),
+    "auntie": ({"af_bella": 0.5, "af_sarah": 0.5}, 1.0),
+    "coach": ({"am_michael": 0.5, "am_onyx": 0.5}, 1.1),
+}
+
+# 10 s test line per candidate and where a reaction pose lands (first word of the stretch, pose).
+CAST = {
+    "patch": ("Patch notes incoming. Version one point oh point seven: Rockstar dropped new screenshots. "
+              "Severity: I can't breathe. Known issues: none. Patch out.",
+              [("Severity", "shocked"), ("Known", "thinking"), ("Patch out", "celebrating")]),
+    "auntie": ("Come, come, sit. You won't believe this. Rockstar posted new pictures and I have not slept. "
+               "Okay, go and play. And drink water. Auntie out.",
+               [("Rockstar", "shocked"), ("drink", "laughing")]),
+    "coach": ("Huddle up! Thirteen days out. Scouting report: Rockstar posted new screenshots. Official. "
+              "Hydrate. Pre-load. Coach out.",
+              [("Huddle", "celebrating"), ("Official", "shocked"), ("Hydrate", "thinking")]),
 }
 
 
@@ -215,6 +232,19 @@ if __name__ == "__main__":
         out_dir.mkdir(parents=True, exist_ok=True)
         for name in VOICES:
             print(f"{name}: {synthesize(SAMPLE, out_dir / f'{name}.wav', name)[0]:.1f}s")
+    elif sys.argv[1:] == ["cast"]:  # V7.1: one ~10 s test per candidate -> renderer/public/test/<who>.wav + props
+        pub = repo / "renderer" / "public" / "test"
+        pub.mkdir(parents=True, exist_ok=True)
+        (repo / "renderer" / "out").mkdir(exist_ok=True)
+        for who, (text, marks) in CAST.items():
+            seconds, cues = synthesize(text, pub / f"{who}.wav", who)
+            poses = []
+            for word, pose in marks:  # ponytail: char-proportion guess, fine for a test
+                at = round(seconds * text.index(word) / len(text), 2)
+                poses.append({"start": at, "end": round(at + 1.6, 2), "pose": pose})
+            props = {"audio": f"test/{who}.wav", "duration": seconds, "cues": cues, "poses": poses, "who": who}
+            (repo / "renderer" / "out" / f"{who}-props.json").write_text(json.dumps(props))
+            print(f"{who}: {seconds:.1f}s, {len(cues)} mouth cues")
     else:  # V2.4: ~10 s talking-clip test -> renderer/public/test/ + props for `remotion render`
         text = (f"Ping check — {CHARACTER_NAME}'s online! Three trends are lighting up the radar today, "
                 "and number two surprised even me. Roll the tape!")

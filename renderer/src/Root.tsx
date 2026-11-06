@@ -1,7 +1,8 @@
 import { Composition, Still } from "remotion";
 import { Broll, brollMetadata, type BrollProps } from "./Broll";
-import { Reporter, type Mouth, type Pose } from "./Reporter";
-import { Sheet } from "./Sheet";
+import { COLORS, Reporter, type Mouth, type Pose } from "./Reporter";
+import { Sheet, type SheetProps } from "./Sheet";
+import { Thumbnail, type ThumbProps } from "./Thumbnail";
 import { FPS, TalkingClip, talkMetadata, type TalkProps } from "./TalkingClip";
 
 const Frame: React.FC<{ pose: Pose; mouth: Mouth }> = (p) => <Reporter {...p} />;
@@ -14,10 +15,12 @@ const sampleCard: BrollProps = {
 
 export const Root = () => (
   <>
-    <Still id="CharacterSheet" component={Sheet} width={1800} height={900} />
+    <Still id="CharacterSheet" component={Sheet} width={1800} height={960} defaultProps={{} as SheetProps} />
     <Still id="ReporterStill" component={Frame} width={1080} height={1920} defaultProps={{ pose: "talk" as Pose, mouth: "C" as Mouth }} />
     <Composition id="TalkingClip" component={TalkingClip} width={1080} height={1920} fps={FPS} durationInFrames={30}
       defaultProps={noTalk} calculateMetadata={talkMetadata} />
+    <Still id="Thumbnail" component={Thumbnail} width={1080} height={1920}
+      defaultProps={{ text: "Pre-load stays #1", pose: "shocked", accent: COLORS.magenta } as ThumbProps} />
     <Composition id="Broll" component={Broll} width={1080} height={1920} fps={FPS} durationInFrames={30}
       defaultProps={sampleCard} calculateMetadata={brollMetadata} />
   </>

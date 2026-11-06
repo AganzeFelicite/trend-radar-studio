@@ -5,7 +5,9 @@ clearly cartoon and clearly AI, and none of them is a Rockstar character or look
 today's three topics (Nov 6: Launch Screenshots, Take-Two business, PS5 Pro) so you can hear the voice, not just read a
 description. The numbers in the hooks are placeholders for verified facts.
 
-**Reply with A, B or C** (or "A but …"). Then V7.1 draws the sheet and voice for your approval.
+**See and hear them:** `scripts/cast.sh` renders each one's sheet and a 10 s talking clip into `assets/cast/` and opens `assets/cast/compare.html`.
+
+**Reply with A, B or C** (or "A but …"). Then V7.1 finishes that one: bible, poses and voice tuned to your notes.
 
 ---
 

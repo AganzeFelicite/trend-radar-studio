@@ -210,6 +210,7 @@ Prices checked 2026-11-04: fal.ai lists Kling Avatar v2 at $0.0562/s (Std) and $
 ## Phase V7 — Story videos (pivot 2, 2026-11-06)
 
 ### V7.1 Character v3: your pick from the 3 candidates → bible, SVG sheet (5 poses + 9 mouths), voice mix, 10 s talking test
+- [x] All three candidates drawn on the reporter's rig (`renderer/src/Cast.tsx`), voiced (`studio/voice.py` CAST) and rendered by `scripts/cast.sh` → `assets/cast/compare.html` (sheet + 10 s talking clip each)
 - [ ] Candidate picked by you (D22); `CHARACTER_NAME`, opener and sign-off updated; Radar `HOST_NAME` matched
 - [ ] Sheet drawn in `renderer/src/`, same character in every pose; approved by you
 - [ ] Voice: original Kokoro mix; 3 sample lines; Whisper hears every word
