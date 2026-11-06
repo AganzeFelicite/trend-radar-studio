@@ -217,27 +217,29 @@ Prices checked 2026-11-04: fal.ai lists Kling Avatar v2 at $0.0562/s (Std) and $
 - DoD: [ ] Implemented [ ] Tests/manual test [ ] Docs [ ] Committed & pushed [ ] Verified — how:
 
 ### V7.2 Story research: per topic, the event (what, when, who, where it was said), 2 angles, a joke bank
-- [ ] Official and press sources first (rockstargames.com, take2games.com, platform blogs, then outlets); user-generated platforms dropped as now
-- [ ] Every claim keeps its URL (`unverified-context`); the Radar's numbers stay `verified`
-- [ ] Output: `story.json` (event, timeline, angles, jokes, media leads with URLs)
+- [x] Official and press sources first; user-generated platforms dropped as before (`studio/research.py`)
+- [x] Every claim keeps its URL (`unverified-context`); the Radar's numbers stay `verified`
+- [x] Official image leads (Rockstar-hosted only) → `storage/jobs/<id>/media-leads.json` (M1…), tested
+- [ ] Angles and a joke bank in the host's voice (the script step improvises them today)
 - DoD: [ ] Implemented [ ] Tests/manual test [ ] Docs [ ] Committed & pushed [ ] Verified — how:
 
 ### V7.3 Hook engine + story script: arc hook → the story → reaction → "why now" data line → what to watch
 - [ ] 5 hook candidates scored and ranked (D23); the winner is editable on the review page
-- [ ] Validator: numbers only from verified facts or cited notes, arc complete, ≤ 60 s, no sensational words, titles/thumbnail unlike the last 7
-- [ ] Every scene carries a media cue (`pixabay:<query>`, `rockstar:<url>`, `ai:<prompt>`, `card:<fact ids>`, `desk:<pose>`)
+- [x] Story-first prompt in the host's voice (`config.PERSONA`); validator as before plus broll rules and the D20 share gate
+- [x] Every scene carries a visual: `desk` (pose), `card` (fact ids), `headline`, or `broll` (`query` for stock, `media_id` for an official image)
 - DoD: [ ] Implemented [ ] Tests/manual test [ ] Docs [ ] Committed & pushed [ ] Verified — how:
 
 ### V7.4 Media fetcher: Pixabay search, Rockstar media download, AI image generation; provenance and credits
-- [ ] `PIXABAY_API_KEY` in `.env`; search by scene query; licence and page URL logged
-- [ ] Rockstar: only direct downloads from rockstargames.com; URL, fetch time and "Rockstar Games" credit logged
+- [x] `PIXABAY_API_KEY` in `.env`; videos first, then vertical photos; licence, page URL and credit logged (`studio/media.py`)
+- [x] Rockstar: only https files on rockstargames.com (image or a page's og:image); page URL and "Image: Rockstar Games" credit logged
 - [ ] AI images: provider and cap confirmed with you first; `ensure_budget` before each call
-- [ ] Gate: render refused if third-party media > 25% of runtime or any asset lacks licence/credit
+- [x] Gate: refused above `THIRD_PARTY_MAX_SHARE` (50%, see D20 note) or without a licence row; stills push in, videos loop and crop to 1080×1920
 - DoD: [ ] Implemented [ ] Tests/manual test [ ] Docs [ ] Committed & pushed [ ] Verified — how:
 
 ### V7.5 Scene builder + edit: media per scene, punch-ins, pop captions, credits, end card, bed and SFX (FilmCraft, as V4.1)
-- [ ] Character on screen for hook, reactions and sign-off; media and cards the rest
-- [ ] Credits strip for Rockstar and Pixabay media; AI-generated frames marked in the description
+- [x] Character on screen for hook, reactions and sign-off; media and cards the rest (existing FilmCraft beats)
+- [x] Credit line on every fetched shot (`broll/credits.json` → the edit's title overlay at y=1400)
+- [ ] AI-generated frames marked in the description (when AI images are switched on)
 - DoD: [ ] Implemented [ ] Tests/manual test [ ] Docs [ ] Committed & pushed [ ] Verified — how:
 
 ### V7.6 Output bundle: MP4, thumbnail, 3 titles, caption, hashtags, description with sources, credits and AI label; posting checklist

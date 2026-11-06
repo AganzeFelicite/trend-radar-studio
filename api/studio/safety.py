@@ -47,10 +47,12 @@ def classify(text: str, job_id: int | None = None) -> str | None:
 Subject:
 {text}
 
-Answer "none" unless the video would be about {", ".join(SENSITIVE_TOPICS)} matters: for example share prices, \
+Answer "none" unless the video itself would be about {", ".join(SENSITIVE_TOPICS)} matters: for example share prices, \
 investing, crypto, making money or side incomes, diets, mental or physical health, medicine, lawsuits or legal \
 advice. Ordinary game news (release dates, file sizes, maps, consoles, trailers, game mechanics like health bars) \
-is "none". Give a one-sentence reason.""", CLASSIFY, job_id=job_id, step="safety classifier")
+is "none". News about a game company is game news too: a publisher's earnings call, a CEO's statement about a \
+release date or a game's price, sales figures or a studio announcement are "none" unless the video would advise \
+on money or centre on share prices. When a gaming subject is a judgment call, answer "none". Give a one-sentence reason.""", CLASSIFY, job_id=job_id, step="safety classifier")
     return None if out["category"] == "none" else f"{out['category']} topic (AI classifier: {out['reason']})"
 
 

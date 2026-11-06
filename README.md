@@ -72,6 +72,10 @@ Secrets go in `.env` only, which git ignores. `.env.example` lists every variabl
 curl -s localhost:8000/api/admin/content-package | jq '{input: tojson}' | curl -s -X POST 127.0.0.1:8400/jobs -H 'content-type: application/json' -d @-
 ```
 
+## B-roll (V7.4): real footage of what we talk about
+
+Script scenes with shot `broll` carry a stock-search `query` or an official image `media_id` (found by research on rockstargames.com). `studio.broll` fetches them (Pixabay with your free key, or Rockstar's own files), logs each in provenance with its licence, and turns them into credited 1080×1920 clips; the edit shows the credit line. Fetched footage is capped at `THIRD_PARTY_MAX_SHARE` of the runtime. YouTube videos are never downloaded.
+
 ## Research (V3.2, runs on the Mac)
 
 Research runs on **your own Claude Code** (`claude -p`, your claude.ai login; `ANTHROPIC_API_KEY` is never passed on), with web search, so it costs $0. The model is `CLAUDE_MODEL` (default `haiku`). It returns up to 8 one-sentence notes, each with the URL of the page that says it, stored as `unverified-context` facts. The code drops user-generated platforms (YouTube, Reddit, X...), rumour/leak wording and homepage citations.
