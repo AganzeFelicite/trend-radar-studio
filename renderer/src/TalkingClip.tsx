@@ -11,7 +11,7 @@ export type TalkProps = {
   duration: number; // seconds
   cues: (Span & { value: Mouth })[];
   poses: (Span & { pose: Pose })[];
-  who?: Cast; // a candidate from Cast.tsx; GameReporter when unset
+  who?: Cast; // a candidate from Cast.tsx; the reporter when unset
 };
 
 export const FPS = 30;

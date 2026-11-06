@@ -5,7 +5,7 @@ import { COLORS, MOUTHS, POSES, Reporter } from "./Reporter";
 
 const label: React.CSSProperties = { color: "white", fontFamily: "DejaVu Sans, Arial, sans-serif", fontSize: 26, textAlign: "center", marginTop: 8 };
 
-export type SheetProps = { who?: Cast }; // a candidate from Cast.tsx, or GameReporter when unset
+export type SheetProps = { who?: Cast }; // a candidate from Cast.tsx, or the reporter when unset
 
 // Character sheet for approval (V2.2, V7.1): the five poses plus every lip-sync mouth shape.
 export const Sheet: React.FC<SheetProps> = ({ who }) => {
