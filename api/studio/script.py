@@ -123,8 +123,8 @@ is shot "desk". Don't write a greeting or a sign-off: they are added for you.
 Shots:
 - "desk": {CHARACTER_NAME} on camera, with a "pose" ({", ".join(POSES)}): the hook, reactions and the end. 2 to 4 desk scenes.
 - "broll": voice-over on real footage of the thing being talked about. Either "query": 2 to 5 plain English words for \
-royalty-free stock footage of a real-world visual that fits the line (e.g. "game controller close up", "night city \
-traffic", "glass office building", "download progress screen"; never brand names, game titles or people), or \
+royalty-free stock footage of a real-world visual that fits the line: concrete things, not ideas (e.g. "gamepad \
+gaming hands", "night city traffic", "glass office building", "loading bar screen"; never brand names, game titles or people), or \
 "media_id": one of the official images below, when the line is about what that image shows. Use broll for most \
 what/why scenes so the viewer sees what we talk about, up to about {int(THIRD_PARTY_MAX_SHARE * 100)}% of the video.
 - "card": voice-over on a data card showing "fact_ids" (verified) and/or "note_ids" (notes). At least one card. Optional "text": the card's title.

@@ -74,3 +74,12 @@ def test_script_broll_rules():
         {"part": "hook", "shot": "desk", "line": "Hook."}, {**ok, "query": "", "media_id": "M1"}, {**ok, "query": "", "media_id": "M1"},
         {"part": "why", "shot": "card", "fact_ids": ["F1"], "line": "y"}, {"part": "next", "shot": "desk", "line": "z"}]}
     assert any("repeats media_id" in e for e in script.validate(two, ctx | {"job": type("J", (), {"target_seconds": 15})()}))
+
+
+def test_rank_prefers_matching_tags_and_rejects_green_screen():
+    hits = [{"id": 1, "tags": "lipstick, hand, beauty", "duration": 20, "likes": 900},
+            {"id": 2, "tags": "cursor, green screen, click", "duration": 12, "likes": 500},
+            {"id": 3, "tags": "controller, gamepad, gaming", "duration": 9, "likes": 10}]
+    assert media.rank(hits, "game controller close up")["id"] == 3
+    assert media.rank(hits[:2], "game controller close up") is None  # nothing matches: no footage beats wrong footage
+    assert media.rank([hits[1]], "cursor click") is None  # chroma-key stock never

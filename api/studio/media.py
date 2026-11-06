@@ -18,6 +18,8 @@ PIXABAY_LICENSE = "Pixabay Content License (free for commercial use; no attribut
 PIXABAY_LICENSE_URL = "https://pixabay.com/service/license-summary/"
 ROCKSTAR_LICENSE = "© Rockstar Games / Take-Two; official media hosted on rockstargames.com, brief commentary use with credit (D20)"
 OG_IMAGE = re.compile(r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\']([^"\']+)', re.I)
+# Stock hits are ranked by how many query words appear in their tags; chroma-key/template stock is never used.
+BAD_TAGS = ("green screen", "greenscreen", "chroma", "chromakey", "alpha channel", "template", "intro", "logo reveal")
 OG_IMAGE_REV = re.compile(r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+property=["\']og:image["\']', re.I)
 
 
@@ -31,20 +33,34 @@ def _official_host(url: str) -> bool:
     return urllib.parse.urlparse(url).scheme == "https" and any(host == d or host.endswith("." + d) for d in OFFICIAL_MEDIA_DOMAINS)
 
 
+def rank(hits: list[dict], query: str) -> dict | None:
+    """The hit whose tags match the query best (at least one word), never chroma-key stock; longer clips and
+    popular hits break ties. None when nothing really matches: better no footage than the wrong footage."""
+    words = {w for w in re.findall(r"[a-z]+", query.lower()) if len(w) > 2}
+
+    def score(h: dict) -> tuple:
+        tags = h.get("tags", "").lower()
+        hit = sum(w in tags for w in words) - (5 if any(b in tags for b in BAD_TAGS) else 0)
+        return (hit, h.get("duration", 0) >= 4, h.get("likes", 0))
+
+    best = max(hits, key=score, default=None)
+    return best if best is not None and score(best)[0] > 0 else None
+
+
 def pixabay(query: str, out_dir: Path) -> dict | None:
-    """Best Pixabay hit for `query`: a video when there is one, else a vertical photo, else any photo.
+    """Best Pixabay hit for `query`: a video when one matches, else a vertical photo, else any photo.
     -> {path, page, by, kind, credit} or None when nothing matches."""
     if not PIXABAY_API_KEY:
         raise RuntimeError("PIXABAY_API_KEY is not set (free key: https://pixabay.com/api/docs/)")
     q = urllib.parse.quote_plus(query)
-    base = f"key={PIXABAY_API_KEY}&q={q}&safesearch=true&per_page=5"
+    base = f"key={PIXABAY_API_KEY}&q={q}&safesearch=true&per_page=20"
     body, _ = _get(f"https://pixabay.com/api/videos/?{base}")
-    for h in json.loads(body)["hits"]:
+    if h := rank(json.loads(body)["hits"], query):
         v = h["videos"].get("medium") or h["videos"].get("small") or h["videos"]["large"]
         return _save(v["url"], out_dir / f"pixabay-{h['id']}.mp4", h, "video")
     for extra in ("&orientation=vertical&image_type=photo", "&image_type=photo"):
         body, _ = _get(f"https://pixabay.com/api/?{base}{extra}")
-        for h in json.loads(body)["hits"]:
+        if h := rank(json.loads(body)["hits"], query):
             return _save(h["largeImageURL"], out_dir / f"pixabay-{h['id']}.jpg", h, "image")
     return None
 
